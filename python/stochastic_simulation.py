@@ -156,7 +156,7 @@ def stochastic_process_simulation(rejection_fn, n, m=1000, step=1, p=1/2,
     return rejection_dict
 
 
-def null_bar():
+def null_bar(x):
     """
     This progression bar is very lazy, and does nothing!
     """

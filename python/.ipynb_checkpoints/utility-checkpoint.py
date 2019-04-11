@@ -22,7 +22,8 @@ base = importr('base')
 # import R's "utils" package
 utils = importr('utils')
 hypergeo = importr("hypergeo")
-vgam = importr("VGAM")
+rmutil = importr("rmutil")
+tail_rank = importr("TailRank")
 
 
 class Cached:
@@ -167,7 +168,7 @@ def addln(aln, bln):
     
     return maxln + np.log(1 + np.exp(minln-maxln))
 
-@Cached
+
 def beta_binomial_cdf(k, a, b, n, definition="r", method="normal"):
     """
     Computes the posterior cdf for a beta-binomial distribution
@@ -210,9 +211,9 @@ def beta_binomial_cdf(k, a, b, n, definition="r", method="normal"):
             return
     elif definition == "r":
         if method == "normal":
-            prob = list(vgam.pbetabinom_ab(k, n, a, b))[0]
+            prob = list(tail_rank.pbb(k, n, a, b))[0]
         elif method == "log":
-            prob = list(vgam.pbetabinom_ab(k, n, a, b, log=True))[0]
+            prob = np.log(list(tail_rank.pbb(k, n, a, b))[0])
         else:
             print("Invalid method", file=sys.stderr)
             return
@@ -259,7 +260,6 @@ def _single_posterior_pmf(sa, s, n, a=1, b=1, thresh=0.95,
     return binom.pmf(sa, s, p_h0) if p_reject >= thresh else 0
 
 
-@Cached
 def posterior_pmf(s, n, a=1, b=1, thresh=0.95, p_h0=1/2, 
                   verbose=False, full_return=False,
                   *args, **kwargs):
