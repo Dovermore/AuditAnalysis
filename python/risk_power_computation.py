@@ -55,6 +55,8 @@ class AuditSimulation:
         pandas.Series as result
         :param true_p: The true proportion of winner's share
         :param params: single {key: values} pair of parameters to be simulated
+        :param dsample: if the distribution of sample should be returned
+            (For sanity check)
         :param args: Other supportive arguments
         :param kwargs: Other supportive arguments
         :return: pd.Series of all simulated results.
@@ -73,6 +75,7 @@ class AuditSimulation:
             simulations[param] = power
         ret = pd.Series(simulations, name=key)
         if dsample:
+            dsamples = dsamples.fillna(value=0)
             ret = [ret, dsamples]
         return ret
 
@@ -82,6 +85,8 @@ class AuditSimulation:
         probabilities will return a pandas.DataFrame as result
         :param true_ps: List of true proportions of winner's share
         :param params: single {key: values} pair of parameters to be simulated
+        :param dsample: if the distribution of sample should be returned
+            (For sanity check)
         :param args: Other supportive arguments
         :param kwargs: Other supportive arguments
         :return: pd.DataFrame of all simulated results.
@@ -91,20 +96,20 @@ class AuditSimulation:
             dsamples = []
         table = pd.DataFrame(columns=true_ps, index=params)
         for true_p in true_ps:
-            column = self.powers(true_p, {key: params}, *args, **kwargs)
+            column = self.powers(true_p, {key: params}, dsample=dsample,
+                                 *args, **kwargs)
             if dsample:
                 column, _dsample = column
                 dsamples.append(_dsample)
             table[true_p] = column
         ret = table
         if dsample:
-            dsamples = pd.concat(dsamples, keys=true_ps,
-                                 axis=0).reset_index(level=1)
+            dsamples = pd.concat(dsamples, keys=true_ps, axis=0)
             ret = [ret, dsamples]
         return ret
 
 
-def qqplot(true_p, cdfs: pd.Series):
+def not_qqplot(true_p, cdfs: pd.Series):
     assert true_p in BRAVO.quantiles.index
     quantiles = BRAVO.quantiles.loc[true_p][:-1]
     plt.plot(quantiles)
@@ -148,7 +153,7 @@ def bravo_check(n=100000, m=5000):
             cumulative[index] = percentile
         cumulative = {value: key for key, value in cumulative.items()}
         cumulative = pd.Series(cumulative)
-        qqplot(true_p, cumulative)
+        not_qqplot(true_p, cumulative)
     save_fig("bravo_check.png", figure)
     plt.show()
 
@@ -181,7 +186,7 @@ def clip_check():
     clip_simulation = AuditSimulation(Clip, n, m=1000)
 
     power, dist = clip_simulation.power(true_p, True, dsample=True,
-                                        n=n, alpha=0.1, conservative=False)
+                                        n=n, alpha=alpha, conservative=False)
     print(sum([i * j for i, j in dist.items()]))
     return dist
 
@@ -223,6 +228,44 @@ def parse_table(table: pd.DataFrame, audit_type):
     return args
 
 
+def split_args(args):
+    individual_args = [(args[3*i], args[3*i+1], args[3*i+2])
+                       for i in range(len(args)//3)]
+    true_ps_bucket = dd(list)
+    for individual_arg in individual_args:
+        # Split and get the true probability
+        p = individual_arg[0].split("_")[-1]
+        true_ps_bucket[p].append(individual_arg)
+    return true_ps_bucket
+
+
+def compute_expected_number(dsample: dict, m):
+    proportion = 1 - sum(dsample.values())
+    return proportion * m + sum((i * j for i, j in dsample.items()))
+
+
+def to_csv(data: pd.DataFrame, fname, fpath=join("..", "data"), dsample=False):
+    if not exists(fpath):
+        makedirs(fpath)
+    full_name = fname
+    full_path = join(fpath, full_name)
+    # This part names the file with _i in the end
+    # extension = ""
+    # if "." in full_name:
+    #     fname, extension = list(fname.rsplit(".", 1))
+    # i = 1
+    # while exists(full_path):
+    #     full_name = fname + f"_{i}." + extension
+    #     full_path = join(fpath, full_name)
+    #     i += 1
+    print("Saving to:", full_path)
+    if dsample:
+        data.to_csv(path_or_buf=full_path,
+                    index_label=["true_p", "sample_number"])
+    else:
+        data.to_csv(path_or_buf=full_path)
+
+
 if __name__ == "__main__":
     # Sanity check for bravo auditing
     # bravo_check(n=10000, m=500)
@@ -236,34 +279,78 @@ if __name__ == "__main__":
     # Code for making the comparison plot
     # n = 100000
     # m = 2000
-    n = 10000
-    m = 1000
+    n = 1000
+    m = 100
+    min_alpha = 0.005
+    max_alpha = 0.15
+    n_param = 15
 
-    # For BRAVO auditing
-    # true_ps = [0.7, 0.65, 0.6, 0.58, 0.55, 0.54, 0.53, 0.52, 0.51, 0.505]
-    # bravo_params = {"alpha": list(np.linspace(0.005, 0.15, 15))}
-    # bravo = AuditSimulation(BRAVO, n, m)
-    #
-    # args = []
-    # for true_p in true_ps:
-    #     print(true_p)
-    #     power = bravo.powers(true_p, bravo_params, p=true_p)
-    #     type1 = bravo.powers(0.5, bravo_params, p=true_p)
-    #     args.append(f"bravo_{true_p}")
-    #     args.append(type1)
-    #     args.append(power)
-
-    # Plot for Bayesian auditing
     # true_ps = [0.5, 0.7, 0.65, 0.6, 0.58, 0.55,
     #            0.54, 0.53, 0.52, 0.51, 0.505]
+    # true_ps = [0.7, 0.65, 0.6, 0.58, 0.55, 0.54, 0.53, 0.52, 0.51, 0.505]
     true_ps = [0.5, 0.7, 0.6, 0.58, 0.55, 0.52, 0.505]
+    # true_ps = [0.5, 0.7, 0.6, 0.55, 0.52]
+    # Plot for Bayesian auditing
     bayesian_params = {"thresh": list(np.linspace(0.85, 0.95, 5)) +
-                       list(np.linspace(0.95, 0.999, 10))}
+                       list(np.linspace(0.96, 0.999, 10))}
     bayesian_audit = AuditSimulation(Bayesian, n, m)
-    bayesian_table = bayesian_audit.tabular_power(true_ps, bayesian_params)
-    args = parse_table(bayesian_table, "bayesian")
-    fig = type1_power_plot(*args)
-    fig.show()
+    bayesian_table, bayesian_dsample = \
+        bayesian_audit.tabular_power(true_ps, bayesian_params, dsample=True)
+    bayesian_args = parse_table(bayesian_table, "bayesian")
+    to_csv(bayesian_dsample, f"bayesian_dsample_{n}_{m}.csv", dsample=True)
+    to_csv(bayesian_table, f"bayesian_table_{n}_{m}.csv")
 
-    # fig = type1_power_plot(*args)
+    # For BRAVO auditing
+    bravo_params = {"alpha": list(np.linspace(min_alpha, max_alpha, n_param))}
+    bravo = AuditSimulation(BRAVO, n, m)
+    bravo_args = []
+    bravo_dsample = []
+    bravo_power_table = pd.DataFrame()
+    bravo_type1_table = pd.DataFrame()
+    for true_p in true_ps:
+        power, dsample = bravo.powers(true_p, bravo_params,
+                                      dsample=True, p=true_p)
+        bravo_dsample.append(dsample)
+        type1 = bravo.powers(0.5, bravo_params, p=true_p)
+        bravo_args.append(f"bravo_{true_p}")
+        bravo_args.append(type1)
+        bravo_type1_table[true_p] = type1
+        bravo_args.append(power)
+        bravo_power_table[true_p] = power
+    bravo_dsample: pd.DataFrame = pd.concat(bravo_dsample,
+                                            keys=true_ps, axis=0)
+    to_csv(bravo_dsample, f"bravo_dsample_{n}_{m}.csv", dsample=True)
+    to_csv(bravo_type1_table, f"bravo_type1_{n}_{m}.csv")
+    to_csv(bravo_power_table, f"bravo_power_{n}_{m}.csv")
+
+    # Plot for Clip auditing
+    clip_params = {"alpha": list(np.linspace(min_alpha, max_alpha, n_param))}
+    clip_audit = AuditSimulation(Clip, n, m)
+    clip_table, clip_dsample = clip_audit.tabular_power(true_ps, clip_params,
+                                                        dsample=True,
+                                                        conservative=True, n=n)
+    to_csv(clip_dsample, f"clip_dsample_{n}_{m}.csv", dsample=True)
+    to_csv(clip_table, f"clip_table_{n}_{m}.csv")
+    clip_args = parse_table(clip_table, "clip")
+
+    dict_args = split_args(bravo_args+bayesian_args+clip_args)
+    figure = plt.figure(figsize=[20.48, 20.48])
+
+    ncol = 3
+    nrow = 3
+    i = 1
+    for true_p, args in sorted(dict_args.items(), key=lambda x: x[1]):
+        if true_p == 0.5:
+            continue
+        args = [i for triples in args for i in triples]
+        plt.subplot(nrow, ncol, i)
+        type1_power_plot(*args)
+        plt.title(f"p={true_p}")
+        # Limit it to certain degree
+        plt.xlim([0, max_alpha])
+        i += 1
+    save_fig(f"overall_plot_{n}_{m}.png")
+    figure.show()
+
+    # fig = type1_power_plot(*bravo_args)
     # fig.show()
