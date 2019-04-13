@@ -132,15 +132,6 @@ def not_qqplot(true_p, cdfs: pd.Series):
     plt.ylabel("samples")
 
 
-def save_fig(fname, fig: plt.Figure = None, fpath=join("..", "figures")):
-    if not exists(fpath):
-        makedirs(fpath)
-    to = join(fpath, fname)
-    if fig is not None:
-        fig.savefig(to)
-        return
-    plt.savefig(to)
-
 
 def bravo_check(n=100000, m=5000):
     # Check if the bravo test is accurate. Replicate the result form
@@ -280,4 +271,12 @@ def to_csv(data: pd.DataFrame, fname, fpath=join("..", "data"), dsample=False):
         data.to_csv(path_or_buf=full_path)
 
 
+if __name__ == "__main__":
+    # Sanity check for bravo auditing
+    bravo_check(n=10000, m=500)
 
+    # Sanity check for bayesian auditing
+    bayesian_check(n=10000)
+
+    # Sanity Check for Clip auditing
+    clip_check()

@@ -10,9 +10,7 @@ min_alpha = 0.005
 max_alpha = 0.15
 n_param = 15
 
-bayesian_output = True
-clip_output = True
-bravo_output = True
+
 
 
 def bayesian_computation():
@@ -90,14 +88,9 @@ def bravo_computation():
 
 
 if __name__ == "__main__":
-    # Sanity check for bravo auditing
-    # bravo_check(n=10000, m=500)
-
-    # Sanity check for bayesian auditing
-    # bayesian_check(n=10000)
-
-    # Sanity Check for Clip auditing
-    # clip_check()
+    bayesian_output = True
+    clip_output = True
+    bravo_output = True
 
     # Bayesian auditing
     if bayesian_output:
