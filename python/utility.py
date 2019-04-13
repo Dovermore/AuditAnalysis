@@ -132,7 +132,10 @@ class OrderedDict:
     
     def serialize(self):
         return [(key, self._dict[key]) for key in self._q]
-    
+
+    def __len__(self):
+        return len(self._q)
+
 
 class SimpleProgressionBar:
     _prefix_format = "{0:6}/{1:6}"
@@ -166,6 +169,7 @@ def addln(aln, bln):
     minln = min(aln, bln)
     
     return maxln + np.log(1 + np.exp(minln-maxln))
+
 
 @Cached
 def beta_binomial_cdf(k, a, b, n, definition="r", method="normal"):

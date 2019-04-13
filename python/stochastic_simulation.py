@@ -121,7 +121,7 @@ def stochastic_process_simulation(rejection_fn, n, m=1000, step=1, p=1/2,
     q = OrderedDict()
     q.append(source[:2], source[2])
 
-    while True:
+    while len(q):
         # get next node to explore
         key, value = q.peek()
 
