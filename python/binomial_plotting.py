@@ -55,9 +55,9 @@ if __name__ == "__main__":
     n = 20000
     m = 500
 
-    table_pattern = re.compile(f"^(\w*)_(table|power|type1)"
+    table_pattern = re.compile(f"^([a-z]*)_(table|power|type1)"
                                f"{n:06}{m:04}(\d*)\.csv$")
-    dsample_pattern = re.compile(f"^(\w+)_(dsample){n:06}{m:04}(\d*)\.csv$")
+    dsample_pattern = re.compile(f"^([a-z]+)_(dsample){n:06}{m:04}(\d*)\.csv$")
 
     tables = {Bayesian.name: {}, BRAVO.name: dd(dict), Clip.name: {}}
     dsamples = {Bayesian.name: {}, BRAVO.name: {}, Clip.name: {}}

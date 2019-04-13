@@ -9,6 +9,7 @@ m = 500
 min_alpha = 0.005
 max_alpha = 0.15
 n_param = 15
+fpath = join("..", "data", f"{n:06}{m:04}_parallel")
 
 
 def bayesian_computation():
@@ -28,10 +29,10 @@ def bayesian_computation():
             bayesian_audit.tabular_power(true_ps, bayesian_params,
                                          dsample=True, a=a, b=b)
         to_csv(bayesian_dsample,
-               f"bayesian_dsample{n:06}{m:04}{a:02}{b:02}.csv",
-               dsample=True)
+               f"bayesian_dsample{a:02}{b:02}.csv",
+               dsample=True, fpath=fpath)
         to_csv(bayesian_table,
-               f"bayesian_table{n:06}{m:04}{a:02}{b:02}.csv")
+               f"bayesian_table{a:02}{b:02}.csv", fpath=fpath)
 
     for partisan in bayesian_auditors:
         a = bayesian_auditors[partisan]["a"]
@@ -49,8 +50,8 @@ def clip_computation():
     clip_table, clip_dsample = \
         clip_audit.tabular_power(true_ps, clip_params, dsample=True,
                                  conservative=True, n=n)
-    to_csv(clip_dsample, f"clip_dsample{n:06}{m:04}.csv", dsample=True)
-    to_csv(clip_table, f"clip_table{n:06}{m:04}.csv")
+    to_csv(clip_dsample, f"clip_dsample.csv", dsample=True, fpath=fpath)
+    to_csv(clip_table, f"clip_table.csv", fpath=fpath)
 
 
 def bravo_computation():
@@ -79,12 +80,12 @@ def bravo_computation():
         bravo_dsample: pd.DataFrame = pd.concat(bravo_dsample,
                                                 keys=true_ps, axis=0)
         to_csv(bravo_dsample,
-               f"bravo_dsample{n:06}{m:04}{reported*100:03.0f}.csv",
-               dsample=True)
+               f"bravo_dsample{reported*100:03.0f}.csv",
+               dsample=True, fpath=fpath)
         to_csv(bravo_type1_table,
-               f"bravo_type1{n:06}{m:04}{reported*100:03.0f}.csv")
+               f"bravo_type1{reported*100:03.0f}.csv", fpath=fpath)
         to_csv(bravo_power_table,
-               f"bravo_power{n:06}{m:04}{reported*100:03.0f}.csv")
+               f"bravo_power{reported*100:03.0f}.csv", fpath=fpath)
 
     for reported in true_ps:
         sub_process = Process(target=single_bravo_computation,

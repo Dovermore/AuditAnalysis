@@ -9,6 +9,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+from binomial_plotting import save_fig
+
 
 class AuditSimulation:
     def __init__(self, audit_class, n, m):
@@ -85,7 +87,7 @@ class AuditSimulation:
         return ret
 
     def tabular_power(self, true_ps, params, dsample=False,
-                      progression=True, *args, **kwargs):
+                      progression=False, *args, **kwargs):
         """
         Compute table of powers for a set of parameters, and a set of true
         probabilities will return a pandas.DataFrame as result
