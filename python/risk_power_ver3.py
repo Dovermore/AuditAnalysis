@@ -11,8 +11,6 @@ max_alpha = 0.15
 n_param = 15
 
 
-
-
 def bayesian_computation():
     true_ps = [0.5, 0.7, 0.58, 0.52]
     bayesian_params = {"thresh":
@@ -23,11 +21,9 @@ def bayesian_computation():
                          "partisan_l1": {"a": 1, "b": 9},
                          "partisan_w2": {"a": 4, "b": 1},
                          "partisan_l2": {"a": 1, "b": 4}}
-    # TODO add plot using dictionary
-    bayesian_audit = AuditSimulation(Bayesian, n, m)
-    for partisan in bayesian_auditors:
-        a = bayesian_auditors[partisan]["a"]
-        b = bayesian_auditors[partisan]["b"]
+
+    def single_bayesian_computation(a, b):
+        bayesian_audit = AuditSimulation(Bayesian, n, m)
         bayesian_table, bayesian_dsample = \
             bayesian_audit.tabular_power(true_ps, bayesian_params,
                                          dsample=True, a=a, b=b)
@@ -36,7 +32,12 @@ def bayesian_computation():
                dsample=True)
         to_csv(bayesian_table,
                f"bayesian_table{n:06}{m:04}{a:02}{b:02}.csv")
-    # bayesian_args = parse_table(bayesian_table, "bayesian")
+
+    for partisan in bayesian_auditors:
+        a = bayesian_auditors[partisan]["a"]
+        b = bayesian_auditors[partisan]["b"]
+        sub_process = Process(target=single_bayesian_computation, args=(a, b))
+        sub_process.start()
 
 
 def clip_computation():
@@ -50,7 +51,6 @@ def clip_computation():
                                  conservative=True, n=n)
     to_csv(clip_dsample, f"clip_dsample{n:06}{m:04}.csv", dsample=True)
     to_csv(clip_table, f"clip_table{n:06}{m:04}.csv")
-    clip_args = parse_table(clip_table, "clip")
 
 
 def bravo_computation():
@@ -59,9 +59,9 @@ def bravo_computation():
     true_ps = [0.7, 0.58, 0.52]
     bravo_params = {"alpha": list(np.linspace(min_alpha,
                                               max_alpha, n_param))}
-    bravo = AuditSimulation(BRAVO, n, m)
-    for reported in true_ps:
-        bravo_args = []
+
+    def single_bravo_computation(reported):
+        bravo = AuditSimulation(BRAVO, n, m)
         bravo_dsample = []
         bravo_power_table = pd.DataFrame()
         bravo_type1_table = pd.DataFrame()
@@ -85,6 +85,11 @@ def bravo_computation():
                f"bravo_type1{n:06}{m:04}{reported*100:03.0f}.csv")
         to_csv(bravo_power_table,
                f"bravo_power{n:06}{m:04}{reported*100:03.0f}.csv")
+
+    for reported in true_ps:
+        sub_process = Process(target=single_bravo_computation,
+                              args=(reported,))
+        sub_process.start()
 
 
 if __name__ == "__main__":
