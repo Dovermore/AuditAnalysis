@@ -1,11 +1,12 @@
-from utility import (Cached, binom, SimpleProgressionBar,
-                     OrderedDict)
-
+from utility.utility import (Cached, SimpleProgressionBar,
+                             OrderedDict, binom_pmf, null_bar,
+                             hyper_geom_pmf)
 import scipy as sp
 import numpy as np
 import pandas as pd
 
 from collections import defaultdict as dd
+from math import floor
 
 
 @Cached
@@ -26,12 +27,7 @@ def reverse_conversion(step, index):
     return t, t * step - (total - index)
 
 
-@Cached
-def binom_pmf(k, n, p):
-    return binom.pmf(k, n, p)
-
-
-def find_terminal(f, n, m=1, step=10, p_h0=1/2, to_sequence=False,
+def find_terminal(f, n, m=1, step=10,p_h0=1/2, to_sequence=False,
                   transition=False):
     """
     Find the terminal state given a specific setting
@@ -106,7 +102,10 @@ def solve_stationary(chain):
 
 
 def stochastic_process_simulation(rejection_fn, n, m=1000, step=1, p=1/2,
-                                  progression=False, *args, **kwargs):
+                                  progression=False,  replacement=True,
+                                  *args, **kwargs):
+    w = floor(n * p)
+
     progression_bar = null_bar
 
     if progression:
@@ -121,30 +120,45 @@ def stochastic_process_simulation(rejection_fn, n, m=1000, step=1, p=1/2,
     q = OrderedDict()
     q.append(source[:2], source[2])
 
+    # While q is not empty
     while len(q):
+
         # get next node to explore
         key, value = q.peek()
 
+        # Update progression
         progression_bar(key[0])
 
+        # If sampled to the max number already, break
         if key[0] >= m:
             break
+
+        # Remove the value
         q.pop()
+
         t, y_t, p_t = *key, value
 
         t_next = t + step
+
+        n_remain = n - t
+        w_remain = w - y_t
+
         # All possible generated sa for next batch
         for i in range(step+1):
-            # the binomial probability reaching next node
-            p_binom = binom_pmf(i, step, p)
-
             y_t_next = y_t + i
 
-            # rejection?
+            if not replacement:
+                # If no replacement sample from hypergeometric distribution
+                p_next = hyper_geom_pmf(i, n_remain, w_remain, step)
+            else:
+                # Else use binomial compute probability
+                p_next = binom_pmf(i, step, p)
+
+            # Is this state rejected?
             reject = rejection_fn(n, t_next, y_t_next, *args, **kwargs)
 
             # Compose the node
-            node = (t_next, y_t_next, p_binom * p_t)
+            node = (t_next, y_t_next, p_next * p_t)
 
             # if null is rejected, put it in the risk dict
             if reject:
@@ -154,13 +168,6 @@ def stochastic_process_simulation(rejection_fn, n, m=1000, step=1, p=1/2,
 
     # The information in this is enough to determine the result
     return rejection_dict
-
-
-def null_bar(x):
-    """
-    This progression bar is very lazy, and does nothing!
-    """
-    return None
 
 
 if __name__ == "__main__":
