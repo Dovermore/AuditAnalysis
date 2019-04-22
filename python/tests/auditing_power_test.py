@@ -4,7 +4,7 @@ import pandas as pd
 from matplotlib import pyplot as plt
 
 from audit_method import BRAVO, Bayesian, Clip
-from auditing_power import AuditSimulation
+from audit_power import AuditSimulation
 from binomial_plotting import save_fig
 
 

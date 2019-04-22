@@ -1,4 +1,4 @@
-from auditing_power import *
+from audit_power import *
 from audit_method import *
 import numpy as np
 
