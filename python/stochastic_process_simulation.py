@@ -104,12 +104,16 @@ def solve_stationary(chain):
 def stochastic_process_simulation(rejection_fn, n, m=1000, step=1, p=1/2,
                                   progression=False,  replacement=True,
                                   *args, **kwargs):
+    if m == -1:
+        m = n + 1
+
     w = floor(n * p)
 
     progression_bar = null_bar
 
     if progression:
         progression_bar = SimpleProgressionBar(m)
+
     rejection_dict = dd(float)
 
     # first element: t,
@@ -120,17 +124,33 @@ def stochastic_process_simulation(rejection_fn, n, m=1000, step=1, p=1/2,
     q = OrderedDict()
     q.append(source[:2], source[2])
 
+    # Records {sample_number: power} pair for the election
+    # This one only records the sample number but not the winner's vote
+    cumulative_rejection = dd(float)
+    total_power = 0
+
     # While q is not empty
     while len(q):
-
         # get next node to explore
         key, value = q.peek()
 
         # Update progression
         progression_bar(key[0])
 
+        # Last step of calculation is finished, record the total power
+        if (key[0] - step) in cumulative_rejection:
+            total_power += cumulative_rejection[key[0] - step]
+            del cumulative_rejection[key[0] - step]
+
         # If sampled to the max number already, break
-        if key[0] >= m:
+        if isinstance(m, int) and key[0] >= m:
+            break
+
+        # Break if a power is given and already at that power
+        if isinstance(m, float) and total_power >= m:
+            break
+
+        if replacement and key[0] > n:
             break
 
         # Remove the value
@@ -159,10 +179,13 @@ def stochastic_process_simulation(rejection_fn, n, m=1000, step=1, p=1/2,
 
             # Compose the node
             node = (t_next, y_t_next, p_next * p_t)
+            if pd.isnull(p_next * p_t):
+                node = (t_next, y_t_next, 0)
 
             # if null is rejected, put it in the risk dict
             if reject:
                 rejection_dict[node[:2]] += node[2]
+                cumulative_rejection[node[0]] += node[2]
             else:
                 q.append(node[:2], node[2])
 

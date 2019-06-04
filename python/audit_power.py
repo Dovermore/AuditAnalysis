@@ -1,4 +1,4 @@
-from stochastic_simulation import stochastic_process_simulation
+from stochastic_process_simulation import stochastic_process_simulation
 from collections import defaultdict as dd
 from os import makedirs
 from os.path import exists, join
@@ -34,6 +34,7 @@ class AuditSimulation:
         ret = power
         if dsample:
             dsample = dd(float)
+            # (t, y_t)
             for key in reject_dict:
                 t, y_t = key
                 proba = reject_dict[key]

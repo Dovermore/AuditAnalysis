@@ -14,6 +14,7 @@ from functools import partial
 
 import sys
 
+import os
 # rpy2 use r in python
 from rpy2.robjects.packages import importr
 

@@ -5,7 +5,7 @@ import numpy as np
 
 # Code for making the comparison plot
 n = 500
-m = 200
+m = -1
 replacement = False
 min_alpha = 0.005
 max_alpha = 0.15

@@ -52,8 +52,8 @@ def save_fig(fname, fig: plt.Figure = None, fpath=path.join("..", "figures")):
 if __name__ == "__main__":
     p0 = str(0.5)
     data_path = path.join("..", "data")
-    n = 20000
-    m = 500
+    n = 500
+    m = -1
 
     table_pattern = re.compile(f"^([a-z]*)_(table|power|type1)"
                                f"{n:06}{m:04}(\d*)\.csv$")
