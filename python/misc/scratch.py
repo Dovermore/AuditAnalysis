@@ -1,4 +1,4 @@
-from audit_power import *
+from auditing_setup.audit_power import *
 
 bayesian_dsample = pd.read_csv("../data/bayesian_dsample_1000_100.csv")
 

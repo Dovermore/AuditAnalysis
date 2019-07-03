@@ -1,9 +1,13 @@
+from os import path
+
 import mpmath as mm
 from math import ceil
 import numpy as np
+from matplotlib import pyplot as plt
 
 from scipy.stats import binom, hypergeom
-from scipy.special import beta as beta
+from scipy.stats import beta as rvbeta
+from scipy.special import beta
 from scipy.special import betaln
 from scipy.special import comb
 from scipy.special import gammaln
@@ -225,7 +229,22 @@ def beta_binomial_cdf(k, a, b, n, definition="r", method="normal"):
         print("Invalid definition", file=sys.stderr)
         return
     return prob
-            
+
+
+@Cached
+def beta_binomial_pmf(k, a, b, n):
+    return list(vgam.dbetabinom_ab(k, n, a, b))[0]
+
+
+@Cached
+def hypergeom_pmf(x, N, n1, n):
+    return hypergeom.pmf(N, n1, n).pmf(x)
+
+
+@Cached
+def beta_pdf(x, a, b):
+    return rvbeta.pdf(x, a, b)
+
 
 def _single_posterior_pmf(sa, s, n, a=1, b=1, thresh=0.95,
                           p_h0=1/2, verbose=False, full_return=False,
@@ -245,7 +264,7 @@ def _single_posterior_pmf(sa, s, n, a=1, b=1, thresh=0.95,
         a (float/int): prior denoting additional votes to winner A
         b (float/int): prior denoting additional votes to loser B
         thresh (float,[0, 1]): the threshold rejecting null hypothesis
-        p_ho (float, default 0.5): the null hypothesis
+        p_h0 (float, default 0.5): the null hypothesis
     Returns:
         p(sa) if NULL is rejected else 0
     """
@@ -368,3 +387,13 @@ def null_bar(x):
     This progression bar is very lazy, and does nothing!
     """
     return None
+
+
+def save_fig(fname, fig: plt.Figure = None, fpath=path.join("..", "figures")):
+    if not path.exists(fpath):
+        os.makedirs(fpath)
+    to = path.join(fpath, fname)
+    if fig is not None:
+        fig.savefig(to)
+        return
+    plt.savefig(to)

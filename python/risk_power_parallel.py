@@ -1,5 +1,5 @@
-from audit_power import *
-from audit_method import *
+from auditing_setup.audit_power import *
+from auditing_setup.audit_method import *
 from multiprocessing import Process
 import numpy as np
 
@@ -99,8 +99,8 @@ def bravo_computation(n=n, m=m):
 
 if __name__ == "__main__":
     bayesian_output = True
-    clip_output = True
-    bravo_output = True
+    clip_output = False
+    bravo_output = False
 
     # Bayesian auditing
     if bayesian_output:

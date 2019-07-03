@@ -3,9 +3,9 @@ from math import ceil
 import pandas as pd
 from matplotlib import pyplot as plt
 
-from audit_method import BRAVO, Bayesian, Clip
-from audit_power import AuditSimulation
-from binomial_plotting import save_fig
+from auditing_setup.audit_method import BRAVO, Bayesian, Clip
+from auditing_setup.audit_power import AuditSimulation
+from utility.utility import save_fig
 
 
 def bravo_check(n=100000, m=5000):
