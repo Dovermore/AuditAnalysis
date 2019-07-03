@@ -1,0 +1,19 @@
+<component name="libraryTable">
+  <library name="gluegen-rt-natives-linux-amd64">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../Programmies-java/UCSDUnfoldingMaps/lib/gluegen-rt-natives-linux-amd64.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Programmies-java/UCSDUnfoldingMaps/lib/gluegen-rt-natives-linux-armv6hf.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Programmies-java/UCSDUnfoldingMaps/lib/gluegen-rt-natives-linux-i586.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Programmies-java/UCSDUnfoldingMaps/lib/gluegen-rt-natives-macosx-universal.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Programmies-java/UCSDUnfoldingMaps/lib/gluegen-rt-natives-windows-amd64.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Programmies-java/UCSDUnfoldingMaps/lib/gluegen-rt-natives-windows-i586.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Programmies-java/UCSDUnfoldingMaps/lib/gluegen-rt.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Programmies-java/UCSDUnfoldingMaps/lib/jogl-all-natives-linux-amd64.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Programmies-java/UCSDUnfoldingMaps/lib/jogl-all-natives-linux-armv6hf.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Programmies-java/UCSDUnfoldingMaps/lib/jogl-all-natives-linux-i586.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Programmies-java/UCSDUnfoldingMaps/lib/jogl-all-natives-macosx-universal.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Programmies-java/UCSDUnfoldingMaps/lib/jogl-all-natives-windows-amd64.jar!/" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>
