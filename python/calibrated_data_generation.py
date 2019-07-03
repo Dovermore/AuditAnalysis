@@ -4,6 +4,7 @@ from auditing_setup.audit_method import Bayesian, HyperGeomBRAVO, KMart
 from auditing_setup.audit_power import to_csv
 import numpy as np
 from os.path import join
+from collections import defaultdict as dd
 
 
 def make_legend(audit_method, **kwargs):
@@ -14,61 +15,26 @@ def make_legend(audit_method, **kwargs):
     return legend
 
 
-def power_data_generation(audit_method, audit_params, n, m,
-                          true_ps=np.linspace(0.5, 0.75, 20)):
-    fpath = join("..", "data_calibrated",
-                 f"{n:06}{m:04}_wo")
-    legends = []
+def power_data_generation(audit_method, audit_params, n, m, true_ps=np.linspace(0.5, 0.75, 20), save=True):
+    fpath = join("..", "new_data", f"{n:06}{m:04}_wo")
     sss = SampleStatisticsSimulation(audit_method, n, m, False)
 
-    power_df = pd.DataFrame()
-    power_mean_df = pd.DataFrame()
-    power_mean_with_handcount_df = pd.DataFrame()
-    power_9th_df = pd.DataFrame()
-    power_median_df = pd.DataFrame()
-
+    statistics_dfs = dd(lambda: pd.DataFrame())
     for params in audit_params:
         legend = make_legend(audit_method, **params)
-
-        power_data = {"legend": legend}
-        power_mean_data = {"legend": legend}
-        power_mean_with_handcount_data = {"legend": legend}
-        power_9th_data = {"legend": legend}
-        power_median_data = {"legend": legend}
-
-        legends.append(legend)
+        statistics_data = dd(lambda: {"legend": legend})
         for true_p in true_ps:
             statistics = sss.compute_statistics(true_p, **params)
+            for stat_type in statistics.index:
 
-            power = statistics["power"]
-            power_data[true_p] = power
+                statistics_data[stat_type][true_p] = statistics[stat_type]
 
-            power_mean = statistics["powermean"]
-            power_mean_data[true_p] = power_mean
-
-            power_mean_with_handcount_data[true_p] = power_mean + (1 - power) * n
-
-            power_9th = statistics["power>=0.90"]
-            power_9th_data[true_p] = power_9th
-
-            power_median = statistics["power>=0.50"]
-            power_median_data[true_p] = power_median
-
-        power_df = power_df.append(power_data, ignore_index=True)
-        power_mean_df = power_mean_df.append(power_mean_data, ignore_index=True)
-        power_mean_with_handcount_df = \
-            power_mean_with_handcount_df.append(power_mean_with_handcount_data,
-                                                ignore_index=True)
-        power_9th_df = power_9th_df.append(power_9th_data, ignore_index=True)
-        power_median_df = power_median_df.append(power_median_data, ignore_index=True)
-
-    to_csv(power_df, f"{audit_method.name}_power", fpath)
-    to_csv(power_mean_df, f"{audit_method.name}_power_mean_size", fpath)
-    to_csv(power_mean_with_handcount_df, f"{audit_method.name}_power_mean_size", fpath)
-    to_csv(power_9th_df, f"{audit_method.name}_power_090quantile_size", fpath)
-    to_csv(power_median_df, f"{audit_method.name}_power_median_size", fpath)
-
-    return power_df, power_mean_df, power_mean_with_handcount_df, power_9th_df, power_median_df
+        for stat_type in statistics_data:
+            statistics_dfs[stat_type] = statistics_dfs[stat_type]\
+                .append(statistics_data[stat_type], ignore_index=True)
+    for stat_type in statistics_dfs:
+        to_csv(statistics_dfs[stat_type], f"{audit_method.name}_{stat_type}", fpath)
+    return statistics_dfs
 
 
 if __name__ == "__main__":
@@ -86,7 +52,7 @@ if __name__ == "__main__":
     #     {"a": 1, "b": 4, "thresh": 0.99555},
     # ]
 
-    m = 100
+    m = -1
     bravo_params = [
         {"alpha": 0.072, "p": 0.7},
         {"alpha": 0.25, "p": 0.55},
@@ -107,7 +73,11 @@ if __name__ == "__main__":
         {"alpha": 0.065},
     ]
 
+    bayesian_params = [
+        {"a": 1, "b": 1, "thresh": 0.95},
+    ]
+
     # power_data_generation(BRAVO, bravo_params, n, m)
-    power_data_generation(HyperGeomBRAVO, hyper_geom_bravo_params, n, m)
+    # power_data_generation(HyperGeomBRAVO, hyper_geom_bravo_params, n, m)
     power_data_generation(Bayesian, bayesian_params, n, m)
-    power_data_generation(KMart, kmart_params, n, m)
+    # power_data_generation(KMart, kmart_params, n, m)
