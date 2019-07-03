@@ -15,7 +15,7 @@ def make_legend(audit_method, **kwargs):
     return legend
 
 
-def power_data_generation(audit_method, audit_params, n, m, true_ps=np.linspace(0.5, 0.75, 20), save=True):
+def power_data_generation(audit_method, audit_params, n, m, true_ps=np.linspace(0.45, 0.75, 25), save=True):
     fpath = join("..", "new_data", f"{n:06}{m:04}_wo")
     sss = SampleStatisticsSimulation(audit_method, n, m, False)
 
@@ -26,19 +26,19 @@ def power_data_generation(audit_method, audit_params, n, m, true_ps=np.linspace(
         for true_p in true_ps:
             statistics = sss.compute_statistics(true_p, **params)
             for stat_type in statistics.index:
-
                 statistics_data[stat_type][true_p] = statistics[stat_type]
 
         for stat_type in statistics_data:
             statistics_dfs[stat_type] = statistics_dfs[stat_type]\
                 .append(statistics_data[stat_type], ignore_index=True)
-    for stat_type in statistics_dfs:
-        to_csv(statistics_dfs[stat_type], f"{audit_method.name}_{stat_type}", fpath)
+    if save:
+        for stat_type in statistics_dfs:
+            to_csv(statistics_dfs[stat_type], f"{audit_method.name}_{stat_type}.csv", fpath)
     return statistics_dfs
 
 
 if __name__ == "__main__":
-    n = 500
+    n = 501
     # true_ps = list(np.linspace(0.4, 1, 40))
     # m = -1
     # bravo_params = [

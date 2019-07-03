@@ -98,8 +98,8 @@ def bravo_computation(n=n, m=m):
 
 
 if __name__ == "__main__":
-    bayesian_output = True
-    clip_output = False
+    bayesian_output = False
+    clip_output = True
     bravo_output = False
 
     # Bayesian auditing
