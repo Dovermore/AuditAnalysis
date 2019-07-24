@@ -60,7 +60,8 @@ def clip_computation(n=n, m=m):
 def bravo_computation(n=n, m=m):
     # BRAVO auditing
     # Reset True P
-    true_ps = [0.7, 0.58, 0.52]
+    # true_ps = [0.7, 0.58, 0.52]
+    true_ps = [0.5, 0.55, 0.7]
     fpath = join("..", "data", f"{n:06}{m:04}_{'w' if replacement else 'wo'}")
     bravo_params = {"alpha": list(np.linspace(min_alpha,
                                               max_alpha, n_param))}
@@ -99,8 +100,8 @@ def bravo_computation(n=n, m=m):
 
 if __name__ == "__main__":
     bayesian_output = False
-    clip_output = True
-    bravo_output = False
+    clip_output = False
+    bravo_output = True
 
     # Bayesian auditing
     if bayesian_output:

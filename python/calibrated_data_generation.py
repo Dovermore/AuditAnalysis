@@ -1,6 +1,6 @@
 import pandas as pd
 from auditing_setup.audit_sample_number_analysis import SampleStatisticsSimulation
-from auditing_setup.audit_method import Bayesian, HyperGeomBRAVO, KMart
+from auditing_setup.audit_method import Bayesian, HyperGeomBRAVO, TruncatedBayesian
 from auditing_setup.audit_power import to_csv
 import numpy as np
 from os.path import join
@@ -21,9 +21,11 @@ def power_data_generation(audit_method, audit_params, n, m, true_ps=np.linspace(
 
     statistics_dfs = dd(lambda: pd.DataFrame())
     for params in audit_params:
+        print("param:", params)
         legend = make_legend(audit_method, **params)
         statistics_data = dd(lambda: {"legend": legend})
         for true_p in true_ps:
+            print("    true_p:", true_p)
             statistics = sss.compute_statistics(true_p, **params)
             for stat_type in statistics.index:
                 statistics_data[stat_type][true_p] = statistics[stat_type]
@@ -38,7 +40,7 @@ def power_data_generation(audit_method, audit_params, n, m, true_ps=np.linspace(
 
 
 if __name__ == "__main__":
-    n = 501
+    n = 500
     # true_ps = list(np.linspace(0.4, 1, 40))
     # m = -1
     # bravo_params = [
@@ -77,7 +79,12 @@ if __name__ == "__main__":
         {"a": 1, "b": 1, "thresh": 0.95},
     ]
 
+    truncated_bayesian_params = [
+        {"a": 1, "b": 1, "thresh": 0.971},
+    ]
+
     # power_data_generation(BRAVO, bravo_params, n, m)
     # power_data_generation(HyperGeomBRAVO, hyper_geom_bravo_params, n, m)
-    power_data_generation(Bayesian, bayesian_params, n, m)
+    # power_data_generation(Bayesian, bayesian_params, n, m)
     # power_data_generation(KMart, kmart_params, n, m)
+    power_data_generation(TruncatedBayesian, truncated_bayesian_params, n, m)

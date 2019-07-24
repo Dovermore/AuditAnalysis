@@ -61,10 +61,43 @@ def hyper_geom_bravo_computation(n=n, m=m, true_p=true_p, fpath=fpath):
         sub_process.start()
 
 
+def truncated_bayesian_computation(n=n, m=m, true_p=true_p, fpath=fpath):
+    bayesian_params = {"thresh":
+                           list(np.linspace(0.9, 0.95, 10)) +
+                           list(np.linspace(0.955, 0.9999, 30))}
+
+    bayesian_auditors = {"nonpartisan": {"a": 1, "b": 1}}
+
+    # bayesian_auditors = {"partisan_w1": {"a": 9, "b": 1},
+    #                      "nonpartisan": {"a": 1, "b": 1},
+    #                      "partisan_l1": {"a": 1, "b": 9},
+    #                      "partisan_w2": {"a": 4, "b": 1},
+    #                      "partisan_l2": {"a": 1, "b": 4}}
+
+    # bayesian_auditors = {"partisan_w1": {"a": 9, "b": 1},
+    #                      "nonpartisan": {"a": 1, "b": 1},
+    #                      "partisan_l1": {"a": 1, "b": 9},
+    #                      "partisan_w2": {"a": 4, "b": 1},
+    #                      "partisan_l2": {"a": 1, "b": 4}}
+
+    def single_bayesian_computation(a, b):
+        bayesian_audit = AuditSimulation(TruncatedBayesian, n, m, replacement=replacement)
+        bayesian_table, bayesian_dsample = bayesian_audit.powers(true_p, bayesian_params, dsample=True,
+                                                                 cdf=True, a=a, b=b)
+        to_csv(bayesian_dsample, f"{TruncatedBayesian.name}{a:02}{b:02}_cdf.csv", fpath=fpath)
+
+    for partisan in bayesian_auditors:
+        a = bayesian_auditors[partisan]["a"]
+        b = bayesian_auditors[partisan]["b"]
+        sub_process = Process(target=single_bayesian_computation, args=(a, b))
+        sub_process.start()
+
+
 if __name__ == "__main__":
-    bayesian_output = True
-    clip_output = True
-    bravo_output = True
+    bayesian_output = False
+    clip_output = False
+    bravo_output = False
+    truncated_bayesian_output = True
 
     # Bayesian auditing
     if bayesian_output:
@@ -81,24 +114,7 @@ if __name__ == "__main__":
         bravo_p = Process(target=hyper_geom_bravo_computation)
         bravo_p.start()
 
-    # dict_args = split_args(bravo_args+bayesian_args+clip_args)
-    #
-    # figure = plt.figure(figsize=[20.48, 20.48])
-    # ncol = ceil(np.sqrt(len(true_ps)))
-    # nrow = ceil(len(true_ps)/ncol)
-    # i = 1
-    # for true_p, args in sorted(dict_args.items(), key=lambda x: x[1]):
-    #     if true_p == 0.5:
-    #         continue
-    #     args = [i for triples in args for i in triples]
-    #     plt.subplot(nrow, ncol, i)
-    #     type1_power_plot(*args)
-    #     plt.title(f"p={true_p}")
-    #     # Limit it to certain degree
-    #     plt.xlim([0, max_alpha])
-    #     i += 1
-    # save_fig(f"overall_plot_{n}_{m}.png")
-    # figure.show()
-
-    # fig = type1_power_plot(*bravo_args)
-    # fig.show()
+    # Bayesian auditing
+    if truncated_bayesian_output:
+        truncated_bayesian_p = Process(target=truncated_bayesian_computation)
+        truncated_bayesian_p.start()
