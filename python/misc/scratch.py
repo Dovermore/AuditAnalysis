@@ -1,5 +1,6 @@
 from auditing_setup.audit_power import *
+from auditing_setup.audit_method import *
+from auditing_setup.audit_sample_number_analysis import *
 
-truncated_bayesian_cdf_data = pd.read_csv("../../new_data/000500-001050_wo/truncated_bayesian0101_cdf.csv", index_col=0, header=0)
-plt.plot([float(i) for i in truncated_bayesian_cdf_data.columns], truncated_bayesian_cdf_data.iloc[-1])
-plt.show()
+audit_s = AuditSimulation(TruncatedBayesian, 500, 500)
+audit_s.power(0.7)

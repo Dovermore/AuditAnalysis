@@ -80,7 +80,7 @@ if __name__ == "__main__":
     ]
 
     truncated_bayesian_params = [
-        {"a": 1, "b": 1, "thresh": 0.971},
+        {"a": 1, "b": 1, "thresh": 0.086},
     ]
 
     # power_data_generation(BRAVO, bravo_params, n, m)

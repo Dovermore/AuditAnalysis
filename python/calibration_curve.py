@@ -62,9 +62,7 @@ def hyper_geom_bravo_computation(n=n, m=m, true_p=true_p, fpath=fpath):
 
 
 def truncated_bayesian_computation(n=n, m=m, true_p=true_p, fpath=fpath):
-    bayesian_params = {"thresh":
-                           list(np.linspace(0.9, 0.95, 10)) +
-                           list(np.linspace(0.955, 0.9999, 30))}
+    bayesian_params = {"thresh": list(np.linspace(min_alpha, max_alpha, n_param))}
 
     bayesian_auditors = {"nonpartisan": {"a": 1, "b": 1}}
 

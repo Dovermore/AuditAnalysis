@@ -3,11 +3,41 @@
   <component name="ChangeListManager">
     <list default="true" id="9d82c61b-1943-4c16-a50b-c917d4554f87" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000500-001050_wo/truncated_bayesian0101_cdf.csv" beforeDir="false" afterPath="$PROJECT_DIR$/new_data/000500-001050_wo/truncated_bayesian0101_cdf.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_power.csv" beforeDir="false" afterPath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_power.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_power&gt;=0.25.csv" beforeDir="false" afterPath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_power&gt;=0.25.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_power&gt;=0.50.csv" beforeDir="false" afterPath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_power&gt;=0.50.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_power&gt;=0.75.csv" beforeDir="false" afterPath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_power&gt;=0.75.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_power&gt;=0.90.csv" beforeDir="false" afterPath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_power&gt;=0.90.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_powermean.csv" beforeDir="false" afterPath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_powermean.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_powermean_with_full_count.csv" beforeDir="false" afterPath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_powermean_with_full_count.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_risk.csv" beforeDir="false" afterPath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_risk.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_risk&gt;=0.25.csv" beforeDir="false" afterPath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_risk&gt;=0.25.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_risk&gt;=0.50.csv" beforeDir="false" afterPath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_risk&gt;=0.50.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_risk&gt;=0.75.csv" beforeDir="false" afterPath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_risk&gt;=0.75.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_risk&gt;=0.90.csv" beforeDir="false" afterPath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_risk&gt;=0.90.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_riskmean.csv" beforeDir="false" afterPath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_riskmean.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_riskmean_with_full_count.csv" beforeDir="false" afterPath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_riskmean_with_full_count.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000501-001_wo/bayesian_power.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000501-001_wo/bayesian_power&gt;=0.25.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000501-001_wo/bayesian_power&gt;=0.50.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000501-001_wo/bayesian_power&gt;=0.75.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000501-001_wo/bayesian_power&gt;=0.90.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000501-001_wo/bayesian_powermean.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000501-001_wo/bayesian_powermean_with_full_count.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000501-001_wo/bayesian_risk.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000501-001_wo/bayesian_risk&gt;=0.25.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000501-001_wo/bayesian_risk&gt;=0.50.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000501-001_wo/bayesian_risk&gt;=0.75.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000501-001_wo/bayesian_risk&gt;=0.90.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000501-001_wo/bayesian_riskmean.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_data/000501-001_wo/bayesian_riskmean_with_full_count.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/python/auditing_setup/audit_method.py" beforeDir="false" afterPath="$PROJECT_DIR$/python/auditing_setup/audit_method.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/python/calibrated_data_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/python/calibrated_data_generation.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/python/calibration_curve.py" beforeDir="false" afterPath="$PROJECT_DIR$/python/calibration_curve.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/python/misc/scratch.py" beforeDir="false" afterPath="$PROJECT_DIR$/python/misc/scratch.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/python/risk_power_parallel.py" beforeDir="false" afterPath="$PROJECT_DIR$/python/risk_power_parallel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/python/utility/utility.py" beforeDir="false" afterPath="$PROJECT_DIR$/python/utility/utility.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,12 +48,12 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/AuditAnalysis$parallel_computation_test.coverage" NAME="parallel_computation_test Coverage Results" MODIFIED="1555217792517" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python/tests" />
     <SUITE FILE_PATH="coverage/AuditAnalysis$calibration_old.coverage" NAME="calibration_old Coverage Results" MODIFIED="1562137575557" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python" />
-    <SUITE FILE_PATH="coverage/AuditAnalysis$audit_method.coverage" NAME="audit_method Coverage Results" MODIFIED="1563924457372" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python/auditing_setup" />
+    <SUITE FILE_PATH="coverage/AuditAnalysis$audit_method.coverage" NAME="audit_method Coverage Results" MODIFIED="1564354348141" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python/auditing_setup" />
     <SUITE FILE_PATH="coverage/AuditAnalysis$risk_power_normal.coverage" NAME="risk_power_normal Coverage Results" MODIFIED="1555213570773" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/jupyter" />
     <SUITE FILE_PATH="coverage/AuditAnalysis$calibration.coverage" NAME="calibration Coverage Results" MODIFIED="1562134171969" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python" />
     <SUITE FILE_PATH="coverage/AuditAnalysis$AuditAnalysis.coverage" NAME="AuditAnalysis Coverage Results" MODIFIED="1562137297027" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/AuditAnalysis$calibrated_data_generation.coverage" NAME="calibrated_data_generation Coverage Results" MODIFIED="1562155588531" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python" />
-    <SUITE FILE_PATH="coverage/AuditAnalysis$calibration_curve.coverage" NAME="calibration_curve Coverage Results" MODIFIED="1563924542866" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python" />
+    <SUITE FILE_PATH="coverage/AuditAnalysis$calibration_curve.coverage" NAME="calibration_curve Coverage Results" MODIFIED="1564386349154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python" />
+    <SUITE FILE_PATH="coverage/AuditAnalysis$calibrated_data_generation.coverage" NAME="calibrated_data_generation Coverage Results" MODIFIED="1564386687064" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python" />
     <SUITE FILE_PATH="coverage/AuditAnalysis$risk_power_parallel.coverage" NAME="risk_power_parallel Coverage Results" MODIFIED="1562162076112" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python" />
     <SUITE FILE_PATH="coverage/AuditAnalysis$risk_power.coverage" NAME="risk_power Coverage Results" MODIFIED="1555115946384" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python" />
     <SUITE FILE_PATH="coverage/AuditAnalysis$audit_sample_number_analysis.coverage" NAME="audit_sample_number_analysis Coverage Results" MODIFIED="1559594255778" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python" />
@@ -52,19 +82,13 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/python/calibration_old.py">
+        <entry file="file://$PROJECT_DIR$/python/auditing_setup/audit_method.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="521">
-              <caret line="102" column="13" selection-start-line="102" selection-start-column="13" selection-end-line="102" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/python/calibration.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" selection-start-line="2" selection-end-line="2" />
+            <state relative-caret-position="110">
+              <caret line="330" lean-forward="true" selection-start-line="330" selection-end-line="330" />
+              <folding>
+                <element signature="e#0#87#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -72,38 +96,60 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/python/calibrated_data_generation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="338">
-              <caret line="34" column="35" selection-start-line="34" selection-start-column="35" selection-end-line="34" selection-end-column="35" />
+            <state relative-caret-position="479">
+              <caret line="82" column="40" selection-start-line="82" selection-start-column="40" selection-end-line="82" selection-end-column="40" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
-                <marker date="1563927791235" expanded="true" signature="1419:1552" ph="..." />
+                <marker date="1564386684563" expanded="true" signature="1419:1552" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_power.csv">
-          <provider selected="true" editor-type-id="csv-text-editor" />
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_power&gt;=0.25.csv">
           <provider editor-type-id="csv-table-editor">
             <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
           </provider>
+          <provider selected="true" editor-type-id="csv-text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/python/risk_power_parallel.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="521">
-              <caret line="63" column="29" selection-start-line="63" selection-start-column="29" selection-end-line="63" selection-end-column="29" />
-            </state>
+        <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_power&gt;=0.90.csv">
+          <provider editor-type-id="csv-table-editor">
+            <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
           </provider>
+          <provider selected="true" editor-type-id="csv-text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_powermean_with_full_count.csv">
+          <provider editor-type-id="csv-table-editor">
+            <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+          </provider>
+          <provider selected="true" editor-type-id="csv-text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_risk.csv">
+          <provider editor-type-id="csv-table-editor">
+            <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+          </provider>
+          <provider selected="true" editor-type-id="csv-text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_risk&gt;=0.25.csv">
+          <provider editor-type-id="csv-table-editor">
+            <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+          </provider>
+          <provider selected="true" editor-type-id="csv-text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/python/calibration_curve.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" column="11" lean-forward="true" selection-start-line="23" selection-start-column="11" selection-end-line="23" selection-end-column="11" />
+            <state>
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
               </folding>
@@ -112,21 +158,47 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/python/misc/scratch.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="9" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
+        <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_power.csv">
+          <provider selected="true" editor-type-id="csv-table-editor">
+            <state showInfoPanel="true" fixedHeaders="false" rowLines="3">
+              <column index="0" width="100" />
+              <column index="1" width="100" />
+              <column index="2" width="100" />
+              <column index="3" width="100" />
+              <column index="4" width="100" />
+              <column index="5" width="100" />
+              <column index="6" width="100" />
+              <column index="7" width="100" />
+              <column index="8" width="100" />
+              <column index="9" width="100" />
+              <column index="10" width="100" />
+              <column index="11" width="100" />
+              <column index="12" width="100" />
+              <column index="13" width="100" />
+              <column index="14" width="100" />
+              <column index="15" width="100" />
+              <column index="16" width="100" />
+              <column index="17" width="100" />
+              <column index="18" width="100" />
+              <column index="19" width="100" />
+              <column index="20" width="100" />
+              <column index="21" width="100" />
+              <column index="22" width="100" />
+              <column index="23" width="100" />
+              <column index="24" width="100" />
+              <column index="25" width="100" />
+              <column index="26" width="100" />
+            </state>
+          </provider>
+          <provider editor-type-id="csv-text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" selection-start-line="2" selection-end-line="2" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/new_data/000500-001050_wo/truncated_bayesian0101_cdf.csv">
-          <provider editor-type-id="csv-text-editor">
-            <state relative-caret-position="399">
-              <caret line="501" column="352" selection-start-line="501" selection-start-column="352" selection-end-line="501" selection-end-column="352" />
-            </state>
-          </provider>
           <provider selected="true" editor-type-id="csv-table-editor">
             <state showInfoPanel="true" fixedHeaders="false" rowLines="3">
               <column index="0" width="100" />
@@ -172,21 +244,10 @@
               <column index="40" width="100" />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian_riskmean.csv">
-          <provider selected="true" editor-type-id="csv-text-editor" />
-          <provider editor-type-id="csv-table-editor">
-            <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bravo055_cdf.csv">
-          <provider selected="true" editor-type-id="csv-text-editor" />
-          <provider editor-type-id="csv-table-editor">
-            <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+          <provider editor-type-id="csv-text-editor">
+            <state relative-caret-position="226">
+              <caret line="501" column="352" selection-start-line="501" selection-start-column="352" selection-end-line="501" selection-end-column="352" />
+            </state>
           </provider>
         </entry>
       </file>
@@ -201,7 +262,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>save</find>
       <find>p0</find>
       <find>data</find>
       <find>progression</find>
@@ -231,7 +291,11 @@
       <find>break</find>
       <find>sss =</find>
       <find>print</find>
+      <find>/l</find>
     </findStrings>
+    <replaceStrings>
+      <replace />
+    </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/python</dir>
     </dirStrings>
@@ -276,7 +340,6 @@
         <option value="$PROJECT_DIR$/python/power_quantile.py" />
         <option value="/anaconda/envs/ml_env/lib/python3.7/site-packages/rpy2/rinterface/__init__.py" />
         <option value="$PROJECT_DIR$/python/stochastic_process_simulation.py" />
-        <option value="$PROJECT_DIR$/python/utility/utility.py" />
         <option value="$PROJECT_DIR$/python/calibrated_data_plots.py" />
         <option value="$PROJECT_DIR$/python/binomial_plotting.py" />
         <option value="$PROJECT_DIR$/python/utility/hashable_array.py" />
@@ -288,14 +351,16 @@
         <option value="$PROJECT_DIR$/python/auditing_setup/audit_sample_number_analysis.py" />
         <option value="$PROJECT_DIR$/python/auditing_setup/audit_power.py" />
         <option value="$PROJECT_DIR$/python/risk_power_parallel.py" />
+        <option value="$PROJECT_DIR$/python/auditing_setup/stochastic_process_simulation.py" />
+        <option value="$PROJECT_DIR$/python/utility/utility.py" />
+        <option value="$PROJECT_DIR$/python/misc/scratch.py" />
         <option value="$PROJECT_DIR$/python/auditing_setup/audit_method.py" />
         <option value="$PROJECT_DIR$/python/calibration_curve.py" />
-        <option value="$PROJECT_DIR$/python/misc/scratch.py" />
         <option value="$PROJECT_DIR$/python/calibrated_data_generation.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
+  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
     <option name="width" value="1920" />
     <option name="height" value="1080" />
   </component>
@@ -304,7 +369,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -332,19 +396,142 @@
             <path>
               <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
               <item name="AuditAnalysis" type="462c0819:PsiDirectoryNode" />
-              <item name="new_data" type="462c0819:PsiDirectoryNode" />
-              <item name="000501-001_wo" type="462c0819:PsiDirectoryNode" />
+              <item name="python" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
               <item name="AuditAnalysis" type="462c0819:PsiDirectoryNode" />
               <item name="python" type="462c0819:PsiDirectoryNode" />
+              <item name="auditing_setup" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
               <item name="AuditAnalysis" type="462c0819:PsiDirectoryNode" />
               <item name="python" type="462c0819:PsiDirectoryNode" />
               <item name="misc" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AuditAnalysis" type="462c0819:PsiDirectoryNode" />
+              <item name="python" type="462c0819:PsiDirectoryNode" />
+              <item name="utility" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
+            <path>
+              <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7 (ml_env) &gt;" type="70bed36:NamedLibraryElementNode" />
+            </path>
+            <path>
+              <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7 (ml_env) &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="python3.7" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7 (ml_env) &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="python3.7" type="462c0819:PsiDirectoryNode" />
+              <item name="site-packages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7 (ml_env) &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="python3.7" type="462c0819:PsiDirectoryNode" />
+              <item name="site-packages" type="462c0819:PsiDirectoryNode" />
+              <item name="scipy" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7 (ml_env) &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="python3.7" type="462c0819:PsiDirectoryNode" />
+              <item name="site-packages" type="462c0819:PsiDirectoryNode" />
+              <item name="scipy" type="462c0819:PsiDirectoryNode" />
+              <item name="special" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7 (ml_env) &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="python3.7" type="462c0819:PsiDirectoryNode" />
+              <item name="site-packages" type="462c0819:PsiDirectoryNode" />
+              <item name="scipy" type="462c0819:PsiDirectoryNode" />
+              <item name="special" type="462c0819:PsiDirectoryNode" />
+              <item name="tests" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7 (ml_env) &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="python3.7" type="462c0819:PsiDirectoryNode" />
+              <item name="site-packages" type="462c0819:PsiDirectoryNode" />
+              <item name="scipy" type="462c0819:PsiDirectoryNode" />
+              <item name="stats" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7 (ml_env) &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="site-packages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7 (ml_env) &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="site-packages" type="462c0819:PsiDirectoryNode" />
+              <item name="scipy" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7 (ml_env) &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="site-packages" type="462c0819:PsiDirectoryNode" />
+              <item name="scipy" type="462c0819:PsiDirectoryNode" />
+              <item name="special" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7 (ml_env) &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="site-packages" type="462c0819:PsiDirectoryNode" />
+              <item name="scipy" type="462c0819:PsiDirectoryNode" />
+              <item name="special" type="462c0819:PsiDirectoryNode" />
+              <item name="tests" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7 (ml_env) &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="site-packages" type="462c0819:PsiDirectoryNode" />
+              <item name="scipy" type="462c0819:PsiDirectoryNode" />
+              <item name="stats" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7 (ml_env) &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="-419063918" type="70582d5e:PySkeletonsNode" />
+            </path>
+            <path>
+              <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7 (ml_env) &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="-419063918" type="70582d5e:PySkeletonsNode" />
+              <item name="scipy" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7 (ml_env) &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="-419063918" type="70582d5e:PySkeletonsNode" />
+              <item name="scipy" type="462c0819:PsiDirectoryNode" />
+              <item name="special" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
@@ -359,6 +546,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -369,7 +557,7 @@
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="PyConsoleConfigurable.Python Console" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -411,7 +599,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.calibrated_data_generation (1)">
+  <component name="RunManager" selected="Python.calibrated_data_generation">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="AuditAnalysis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -462,6 +650,7 @@
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
         <env name="R_HOME" value="/anaconda/envs/ml_env/lib/R" />
       </envs>
       <option name="SDK_HOME" value="" />
@@ -570,7 +759,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="scratch" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="scratch" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true">
       <module name="AuditAnalysis" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -603,11 +792,11 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.scratch" />
+        <item itemvalue="Python.calibrated_data_generation" />
         <item itemvalue="Python.calibration_curve" />
+        <item itemvalue="Python.scratch" />
         <item itemvalue="Python.audit_method" />
         <item itemvalue="Python.risk_power_parallel" />
-        <item itemvalue="Python.calibrated_data_generation" />
       </list>
     </recent_temporary>
   </component>
@@ -645,12 +834,13 @@
       <workItem from="1561511955605" duration="628000" />
       <workItem from="1561631176635" duration="4832000" />
       <workItem from="1562137340915" duration="24216000" />
-      <workItem from="1563924445414" duration="2736000" />
+      <workItem from="1563924445414" duration="3701000" />
+      <workItem from="1564141132637" duration="16092000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="223012000" />
+    <option name="totallyTimeSpent" value="240069000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -662,14 +852,14 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
+    <frame x="0" y="0" width="1680" height="1050" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.7317487" visible="true" weight="0.18051118" />
-      <window_info id="Structure" order="1" sideWeight="0.26825127" side_tool="true" visible="true" weight="0.18051118" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.9012016" visible="true" weight="0.25030527" />
+      <window_info id="Structure" order="1" sideWeight="0.098798394" side_tool="true" visible="true" weight="0.25030527" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49574015" weight="0.3283433" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.66719913" weight="0.3966034" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49574015" weight="0.3281893" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.66719913" visible="true" weight="0.22942387" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.76624066" weight="0.3972056" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -679,13 +869,13 @@
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.33333334" side_tool="true" weight="0.37433156" />
       <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49627262" weight="0.32934132" />
-      <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.67625135" visible="true" weight="0.41217566" />
+      <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.67625135" weight="0.41666666" />
       <window_info anchor="bottom" id="Concurrent Activities Diagram" order="13" sideWeight="0.49893504" weight="0.32867134" />
       <window_info anchor="bottom" x="862" y="681" width="564" height="159" id="Documentation" order="14" sideWeight="0.32374868" side_tool="true" weight="0.5508982" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="SciView" order="3" sideWeight="0.72649574" visible="true" weight="0.31842387" />
+      <window_info anchor="right" id="SciView" order="3" sideWeight="0.72649574" visible="true" weight="0.18376069" />
       <window_info anchor="right" id="Database" order="4" sideWeight="0.49751243" weight="0.32967034" />
       <window_info anchor="right" id="Coverage" order="5" side_tool="true" />
       <window_info anchor="right" id="make" order="6" />
@@ -705,117 +895,11 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/data/000500-001_wo/bayesian0101_dsample.csv">
-      <provider editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
-      </provider>
-      <provider selected="true" editor-type-id="csv-text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data_calibrated/000500-001_wo/bravo_power_mean_size">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/figures/calibrated_power_mean_size_000500_-001.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian_power&gt;=0.75" />
-    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian_power&gt;=0.50" />
-    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian_risk&gt;=0.25" />
-    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian_risk&gt;=0.75" />
-    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian_risk&gt;=0.90" />
-    <entry file="file://$PROJECT_DIR$/data_calibrated/000500-001_wo/bayesian_power">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data_calibrated/000500-001_wo/bravo_power">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data_calibrated/000500-001_wo/bravo_power_090quantile_size">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data_calibrated/000500-001_wo/bayesian_power_median_size">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data_calibrated/000500-001_wo/bayesian_power_090quantile_size">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data_calibrated/000500-001_wo/bayesian_power_mean_size">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="769" selection-start-line="1" selection-start-column="769" selection-end-line="1" selection-end-column="769" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian_risk" />
-    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian_power&gt;=0.90" />
-    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian_riskmean_with_full_count" />
-    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian_riskmean" />
-    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian_powermean_with_full_count" />
     <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian_powermean" />
-    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian_risk&gt;=0.90.csv">
-      <provider editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
-      </provider>
-      <provider selected="true" editor-type-id="csv-text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python/auditing_setup/audit_sample_number_analysis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="95" column="34" selection-start-line="95" selection-start-column="34" selection-end-line="95" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_data/000501-001_wo/bayesian_powermean.csv">
-      <provider editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
-      </provider>
-      <provider selected="true" editor-type-id="csv-text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="93" selection-start-line="1" selection-start-column="93" selection-end-line="1" selection-end-column="93" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python/auditing_setup/stochastic_process_simulation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97">
-          <caret line="103" column="69" selection-start-line="103" selection-start-column="69" selection-end-line="103" selection-end-column="69" />
-          <folding>
-            <element signature="e#0#166#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_data/000501-001_wo/bayesian_risk&gt;=0.90.csv">
-      <provider editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
-      </provider>
-      <provider selected="true" editor-type-id="csv-text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python/auditing_setup/audit_power.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="59" column="24" selection-start-line="59" selection-start-column="24" selection-end-line="59" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian_power.csv">
-      <provider editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
-      </provider>
-      <provider selected="true" editor-type-id="csv-text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/new_data/000501-001_wo/bayesian_powermean.csv" />
+    <entry file="file://$PROJECT_DIR$/new_data/000501-001_wo/bayesian_risk&gt;=0.90.csv" />
     <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian_power" />
     <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian_power&gt;=0.25" />
-    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian0101_cdf.csv">
-      <provider editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
-      </provider>
-      <provider selected="true" editor-type-id="csv-text-editor">
-        <state relative-caret-position="-1245" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/000500-001_wo/clip_dsample.csv">
       <provider editor-type-id="csv-table-editor">
         <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
@@ -870,16 +954,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/python/utility/utility.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2880">
-          <caret line="214" column="44" selection-start-line="214" selection-start-column="44" selection-end-line="214" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/000500-001_wo/bravo050_type1.csv">
       <provider editor-type-id="csv-table-editor">
         <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
@@ -902,29 +976,209 @@
       </provider>
       <provider selected="true" editor-type-id="csv-text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/python/auditing_setup/audit_method.py">
+    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bravo055_cdf.csv">
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+      <provider selected="true" editor-type-id="csv-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_risk&gt;=0.75.csv">
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+      <provider selected="true" editor-type-id="csv-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian_power.csv">
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+      <provider selected="true" editor-type-id="csv-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian0101_cdf.csv">
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+      <provider selected="true" editor-type-id="csv-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_risk&gt;=0.50.csv">
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+      <provider selected="true" editor-type-id="csv-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian_risk&gt;=0.90.csv">
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+      <provider selected="true" editor-type-id="csv-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian_riskmean.csv">
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+      <provider selected="true" editor-type-id="csv-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian_risk&gt;=0.75.csv">
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+      <provider selected="true" editor-type-id="csv-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian_power&gt;=0.50.csv">
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+      <provider selected="true" editor-type-id="csv-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian_powermean_with_full_count.csv">
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+      <provider selected="true" editor-type-id="csv-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_powermean.csv">
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+      <provider selected="true" editor-type-id="csv-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian_power&gt;=0.25.csv">
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+      <provider selected="true" editor-type-id="csv-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian_risk&gt;=0.25.csv">
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+      <provider selected="true" editor-type-id="csv-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian_power&gt;=0.75.csv">
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+      <provider selected="true" editor-type-id="csv-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python/risk_power_parallel.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="330" selection-start-line="330" selection-end-line="330" />
+        <state relative-caret-position="900">
+          <caret line="63" column="29" selection-start-line="63" selection-start-column="29" selection-end-line="63" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python/calibration.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian_power&gt;=0.90.csv">
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+      <provider selected="true" editor-type-id="csv-text-editor" />
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="26" column="12" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python/calibration_old.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="102" column="13" selection-start-line="102" selection-start-column="13" selection-end-line="102" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python/auditing_setup/audit_sample_number_analysis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python/auditing_setup/stochastic_process_simulation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="386">
+          <caret line="116" column="4" selection-start-line="116" selection-start-column="4" selection-end-line="116" selection-end-column="4" />
           <folding>
-            <element signature="e#0#69#0" expanded="true" />
+            <element signature="e#0#166#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///anaconda/envs/ml_env/lib/python3.7/site-packages/scipy/special/tests/test_cython_special.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="130" column="13" selection-start-line="130" selection-start-column="13" selection-end-line="130" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Library/Caches/PyCharm2018.3/python_stubs/-419063918/scipy/special/_ufuncs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="2737" column="7" lean-forward="true" selection-start-line="2737" selection-start-column="7" selection-end-line="2737" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///anaconda/envs/ml_env/lib/python3.7/site-packages/scipy/stats/_discrete_distns.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="89" column="13" lean-forward="true" selection-start-line="89" selection-start-column="13" selection-end-line="89" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python/auditing_setup/audit_power.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="31" column="43" lean-forward="true" selection-start-line="31" selection-start-column="43" selection-end-line="31" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python/utility/utility.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="255" selection-start-line="255" selection-end-line="255" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/python/misc/scratch.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="9" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
+        <state relative-caret-position="75">
+          <caret line="5" column="18" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python/auditing_setup/audit_method.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="330" lean-forward="true" selection-start-line="330" selection-end-line="330" />
+          <folding>
+            <element signature="e#0#87#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python/calibration_curve.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/new_data/000500-001050_wo/truncated_bayesian0101_cdf.csv">
-      <provider editor-type-id="csv-text-editor">
-        <state relative-caret-position="399">
-          <caret line="501" column="352" selection-start-line="501" selection-start-column="352" selection-end-line="501" selection-end-column="352" />
-        </state>
-      </provider>
       <provider selected="true" editor-type-id="csv-table-editor">
         <state showInfoPanel="true" fixedHeaders="false" rowLines="3">
           <column index="0" width="100" />
@@ -970,66 +1224,90 @@
           <column index="40" width="100" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bayesian_riskmean.csv">
-      <provider selected="true" editor-type-id="csv-text-editor" />
-      <provider editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/bravo055_cdf.csv">
-      <provider editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
-      </provider>
-      <provider selected="true" editor-type-id="csv-text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python/risk_power_parallel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="521">
-          <caret line="63" column="29" selection-start-line="63" selection-start-column="29" selection-end-line="63" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python/calibration_old.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="521">
-          <caret line="102" column="13" selection-start-line="102" selection-start-column="13" selection-end-line="102" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python/calibration_curve.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="11" lean-forward="true" selection-start-line="23" selection-start-column="11" selection-end-line="23" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python/calibration.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
+      <provider editor-type-id="csv-text-editor">
+        <state relative-caret-position="226">
+          <caret line="501" column="352" selection-start-line="501" selection-start-column="352" selection-end-line="501" selection-end-column="352" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/python/calibrated_data_generation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="34" column="35" selection-start-line="34" selection-start-column="35" selection-end-line="34" selection-end-column="35" />
+        <state relative-caret-position="479">
+          <caret line="82" column="40" selection-start-line="82" selection-start-column="40" selection-end-line="82" selection-end-column="40" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
-            <marker date="1563927791235" expanded="true" signature="1419:1552" ph="..." />
+            <marker date="1564386684563" expanded="true" signature="1419:1552" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_power.csv">
-      <provider selected="true" editor-type-id="csv-text-editor" />
+      <provider selected="true" editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3">
+          <column index="0" width="100" />
+          <column index="1" width="100" />
+          <column index="2" width="100" />
+          <column index="3" width="100" />
+          <column index="4" width="100" />
+          <column index="5" width="100" />
+          <column index="6" width="100" />
+          <column index="7" width="100" />
+          <column index="8" width="100" />
+          <column index="9" width="100" />
+          <column index="10" width="100" />
+          <column index="11" width="100" />
+          <column index="12" width="100" />
+          <column index="13" width="100" />
+          <column index="14" width="100" />
+          <column index="15" width="100" />
+          <column index="16" width="100" />
+          <column index="17" width="100" />
+          <column index="18" width="100" />
+          <column index="19" width="100" />
+          <column index="20" width="100" />
+          <column index="21" width="100" />
+          <column index="22" width="100" />
+          <column index="23" width="100" />
+          <column index="24" width="100" />
+          <column index="25" width="100" />
+          <column index="26" width="100" />
+        </state>
+      </provider>
+      <provider editor-type-id="csv-text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_power&gt;=0.25.csv">
       <provider editor-type-id="csv-table-editor">
         <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
       </provider>
+      <provider selected="true" editor-type-id="csv-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_power&gt;=0.90.csv">
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+      <provider selected="true" editor-type-id="csv-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_powermean_with_full_count.csv">
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+      <provider selected="true" editor-type-id="csv-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_risk.csv">
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+      <provider selected="true" editor-type-id="csv-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_risk&gt;=0.25.csv">
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+      <provider selected="true" editor-type-id="csv-text-editor" />
     </entry>
   </component>
   <component name="masterDetails">

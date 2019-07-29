@@ -1,16 +1,10 @@
 from os import path
 
-import mpmath as mm
 from math import ceil
 import numpy as np
 from matplotlib import pyplot as plt
 
-from scipy.stats import binom, hypergeom
-from scipy.stats import beta as rvbeta
-from scipy.special import beta
-from scipy.special import betaln
-from scipy.special import comb
-from scipy.special import gammaln
+# from scipy.stats import binom, hypergeom
 
 from collections import defaultdict as dd
 from collections import deque
@@ -21,6 +15,7 @@ import sys
 import os
 # rpy2 use r in python
 from rpy2.robjects.packages import importr
+from rpy2.robjects import r
 
 # import R's "base" package
 base = importr('base')
@@ -161,10 +156,6 @@ class SimpleProgressionBar:
             print()
 
 
-def combln(n, k):
-    return gammaln(n + 1) - gammaln(n - k + 1) - gammaln(k + 1)
-
-
 def addln(aln, bln):
     """
     Add two log numbers together
@@ -177,7 +168,7 @@ def addln(aln, bln):
 
 
 @Cached
-def beta_binomial_cdf(k, a, b, n, definition="r", method="normal"):
+def beta_binomial_cdf(k, a, b, n, method="normal"):
     """
     Computes the posterior cdf for a beta-binomial distribution
     
@@ -197,36 +188,12 @@ def beta_binomial_cdf(k, a, b, n, definition="r", method="normal"):
     if k < 0:
         return 0
     
-    if definition == "wiki":
-        print("Wiki method is still not working correctly", file=sys.stderr)
-        c_nk = comb(n, k)
-        bb = beta(k+a, n-k+b) / beta(a, b)
-        geom = mm.hyp3f2(1, -k, n-k+b, n-k-1, 1-k-a, 1)
-        return c_nk * bb * geom
-    elif definition == "wolfram":
-        if method == "normal":
-            bb = beta(b+n-k-1, a+k+1) / beta(a, b) / beta(n-k, k+2)
-            geom = mm.hyp3f2(1, a+k+1, -n+k+1, k+2, -b-n+k+2, 1)
-            gam = 1 / (n+1) / (n+2)
-            prob = 1 - n * bb * geom * gam
-        elif method == "log":
-            bbln = betaln(b+n-k-1, a+k+1) - betaln(a, b) - betaln(n-k, k+2)
-            geomln = np.log(mm.hyp3f2(1, a+k+1, -n+k+1, k+2, -b-n+k+2, 1))
-            gamln = gammaln(n) - gammaln(n+2)
-            prob = addln(np.log(1), -(np.log(n) + bbln + geomln + gamln))
-        else:
-            print("Invalid method", file=sys.stderr)
-            return
-    elif definition == "r":
-        if method == "normal":
-            prob = list(vgam.pbetabinom_ab(k, n, a, b))[0]
-        elif method == "log":
-            prob = list(vgam.pbetabinom_ab(k, n, a, b, log=True))[0]
-        else:
-            print("Invalid method", file=sys.stderr)
-            return
+    if method == "normal":
+        prob = list(vgam.pbetabinom_ab(k, n, a, b))[0]
+    elif method == "log":
+        prob = list(vgam.pbetabinom_ab(k, n, a, b, log=True))[0]
     else:
-        print("Invalid definition", file=sys.stderr)
+        print("Invalid method", file=sys.stderr)
         return
     return prob
 
@@ -237,97 +204,111 @@ def beta_binomial_pmf(k, a, b, n):
 
 
 @Cached
-def hypergeom_pmf(x, N, n1, n):
-    return hypergeom.pmf(N, n1, n).pmf(x)
+def beta_pdf(x, a, b, log):
+    return r.dbeta(x, a, b, log=log)
+
+@Cached
+def betafn(a, b, log=False):
+    """
+    Ported r beta function that integrates lbeta and beta together
+    :param a: alpha
+    :param b: beta
+    :param log: log output
+    """
+    if log:
+        return list(r.lbeta(a, b))[0]
+    return list(r.beta(a, b))[0]
 
 
 @Cached
-def beta_pdf(x, a, b):
-    return rvbeta.pdf(x, a, b)
+def beta_cdf(p, a, b, log=False, lower_tail=True):
+    return list(r.pbeta(p, a, b, log_p=log, lower_tail=lower_tail))[0]
 
 
-def _single_posterior_pmf(sa, s, n, a=1, b=1, thresh=0.95,
-                          p_h0=1/2, verbose=False, full_return=False,
-                          *args, **kwargs):
-    """
-    This function calculate the one part of posterior probability of
-    rejecting the null hypothesis when null hypothesis is true with 
-    given sampled S_A from a set of samples of size S of an election 
-    of size N. The prior is given by alpha and beta where alpha denotes 
-    the number of additional votes to the winner and the beta denotes 
-    the additional votes to loser.
-    
-    Args:
-        sa (int): number of votes out of S the winner A got
-        s (int): total number of votes sampled
-        n (int): size of election
-        a (float/int): prior denoting additional votes to winner A
-        b (float/int): prior denoting additional votes to loser B
-        thresh (float,[0, 1]): the threshold rejecting null hypothesis
-        p_h0 (float, default 0.5): the null hypothesis
-    Returns:
-        p(sa) if NULL is rejected else 0
-    """
-    # Try compute with/without celling
-    # k = n/2 - sa
-    k = ceil(n/2 - sa)
-    p_reject = 1 - beta_binomial_cdf(k, sa+a, s-sa+b, n-s, *args, **kwargs)
-    if verbose:
-        pretty_print(sa=(sa, 6), s=(s, 6), n=(n, 6), alpha=(a, 6),
-                     beta=(b, 6), rejection_proba=(float(p_reject), 20,
-                                                   "20.4f"),
-                     binomial_proba=(binom.pmf(sa, s, p_h0), 20, "20.4f"))
-        verbose -= 1
-    if full_return:
-        return binom.pmf(sa, s, p_h0), p_reject
-    return binom.pmf(sa, s, p_h0) if p_reject >= thresh else 0
 
 
-@Cached
-def posterior_pmf(s, n, a=1, b=1, thresh=0.95, p_h0=1/2, 
-                  verbose=False, full_return=False,
-                  *args, **kwargs):
-    """
-    Args:
-        s (int): number of sampled votes
-        n (int): total votes in the election
-        a (float): prior alpha for the winner
-        b (float): prior beta for the winner
-        thresh (0 < ` < 1): threshold over which the null is rejected
-        p_h0 (0 < ` < 1): the null hypothesis to test with
-        verbose: verbocity of the output, level 0 to 2
-                 (2 must be used with full_return)
-        full_return: if the return should be full list of
-                     individual probabilities
-    """
-    p = 0
-    ps = []
-    if full_return:
-        for sa in range(0, s+1):
-            p_binomial, p_reject = \
-                _single_posterior_pmf(sa, s, n, a, b, thresh, p_h0,
-                                      verbose - 1 if verbose else verbose,
-                                      full_return=True, *args, **kwargs)
-            p += p_binomial * (p_reject >= thresh)
-            ps.append([p_binomial, p_reject])
-    else:
-        sa = 0
-        # Find the first value it starts to give positive number
-        k = ceil(n/2 - sa)
-        while 1 - beta_binomial_cdf(k, sa+a, s-sa+b, n-s, 
-                                    *args, **kwargs) < thresh and sa <= s:
-            sa += 1
-            k = ceil(n/2 - sa)
-        # The value of sa now is the threshold
-        if sa <= s:
-            p = 1 - binom.cdf(sa-1, s, p_h0)
-        
-    if verbose:
-        pretty_print(s=(s, 6), n=(n, 6), alpha=(a, 6), beta=(b, 6),
-                     overall=(p, 20, "20.4f"), sep=2)
-    if full_return:
-        return p, ps
-    return p
+# def _single_posterior_pmf(sa, s, n, a=1, b=1, thresh=0.95,
+#                           p_h0=1/2, verbose=False, full_return=False,
+#                           *args, **kwargs):
+#     """
+#     This function calculate the one part of posterior probability of
+#     rejecting the null hypothesis when null hypothesis is true with
+#     given sampled S_A from a set of samples of size S of an election
+#     of size N. The prior is given by alpha and beta where alpha denotes
+#     the number of additional votes to the winner and the beta denotes
+#     the additional votes to loser.
+#
+#     Args:
+#         sa (int): number of votes out of S the winner A got
+#         s (int): total number of votes sampled
+#         n (int): size of election
+#         a (float/int): prior denoting additional votes to winner A
+#         b (float/int): prior denoting additional votes to loser B
+#         thresh (float,[0, 1]): the threshold rejecting null hypothesis
+#         p_h0 (float, default 0.5): the null hypothesis
+#     Returns:
+#         p(sa) if NULL is rejected else 0
+#     """
+#     # Try compute with/without celling
+#     # k = n/2 - sa
+#     k = ceil(n/2 - sa)
+#     p_reject = 1 - beta_binomial_cdf(k, sa+a, s-sa+b, n-s, *args, **kwargs)
+#     if verbose:
+#         pretty_print(sa=(sa, 6), s=(s, 6), n=(n, 6), alpha=(a, 6),
+#                      beta=(b, 6), rejection_proba=(float(p_reject), 20,
+#                                                    "20.4f"),
+#                      binomial_proba=(binom.pmf(sa, s, p_h0), 20, "20.4f"))
+#         verbose -= 1
+#     if full_return:
+#         return binom.pmf(sa, s, p_h0), p_reject
+#     return binom.pmf(sa, s, p_h0) if p_reject >= thresh else 0
+
+
+# @Cached
+# def posterior_pmf(s, n, a=1, b=1, thresh=0.95, p_h0=1/2,
+#                   verbose=False, full_return=False,
+#                   *args, **kwargs):
+#     """
+#     Args:
+#         s (int): number of sampled votes
+#         n (int): total votes in the election
+#         a (float): prior alpha for the winner
+#         b (float): prior beta for the winner
+#         thresh (0 < ` < 1): threshold over which the null is rejected
+#         p_h0 (0 < ` < 1): the null hypothesis to test with
+#         verbose: verbocity of the output, level 0 to 2
+#                  (2 must be used with full_return)
+#         full_return: if the return should be full list of
+#                      individual probabilities
+#     """
+#     p = 0
+#     ps = []
+#     if full_return:
+#         for sa in range(0, s+1):
+#             p_binomial, p_reject = \
+#                 _single_posterior_pmf(sa, s, n, a, b, thresh, p_h0,
+#                                       verbose - 1 if verbose else verbose,
+#                                       full_return=True, *args, **kwargs)
+#             p += p_binomial * (p_reject >= thresh)
+#             ps.append([p_binomial, p_reject])
+#     else:
+#         sa = 0
+#         # Find the first value it starts to give positive number
+#         k = ceil(n/2 - sa)
+#         while 1 - beta_binomial_cdf(k, sa+a, s-sa+b, n-s,
+#                                     *args, **kwargs) < thresh and sa <= s:
+#             sa += 1
+#             k = ceil(n/2 - sa)
+#         # The value of sa now is the threshold
+#         if sa <= s:
+#             p = 1 - binom.cdf(sa-1, s, p_h0)
+#
+#     if verbose:
+#         pretty_print(s=(s, 6), n=(n, 6), alpha=(a, 6), beta=(b, 6),
+#                      overall=(p, 20, "20.4f"), sep=2)
+#     if full_return:
+#         return p, ps
+#     return p
 
 
 def pretty_print(sep=1, **kwargs):
@@ -373,13 +354,17 @@ def pretty_print(sep=1, **kwargs):
 
 
 @Cached
-def hyper_geom_pmf(k, M, n, N):
-    return hypergeom.pmf(k, M, n, N)
+def hyper_geom_pmf(k, M, n, N, log=False):
+    """
+    From r api to scipy api
+    log to indicate whether to use log output
+    """
+    return list(r.dhyper(k, n, M-n, N, log=log))[0]
 
 
 @Cached
-def binom_pmf(k, n, p):
-    return binom.pmf(k, n, p)
+def binom_pmf(k, n, p, log=False):
+    return list(r.dbinom(k, n, p, log=log))[0]
 
 
 def null_bar(x):
