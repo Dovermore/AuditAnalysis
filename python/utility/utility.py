@@ -354,7 +354,7 @@ def pretty_print(sep=1, **kwargs):
 
 
 @Cached
-def hyper_geom_pmf(k, M, n, N, log=False):
+def hypergeom_pmf(k, M, n, N, log=False):
     """
     From r api to scipy api
     log to indicate whether to use log output
@@ -382,3 +382,14 @@ def save_fig(fname, fig: plt.Figure = None, fpath=path.join("..", "figures")):
         fig.savefig(to)
         return
     plt.savefig(to)
+
+
+def string_to_num(s):
+    try:
+        return int(s)
+    except ValueError:
+        try:
+            return float(s)
+        except ValueError:
+            return s
+

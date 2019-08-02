@@ -1,6 +1,6 @@
-from auditing_setup.audit_power import *
-from auditing_setup.audit_method import *
-from auditing_setup.audit_sample_number_analysis import *
+from auditing_setup.raw_distributions import *
+from auditing_setup.audit_methods import *
+from auditing_setup.expected_statistics import *
 
-audit_s = AuditSimulation(TruncatedBayesian, 500, 500)
-audit_s.power(0.7)
+audit_s = AuditMethodDistributionComputer(TruncatedBayesian, 500, 500)
+# audit_s.power(0.7)

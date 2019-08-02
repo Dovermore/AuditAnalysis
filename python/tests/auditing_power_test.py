@@ -3,8 +3,8 @@ from math import ceil
 import pandas as pd
 from matplotlib import pyplot as plt
 
-from auditing_setup.audit_method import BRAVO, Bayesian, Clip
-from auditing_setup.audit_power import AuditSimulation
+from auditing_setup.audit_methods import BRAVO, Bayesian, Clip
+from auditing_setup.raw_distributions import AuditMethodDistributionComputer
 from utility.utility import save_fig
 
 
@@ -18,7 +18,7 @@ def bravo_check(n=100000, m=5000):
     n_row = ceil(n_plot/n_col)
 
     figure = plt.figure(figsize=[20, 20])
-    bravo_simulation = AuditSimulation(BRAVO, n, m)
+    bravo_simulation = AuditMethodDistributionComputer(BRAVO, n, m)
     for i, true_p in enumerate(true_ps):
         print(i, true_p)
         plt.subplot(n_row, n_col, i+1)
@@ -43,7 +43,7 @@ def bayesian_check(n=10000):
                0.03, 0.035, 0.04, 0.045, 0.05]
     true_ps = [0.5+i/2 for i in margins]
 
-    bayesian_simulation = AuditSimulation(Bayesian, n, m=500)
+    bayesian_simulation = AuditMethodDistributionComputer(Bayesian, n, m=500)
     mean_numbers = {}
     for true_p in true_ps[:1]:
         print(true_p)
@@ -61,7 +61,7 @@ def clip_check():
     n = 50000
     true_p = 0.6
     alpha = 0.1
-    clip_simulation = AuditSimulation(Clip, n, m=1000)
+    clip_simulation = AuditMethodDistributionComputer(Clip, n, m=1000)
 
     power, dist = clip_simulation.power(true_p, True, dsample=True,
                                         n=n, alpha=alpha, conservative=False)

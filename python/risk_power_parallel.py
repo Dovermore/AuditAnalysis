@@ -1,5 +1,5 @@
-from auditing_setup.audit_power import *
-from auditing_setup.audit_method import *
+from auditing_setup.raw_distributions import *
+from auditing_setup.audit_methods import *
 from multiprocessing import Process
 import numpy as np
 
@@ -25,8 +25,8 @@ def bayesian_computation(n=n, m=m):
                          "partisan_l2": {"a": 1, "b": 4}}
 
     def single_bayesian_computation(a, b):
-        bayesian_audit = AuditSimulation(Bayesian, n, m,
-                                         replacement=replacement)
+        bayesian_audit = AuditMethodDistributionComputer(Bayesian, n, m,
+                                                         replacement=replacement)
         bayesian_table, bayesian_dsample = \
             bayesian_audit.tabular_power(true_ps, bayesian_params,
                                          dsample=True, a=a, b=b)
@@ -49,7 +49,7 @@ def clip_computation(n=n, m=m):
     # Clip auditing
     clip_params = {"alpha": list(np.linspace(min_alpha,
                                              max_alpha, n_param))}
-    clip_audit = AuditSimulation(Clip, n, m, replacement=replacement)
+    clip_audit = AuditMethodDistributionComputer(Clip, n, m, replacement=replacement)
     clip_table, clip_dsample = \
         clip_audit.tabular_power(true_ps, clip_params, dsample=True,
                                  conservative=True, n=n)
@@ -67,7 +67,7 @@ def bravo_computation(n=n, m=m):
                                               max_alpha, n_param))}
 
     def single_bravo_computation(reported):
-        bravo = AuditSimulation(BRAVO, n, m, replacement=replacement)
+        bravo = AuditMethodDistributionComputer(BRAVO, n, m, replacement=replacement)
         bravo_dsample = []
         bravo_power_table = pd.DataFrame()
         bravo_type1_table = pd.DataFrame()

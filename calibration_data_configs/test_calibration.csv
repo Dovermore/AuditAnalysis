@@ -1,0 +1,11 @@
+100,100,0.05,0.5,,,calibrated_data
+Clip,alpha,0.001,0.5,n_total,100
+Bayesian,thresh,0.90,0.9999,a,1,b,1
+MaxSPRT,alpha,0.001,0.5
+TruncatedBayesian,thresh,0.001,0.5,a,1,b,1
+BRAVO,alpha,0.001,0.5,p,0.7
+BRAVO,alpha,0.001,0.5,p,0.55
+HyperGeomBRAVO,alpha,0.001,0.5,p,0.7
+HyperGeomBRAVO,alpha,0.001,0.5,p,0.55
+0.52, 0.55, 0.57, 0.59, 0.62, 0.7
+True
