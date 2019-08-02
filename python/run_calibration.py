@@ -15,22 +15,30 @@ def run_calibration():
     with open(file_path) as config_file:
         config_reader = csv.reader(config_file)
         global_setting = next(config_reader)
-        global_parameters = ["n", "m", "risk_lim", "p_0", "tol", "max_iter", "fpath"]
+        global_parameters = ["n", "m", "risk_lim", "p_0", "step", "replacement", "tol", "max_iter", "fpath"]
 
         global_kwargs = dict(zip(global_parameters, global_setting))
+
         global_kwargs["n"] = int(global_kwargs["n"])
         global_kwargs["m"] = int(global_kwargs["m"])
+        global_kwargs["fpath"] = path.join(global_kwargs["fpath"], f"election_n={global_kwargs['n']:06d}_m="
+                                           f"{global_kwargs['m']:05d}_replacement={global_kwargs['replacement']}_"
+                                           f"step={global_kwargs['step']}")
+        if not global_kwargs["replacement"]:
+            global_kwargs["replacement"] = "False"
+
+        if not global_kwargs["step"]:
+            global_kwargs["step"] = 1
+
         null_params = set()
+
         for param in global_kwargs:
             if param not in ("n", "m", "fpath") and global_kwargs[param]:
                 global_kwargs[param] = eval(global_kwargs[param])
             elif not global_kwargs[param]:
                 null_params.add(param)
-        global_kwargs["fpath"] = path.join(global_kwargs["fpath"],
-                                           f"election_n={global_kwargs['n']:06d}_m={global_kwargs['m']:05d}")
         for param in null_params:
             del global_kwargs[param]
-
         print(global_kwargs)
         audit_method_calibrator = AuditMethodCalibrator(**global_kwargs)
 

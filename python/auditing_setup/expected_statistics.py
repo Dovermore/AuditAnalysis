@@ -27,36 +27,26 @@ import numpy as np
 
 
 class ExpectedStatisticsComputer:
-    def __init__(self, audit_class, n, m, replacement=False):
+    def __init__(self, audit_class, n, m, step=1, replacement=False):
         self.n = n
         if m == -1:
             m = n
         self.m = m
         self.audit_class = audit_class
+        self.step = step
         self.replacement = replacement
 
     def compute_statistics(self, true_p, *args, **kwargs):
         audit_simulation = AuditMethodDistributionComputer(self.audit_class, self.n,
-                                                           self.m, self.replacement)
+                                                           self.m, step=self.step, replacement=self.replacement)
+
+        # Computer all statistics related to alternative hypothesis
         power, dsample_power = audit_simulation.power(true_p, dsample=True, *args, **kwargs)
-        m = max(dsample_power.keys())
-        statistics_power = self.extract_statistics(dsample_power, self.n, m)
-
-        audit_simulation = AuditMethodDistributionComputer(self.audit_class, self.n,
-                                                           m, self.replacement)
-
-        risk, dsample_risk = audit_simulation.power(0.5, dsample=True, *args, **kwargs)
-        statistics_risk = self.extract_statistics(dsample_risk, self.n, m)
-
-        # TODO change name for power to alt and add separation sign
+        statistics_power = self.extract_statistics(dsample_power, self.n, self.m, power)
         summary_statistics = dict()
         summary_statistics["power"] = power
-        summary_statistics.update({f"power{key}": statistics_power[key]
-                                   for key in statistics_power})
-        summary_statistics["risk"] = risk
-        summary_statistics.update({f"risk{key}": statistics_risk[key]
-                                   for key in statistics_risk})
-        summary_statistics = pd.Series(summary_statistics, name=m)
+        summary_statistics.update({key: statistics_power[key] for key in statistics_power})
+        summary_statistics = pd.Series(summary_statistics, name=self.m)
         return summary_statistics
 
     def compute_param_dict_statistics(self, true_p, params, *args,
@@ -73,14 +63,14 @@ class ExpectedStatisticsComputer:
         return all_statistics
 
     @staticmethod
-    def update_quantile(t, cumulative_probability, quantile, statistics):
-        entry = f">={quantile:.2f}"
+    def update_quantile(t, cumulative_probability, quantile, statistics, prefix="unconditional"):
+        entry = f"{prefix}_quantile{quantile:.2f}"
         if cumulative_probability >= quantile and entry \
                 not in statistics:
             statistics[entry] = t
 
     @staticmethod
-    def extract_statistics(dsample, n, m):
+    def extract_statistics(dsample, n, m, power):
         """
         :param dsample: Dictionary or pd.Series of distribution of sample
         :param m: The max number sampled (To compute mean)
@@ -91,37 +81,44 @@ class ExpectedStatisticsComputer:
         cumulative_probability = 0
 
         quantiles = [0.25, 0.5, 0.75, 0.9]
-        mean = 0
+        unconditional_mean = 0
         for t in sorted(dsample.index):
             cumulative_probability += dsample[t]
-            mean += dsample[t] * t
+            unconditional_mean += dsample[t] * t
             for quantile in quantiles:
-                ExpectedStatisticsComputer.\
-                    update_quantile(t, cumulative_probability,
-                                    quantile, statistics)
+                # Update unconditional quantile
+                ExpectedStatisticsComputer.update_quantile(t, cumulative_probability, quantile, statistics)
+                # Update conditional quantile
+                ExpectedStatisticsComputer.update_quantile(t, cumulative_probability/power, quantile, statistics,
+                                                           prefix="conditional")
             if t >= m:
                 break
+
         # Update mean by computing (computed mean + rest prob * m)
-        statistics["mean"] = mean
-        statistics["mean_with_recount"] = mean + (1 - cumulative_probability) * (m+n)
+        statistics["unconditional_mean"] = unconditional_mean
+        statistics["unconditional_mean_with_recount"] = unconditional_mean + (1 - cumulative_probability) * (m+n)
+        statistics["conditional_mean"] = unconditional_mean / power
+
         # The rest of the statistics should be 1
         cumulative_probability = 1
         for quantile in quantiles:
-            ExpectedStatisticsComputer.\
-                update_quantile(m, cumulative_probability, quantile,
-                                statistics)
+            ExpectedStatisticsComputer.update_quantile(m, cumulative_probability, quantile, statistics)
         return statistics
 
 
 def audit_method_expected_statistics(audit_method, audit_params, n, m, true_ps=np.linspace(0.45, 0.75, 25),
-                                     save=False, fpath="data"):
-    expected_statistics_computer = ExpectedStatisticsComputer(audit_method, n, m, False)
+                                     step=1, replacement=False, save=False, fpath="data", include_risk=True):
+    true_ps = list(true_ps)
+    expected_statistics_computer = ExpectedStatisticsComputer(audit_method, n, m, step=step, replacement=replacement)
 
     statistics_dfs = dd(lambda: pd.DataFrame())
     for params in audit_params:
-        print("param:", params)
         legend = make_legend(audit_method, **params)
         statistics_data = dd(lambda: {"legend": legend})
+
+        # add 0.5 for computing risk as well.
+        if include_risk:
+            true_ps.insert(0, 0.5)
         for true_p in true_ps:
             print("    true_p:", true_p)
             statistics = expected_statistics_computer.compute_statistics(true_p, **params)

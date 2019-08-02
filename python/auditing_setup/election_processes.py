@@ -66,8 +66,7 @@ def find_terminal(f, n, m=1, step=10, p_h0=1/2, to_sequence=False,
                 for y_t_add in range(step+1):
                     y_t_next = y_t + y_t_add
                     index_next = str((t_next * step, y_t_next))
-                    transition_matrix.loc[index, index_next] = \
-                        binom_pmf(y_t_add, step, p_h0)
+                    transition_matrix.loc[index, index_next] = binom_pmf(y_t_add, step, p_h0)
     if transition:
         return transition_matrix
     # Initialise the sparse matrix to sovle this chain
@@ -101,9 +100,8 @@ def solve_stationary(chain):
     return sp.linalg.lstsq(a, b)[0]
 
 
-def stochastic_process_simulation(rejection_fn, n, m=1000, step=1, p=1/2,
-                                  progression=False,  replacement=True,
-                                  *args, **kwargs):
+def stochastic_process_simulation(rejection_fn, n, m, step=1, p=1/2, progression=False,
+                                  replacement=True, *args, **kwargs):
     if m == -1:
         m = n + 1
 

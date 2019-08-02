@@ -10,7 +10,8 @@ class AuditMethodCalibrator:
     further analysis
     """
 
-    def __init__(self, n, m, risk_lim=0.05, p_0=0.5, tol=1e-3, max_iter=40, fpath="calibrated_data"):
+    def __init__(self, n, m, risk_lim=0.05, p_0=0.5, step=1, replacement=False, tol=1e-3,
+                 max_iter=40, fpath="calibrated_data"):
         """
         Initialise the class with a default risk limit
         :param risk_lim: risk limit
@@ -18,6 +19,8 @@ class AuditMethodCalibrator:
         self.n = n
         self.m = m
         self.p_0 = p_0
+        self.step = step
+        self.replacement = replacement
         self.audit_methods = {}
         self.risk_lim = risk_lim
         self.fpath = fpath
@@ -35,8 +38,8 @@ class AuditMethodCalibrator:
             }
         audit_method_dict = self.audit_methods[audit_method]
         audit_method_dict["risk_search"].append(RiskBinarySearch(audit_method, param_name, param_min, param_max,
-                                                                  self.n, self.m, self.p_0, self.tol, self.max_iter,
-                                                                  **kwargs))
+                                                                 self.n, self.m, self.p_0, self.step, self.replacement,
+                                                                 self.tol, self.max_iter, **kwargs))
 
     def remove_method(self, audit_method):
         try:
@@ -76,6 +79,6 @@ class AuditMethodCalibrator:
                 kwargs[risk_calibrator.param_name] = audit_method_dict["calibrated_param_val"][setting_ind]
                 kwargs_list.append(kwargs)
             audit_method_dict["calibrated_param_expected_statistics"] = \
-                audit_method_expected_statistics(audit_method, kwargs_list, self.n, self.m, save=save,
-                                                 true_ps=true_ps,
-                                                 fpath=path.join(self.fpath, f"{audit_method.name}_{self.risk_lim}"))
+                audit_method_expected_statistics(audit_method, kwargs_list, self.n, self.m, step=self.step, replacement=self.replacement,
+                                                 true_ps=true_ps, save=save, fpath=
+                                                 path.join(self.fpath, f"{audit_method.name}_{self.risk_lim}"))

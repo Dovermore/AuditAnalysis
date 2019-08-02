@@ -12,21 +12,24 @@ class RiskBinarySearch:
     A class that implements binary search to calibrate certain parameter for a given risk limit
     """
 
-    def __init__(self, audit_method, param_name, param_min, param_max,
-                 n=500, m=500, p_0=0.5, tol=1e-3, max_iter=40, **kwargs):
+    def __init__(self, audit_method, param_name, param_min, param_max, n=500, m=500, p_0=0.5, step=1,
+                 replacement=False, tol=1e-3, max_iter=40, **kwargs):
         self.audit_method = audit_method
         self.param_name = param_name
         self.param_min = param_min
         self.param_max = param_max
         self.kwargs = kwargs
         self.p_0 = p_0
+        self.step = step
+        self.replacement = replacement
         self.risk_lim = None
         self.n = n
         self.m = m
         self.tol = tol
         self.step_count = 0
         self.max_iter = max_iter
-        self.method_distribution_computer = AuditMethodDistributionComputer(audit_method, n, m)
+        self.method_distribution_computer = AuditMethodDistributionComputer(audit_method, n, m, step=step,
+                                                                            replacement=replacement)
         self.reset()
 
     def reset(self):
@@ -49,7 +52,8 @@ class RiskBinarySearch:
 
         full_kwargs = deepcopy(self.kwargs)
         full_kwargs[self.param_name] = self.param_val
-        self.param_risk = self.method_distribution_computer.power(self.p_0, dsample=False, cdf=True, **full_kwargs)
+
+        self.param_risk = self.method_distribution_computer.power(self.p_0, **full_kwargs)
         self._search_record[self.param_val] = self.param_risk
 
         print(f"{self.param_val} -> {self.param_risk} | {self.lo} | {self.hi}")

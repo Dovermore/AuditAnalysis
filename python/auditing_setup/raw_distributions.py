@@ -8,13 +8,14 @@ import matplotlib.pyplot as plt
 
 
 class AuditMethodDistributionComputer:
-    def __init__(self, audit_class, n, m, replacement=False):
+    def __init__(self, audit_class, n, m, step=1, replacement=False):
         self.n = n
         if m == -1:
             m = n
         self.m = m
         self.audit_class = audit_class
         self.replacement = replacement
+        self.step = step
 
     def power(self, true_p, dsample=False, cdf=False, progression=False, *args, **kwargs):
         """
@@ -28,11 +29,8 @@ class AuditMethodDistributionComputer:
         :return: The power of current simulation
         """
         audit_f = self.audit_class(*args, **kwargs)
-        reject_dict = \
-            stochastic_process_simulation(audit_f, n=self.n,
-                                          m=self.m, p=true_p,
-                                          progression=progression,
-                                          replacement=self.replacement)
+        reject_dict = stochastic_process_simulation(audit_f, n=self.n, m=self.m, p=true_p, progression=progression,
+                                                    step=self.step, replacement=self.replacement)
         power = sum(reject_dict.values())
         ret = power
         if dsample:
