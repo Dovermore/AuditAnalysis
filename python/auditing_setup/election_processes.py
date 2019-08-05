@@ -135,18 +135,18 @@ def stochastic_process_simulation(rejection_fn, n, m, step=1, p=1/2, progression
         # Update progression
         progression_bar(key[0])
 
-        # Last step of calculation is finished, record the total power
-        if (key[0] - step) in cumulative_rejection:
-            total_power += cumulative_rejection[key[0] - step]
-            del cumulative_rejection[key[0] - step]
+        # # Last step of calculation is finished, record the total power
+        # if (key[0] - step) in cumulative_rejection:
+        #     total_power += cumulative_rejection[key[0] - step]
+        #     del cumulative_rejection[key[0] - step]
 
         # If sampled to the max number already, break
         if isinstance(m, int) and key[0] >= m:
             break
 
-        # Break if a power is given and already at that power
-        if isinstance(m, float) and total_power >= m:
-            break
+        # # Break if a power is given and already at that power
+        # if isinstance(m, float) and total_power >= m:
+        #     break
 
         if replacement and key[0] > n:
             break
@@ -183,7 +183,7 @@ def stochastic_process_simulation(rejection_fn, n, m, step=1, p=1/2, progression
             # if null is rejected, put it in the risk dict
             if reject:
                 rejection_dict[node[:2]] += node[2]
-                cumulative_rejection[node[0]] += node[2]
+                # cumulative_rejection[node[0]] += node[2]
             else:
                 q.append(node[:2], node[2])
 

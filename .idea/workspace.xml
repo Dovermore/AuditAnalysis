@@ -2,97 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d82c61b-1943-4c16-a50b-c917d4554f87" name="Default Changelist" comment="kk">
-      <change afterPath="$PROJECT_DIR$/calibration_data_configs/step/calibration_5000_500_10.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/calibration_data_configs/step/calibration_5000_500_20.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/calibration_data_configs/step/calibration_5000_500_5.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/calibration_data_configs/step/calibration_500_500_10.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/calibration_data_configs/step/calibration_500_500_20.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/calibration_data_configs/step/calibration_500_500_5.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/calibration_data_configs/with_replacements/calibration_100000_5000.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/python/benchmark.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/python/calibrated_config_generation.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/python/calibration/calibration_curve.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=10/bayesian_0.05/bayesian_conditional_mean.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=10/bayesian_0.05/bayesian_conditional_quantile0.25.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=10/bayesian_0.05/bayesian_conditional_quantile0.50.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=10/bayesian_0.05/bayesian_conditional_quantile0.75.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=10/bayesian_0.05/bayesian_conditional_quantile0.90.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=10/bayesian_0.05/bayesian_power.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=10/bayesian_0.05/bayesian_unconditional_mean.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=10/bayesian_0.05/bayesian_unconditional_mean_with_recount.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=10/bayesian_0.05/bayesian_unconditional_quantile0.25.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=10/bayesian_0.05/bayesian_unconditional_quantile0.50.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=10/bayesian_0.05/bayesian_unconditional_quantile0.75.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=10/bayesian_0.05/bayesian_unconditional_quantile0.90.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=2/bayesian_0.05/bayesian_conditional_mean.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=2/bayesian_0.05/bayesian_conditional_quantile0.25.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=2/bayesian_0.05/bayesian_conditional_quantile0.50.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=2/bayesian_0.05/bayesian_conditional_quantile0.75.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=2/bayesian_0.05/bayesian_conditional_quantile0.90.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=2/bayesian_0.05/bayesian_power.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=2/bayesian_0.05/bayesian_unconditional_mean.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=2/bayesian_0.05/bayesian_unconditional_mean_with_recount.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=2/bayesian_0.05/bayesian_unconditional_quantile0.25.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=2/bayesian_0.05/bayesian_unconditional_quantile0.50.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=2/bayesian_0.05/bayesian_unconditional_quantile0.75.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=2/bayesian_0.05/bayesian_unconditional_quantile0.90.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibration_data_configs/with_replacements/calibration_10000_1000.csv" beforeDir="false" afterPath="$PROJECT_DIR$/calibration_data_configs/with_replacements/calibration_10000_1000.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibration_data_configs/with_replacements/calibration_20000_1000.csv" beforeDir="false" afterPath="$PROJECT_DIR$/calibration_data_configs/with_replacements/calibration_20000_1000.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibration_data_configs/with_replacements/calibration_5000_500.csv" beforeDir="false" afterPath="$PROJECT_DIR$/calibration_data_configs/with_replacements/calibration_5000_500.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibration_data_configs/with_replacements/calibration_500_500.csv" beforeDir="false" afterPath="$PROJECT_DIR$/calibration_data_configs/with_replacements/calibration_500_500.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001050_wo/max_sprt_cdf.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001050_wo/truncated_bayesian0101_cdf.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/bayesian0101_cdf.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/bayesian_power.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/bayesian_power&gt;=0.25.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/bayesian_power&gt;=0.50.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/bayesian_power&gt;=0.75.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/bayesian_power&gt;=0.90.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/bayesian_powermean.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/bayesian_powermean_with_full_count.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/bayesian_risk.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/bayesian_risk&gt;=0.25.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/bayesian_risk&gt;=0.50.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/bayesian_risk&gt;=0.75.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/bayesian_risk&gt;=0.90.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/bayesian_riskmean.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/bayesian_riskmean_with_full_count.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/bravo055_cdf.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/bravo070_cdf.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/clip_cdf.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/max_sprt_power.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/max_sprt_power&gt;=0.25.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/max_sprt_power&gt;=0.50.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/max_sprt_power&gt;=0.75.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/max_sprt_power&gt;=0.90.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/max_sprt_powermean.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/max_sprt_powermean_with_full_count.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/max_sprt_risk.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/max_sprt_risk&gt;=0.25.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/max_sprt_risk&gt;=0.50.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/max_sprt_risk&gt;=0.75.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/max_sprt_risk&gt;=0.90.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/max_sprt_riskmean.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/max_sprt_riskmean_with_full_count.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_power.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_power&gt;=0.25.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_power&gt;=0.50.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_power&gt;=0.75.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_power&gt;=0.90.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_powermean.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_powermean_with_full_count.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_risk.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_risk&gt;=0.25.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_risk&gt;=0.50.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_risk&gt;=0.75.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_risk&gt;=0.90.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_riskmean.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_data/000500-001_wo/truncated_bayesian_riskmean_with_full_count.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/python/auditing_setup/audit_methods.py" beforeDir="false" afterPath="$PROJECT_DIR$/python/auditing_setup/audit_methods.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/python/auditing_setup/election_processes.py" beforeDir="false" afterPath="$PROJECT_DIR$/python/auditing_setup/election_processes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/python/run_calibration.py" beforeDir="false" afterPath="$PROJECT_DIR$/python/run_calibration.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/python/tests/file_equality_check.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -162,8 +72,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/python/auditing_setup/election_processes.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-345">
-              <caret line="116" column="22" selection-start-line="116" selection-start-column="22" selection-end-line="116" selection-end-column="22" />
+            <state relative-caret-position="188">
+              <caret line="146" column="18" selection-start-line="146" selection-start-column="18" selection-end-line="146" selection-end-column="18" />
               <folding>
                 <element signature="e#0#165#0" expanded="true" />
               </folding>
@@ -758,12 +668,12 @@
       <workItem from="1564460638182" duration="31447000" />
       <workItem from="1564528651579" duration="8465000" />
       <workItem from="1564569102014" duration="11042000" />
-      <workItem from="1564786547476" duration="8044000" />
+      <workItem from="1564786547476" duration="8329000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="306581000" />
+    <option name="totallyTimeSpent" value="306866000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1199,8 +1109,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/python/auditing_setup/election_processes.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-345">
-          <caret line="116" column="22" selection-start-line="116" selection-start-column="22" selection-end-line="116" selection-end-column="22" />
+        <state relative-caret-position="188">
+          <caret line="146" column="18" selection-start-line="146" selection-start-column="18" selection-end-line="146" selection-end-column="18" />
           <folding>
             <element signature="e#0#165#0" expanded="true" />
           </folding>
