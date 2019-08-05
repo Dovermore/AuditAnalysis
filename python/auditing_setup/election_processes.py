@@ -101,7 +101,7 @@ def solve_stationary(chain):
 
 
 def stochastic_process_simulation(rejection_fn, n, m, step=1, p=1/2, progression=False,
-                                  replacement=True, *args, **kwargs):
+                                  replacement=False, *args, **kwargs):
     if m == -1:
         m = n + 1
 

@@ -1,17 +1,20 @@
 import argparse
 from calibration.calibration_data_generation import AuditMethodCalibrator
-from auditing_setup.audit_methods import *
 import csv
+from auditing_setup.audit_methods import *
 from os import path
 
 
-def run_calibration():
+def main_run_calibration():
     parser = argparse.ArgumentParser()
     parser.add_argument("file_path")
     args = parser.parse_args()
     file_path = args.file_path
     assert file_path.endswith(".csv")
+    run_calibration(file_path)
 
+
+def run_calibration(file_path):
     with open(file_path) as config_file:
         config_reader = csv.reader(config_file)
         global_setting = next(config_reader)
@@ -65,4 +68,4 @@ def run_calibration():
 
 
 if __name__ == "__main__":
-    run_calibration()
+    main_run_calibration()
