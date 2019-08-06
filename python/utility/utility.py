@@ -53,10 +53,8 @@ class Cached:
             cached_value = self.cache[(args, sorted_kwargs)]
             # print("cached")
             return cached_value
-        
         except KeyError:
-            ret = self.cache[(args, sorted_kwargs)] = self.function(*args,
-                                                                    **kwargs)
+            ret = self.cache[(args, sorted_kwargs)] = self.function(*args, **kwargs)
             return ret
 
 

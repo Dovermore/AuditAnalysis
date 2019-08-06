@@ -1,3 +1,9 @@
+import logging
+from concurrent.futures import ThreadPoolExecutor
+import threading
+import multiprocessing as mp
+from multiprocessing import Manager
+from multiprocessing.managers import BaseManager
 from utility.utility import (Cached, SimpleProgressionBar,
                              OrderedDict, binom_pmf, null_bar,
                              hypergeom_pmf)
@@ -7,6 +13,7 @@ import pandas as pd
 
 from collections import defaultdict as dd
 from math import floor
+
 
 
 @Cached
@@ -100,12 +107,47 @@ def solve_stationary(chain):
     return sp.linalg.lstsq(a, b)[0]
 
 
+def single_node_update(rejection_dict, q, rejection_fn, n, t, y_t, p_t, step, p, replacement, lock, *args, **kwargs):
+    # Take the floor for winner's share
+    w = floor(n * p)
+
+    t_next = t + step
+    n_remain = n - t
+    w_remain = w - y_t
+
+    # All possible generated sa for next batch
+    for i in range(step+1):
+        y_t_next = y_t + i
+
+        if not replacement:
+            # If no replacement sample from hypergeometric distribution
+            p_next = hypergeom_pmf(i, n_remain, w_remain, step)
+        else:
+            # Else use binomial compute probability
+            p_next = binom_pmf(i, step, p)
+
+        # Is this state rejected?
+        reject = rejection_fn(n, t_next, y_t_next, *args, **kwargs)
+
+        # Compose the node
+        node = (t_next, y_t_next, p_next * p_t)
+        if pd.isnull(node[2]):
+            node = (t_next, y_t_next, 0)
+
+        with lock:
+            # if null is rejected, put it in the risk dict
+            if reject:
+                rejection_dict[node[:2]] += node[2]
+            else:
+                q.append(node[:2], node[2])
+
+
 def stochastic_process_simulation(rejection_fn, n, m, step=1, p=1/2, progression=False,
                                   replacement=False, *args, **kwargs):
+    lock = threading.Lock()
     if m == -1:
-        m = n + 1
-
-    w = floor(n * p)
+        m = n
+    m += 1
 
     progression_bar = null_bar
 
@@ -122,74 +164,38 @@ def stochastic_process_simulation(rejection_fn, n, m, step=1, p=1/2, progression
     q = OrderedDict()
     q.append(source[:2], source[2])
 
-    # Records {sample_number: power} pair for the election
-    # This one only records the sample number but not the winner's vote
-    cumulative_rejection = dd(float)
-    total_power = 0
-
-    # While q is not empty
-    while len(q):
+    for i in range(0, m, step):
         # get next node to explore
         key, value = q.peek()
 
+        logging.log(logging.DEBUG, f"Start ThreadPoolExecutor: {i}")
+        with ThreadPoolExecutor(max_workers=100) as executor:
+            while key[0] <= i:
+                assert key[0] == i
+                # Remove the value
+                q.pop()
+                t, y_t, p_t = *key, value
+                executor.submit(single_node_update, rejection_dict, q, rejection_fn, n, t, y_t, p_t, step, p,
+                                replacement, lock, *args, **kwargs)
+                if not len(q):
+                    break
+                key, value = q.peek()
+        logging.log(logging.DEBUG, f"End   ThreadPoolExecutor: {i}")
         # Update progression
         progression_bar(key[0])
-
-        # # Last step of calculation is finished, record the total power
-        # if (key[0] - step) in cumulative_rejection:
-        #     total_power += cumulative_rejection[key[0] - step]
-        #     del cumulative_rejection[key[0] - step]
-
-        # If sampled to the max number already, break
-        if isinstance(m, int) and key[0] >= m:
-            break
-
-        # # Break if a power is given and already at that power
-        # if isinstance(m, float) and total_power >= m:
-        #     break
-
-        if replacement and key[0] > n:
-            break
-
-        # Remove the value
-        q.pop()
-
-        t, y_t, p_t = *key, value
-
-        t_next = t + step
-
-        n_remain = n - t
-        w_remain = w - y_t
-
-        # All possible generated sa for next batch
-        for i in range(step+1):
-            y_t_next = y_t + i
-
-            if not replacement:
-                # If no replacement sample from hypergeometric distribution
-                p_next = hypergeom_pmf(i, n_remain, w_remain, step)
-            else:
-                # Else use binomial compute probability
-                p_next = binom_pmf(i, step, p)
-
-            # Is this state rejected?
-            reject = rejection_fn(n, t_next, y_t_next, *args, **kwargs)
-
-            # Compose the node
-            node = (t_next, y_t_next, p_next * p_t)
-            if pd.isnull(p_next * p_t):
-                node = (t_next, y_t_next, 0)
-
-            # if null is rejected, put it in the risk dict
-            if reject:
-                rejection_dict[node[:2]] += node[2]
-                # cumulative_rejection[node[0]] += node[2]
-            else:
-                q.append(node[:2], node[2])
 
     # The information in this is enough to determine the result
     return rejection_dict
 
 
 if __name__ == "__main__":
+    logging.getLogger().setLevel(logging.DEBUG)
+    from auditing_setup.audit_methods import *
+    from time import clock
+    now = clock()
+    bayesian = Bayesian(0.99)
+    stochastic_process_simulation(bayesian, 100000, 5000, replacement=True)
+    after = clock()
+    duration = after - now
+    print(duration)
     pass
