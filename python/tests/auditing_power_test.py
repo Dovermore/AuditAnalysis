@@ -5,7 +5,7 @@ from matplotlib import pyplot as plt
 
 from auditing_setup.audit_methods import BRAVO, Bayesian, Clip
 from auditing_setup.raw_distributions import AuditMethodDistributionComputer
-from utility.utility import save_fig
+from utility.program_utility import save_fig
 
 
 def bravo_check(n=100000, m=5000):

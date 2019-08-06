@@ -1,17 +1,9 @@
 import logging
-from concurrent.futures import ThreadPoolExecutor
-import threading
-import multiprocessing as mp
-from multiprocessing import Manager
-from multiprocessing.managers import BaseManager
-from utility.utility import (Cached, SimpleProgressionBar,
-                             OrderedDict, binom_pmf, null_bar,
-                             hypergeom_pmf)
+from multiprocessing import Pool
+from utility.program_utility import (Cached, SimpleProgressionBar, null_bar, AutoLockMultiprocessingDefaultdict, AutoLockMultiprocessingOrderedDict, CollectionsManager)
+from utility.math_utility import binom_pmf
 import scipy as sp
-import numpy as np
-import pandas as pd
 
-from collections import defaultdict as dd
 from math import floor
 
 
@@ -107,7 +99,7 @@ def solve_stationary(chain):
     return sp.linalg.lstsq(a, b)[0]
 
 
-def single_node_update(rejection_dict, q, rejection_fn, n, t, y_t, p_t, step, p, replacement, lock, *args, **kwargs):
+def single_node_update(rejection_dict, q, rejection_fn, n, t, y_t, p_t, step, p, replacement, *args, **kwargs):
     # Take the floor for winner's share
     w = floor(n * p)
 
@@ -134,17 +126,23 @@ def single_node_update(rejection_dict, q, rejection_fn, n, t, y_t, p_t, step, p,
         if pd.isnull(node[2]):
             node = (t_next, y_t_next, 0)
 
-        with lock:
-            # if null is rejected, put it in the risk dict
-            if reject:
-                rejection_dict[node[:2]] += node[2]
-            else:
-                q.append(node[:2], node[2])
+        logging.debug(f"rejection({[n, t, y_t]}): {reject}")
+        # No need for a lock since the Data Structures inherently have locks in their method
+        # if null is rejected, put it in the risk dict
+        if reject:
+            logging.debug(f"        rejected: {node[:2]} -> {node[2]}")
+            rejection_dict[node[:2]] += node[2]
+        else:
+            logging.debug(f"        append queue: {node[:2]} -> {node[2]}")
+            q.append(node[:2], node[2])
 
 
 def stochastic_process_simulation(rejection_fn, n, m, step=1, p=1/2, progression=False,
                                   replacement=False, *args, **kwargs):
-    lock = threading.Lock()
+    # manager for multiprocessing purpose
+    mgr = CollectionsManager()
+    mgr.start()
+
     if m == -1:
         m = n
     m += 1
@@ -154,35 +152,41 @@ def stochastic_process_simulation(rejection_fn, n, m, step=1, p=1/2, progression
     if progression:
         progression_bar = SimpleProgressionBar(m)
 
-    rejection_dict = dd(float)
+    rejection_dict = AutoLockMultiprocessingDefaultdict(float, mgr)
 
     # first element: t,
     # second element: y_t, (observe every step time)
     # third element: probability going to this state
     source = (0, 0, 1)
 
-    q = OrderedDict()
+    q = AutoLockMultiprocessingOrderedDict(mgr)
     q.append(source[:2], source[2])
 
     for i in range(0, m, step):
         # get next node to explore
+        logging.debug(f"{i}")
         key, value = q.peek()
 
-        logging.log(logging.DEBUG, f"Start ThreadPoolExecutor: {i}")
-        with ThreadPoolExecutor(max_workers=100) as executor:
+        logging.debug(f"    Start Pool: {i}")
+        with Pool() as pool:
             while key[0] <= i:
                 assert key[0] == i
                 # Remove the value
                 q.pop()
                 t, y_t, p_t = *key, value
-                executor.submit(single_node_update, rejection_dict, q, rejection_fn, n, t, y_t, p_t, step, p,
-                                replacement, lock, *args, **kwargs)
+                logging.debug(f"*        poped: {t, y_t, p_t}")
+                pool.apply_async(single_node_update, (rejection_dict, q, rejection_fn, n, t, y_t, p_t, step, p,
+                                                      replacement, *args), kwargs)
                 if not len(q):
                     break
                 key, value = q.peek()
-        logging.log(logging.DEBUG, f"End   ThreadPoolExecutor: {i}")
+        logging.debug(f"    End   Pool: {i}")
         # Update progression
         progression_bar(key[0])
+
+        # Break if no more item remains (all rejected)
+        if not len(q):
+            break
 
     # The information in this is enough to determine the result
     return rejection_dict
@@ -191,11 +195,11 @@ def stochastic_process_simulation(rejection_fn, n, m, step=1, p=1/2, progression
 if __name__ == "__main__":
     logging.getLogger().setLevel(logging.DEBUG)
     from auditing_setup.audit_methods import *
-    from time import clock
-    now = clock()
+    from time import process_time
+    now = process_time()
     bayesian = Bayesian(0.99)
     stochastic_process_simulation(bayesian, 100000, 5000, replacement=True)
-    after = clock()
+    after = process_time()
     duration = after - now
-    print(duration)
+    print(f"duration: {duration}")
     pass

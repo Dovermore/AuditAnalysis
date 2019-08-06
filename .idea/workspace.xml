@@ -2,8 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d82c61b-1943-4c16-a50b-c917d4554f87" name="Default Changelist" comment="kk">
+      <change afterPath="$PROJECT_DIR$/python/utility/math_utility.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/python/utility/mp_help.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/python/auditing_setup/audit_methods.py" beforeDir="false" afterPath="$PROJECT_DIR$/python/auditing_setup/audit_methods.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/python/auditing_setup/election_processes.py" beforeDir="false" afterPath="$PROJECT_DIR$/python/auditing_setup/election_processes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/python/utility/utility.py" beforeDir="false" afterPath="$PROJECT_DIR$/python/utility/utility.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/python/tests/auditing_power_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/python/tests/auditing_power_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/python/utility/utility.py" beforeDir="false" afterPath="$PROJECT_DIR$/python/utility/program_utility.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,6 +33,7 @@
     <SUITE FILE_PATH="coverage/AuditAnalysis$benchmark.coverage" NAME="benchmark Coverage Results" MODIFIED="1564988856682" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/AuditAnalysis$run_calibration_test.coverage" NAME="run_calibration-100_100 Coverage Results" MODIFIED="1564521853287" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/AuditAnalysis$run_calibration_10000_1000.coverage" NAME="run_calibration-10000-1000 Coverage Results" MODIFIED="1564521923594" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/AuditAnalysis$election_processes.coverage" NAME="election_processes Coverage Results" MODIFIED="1565072028918" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python/auditing_setup" />
     <SUITE FILE_PATH="coverage/AuditAnalysis$run_calibration_5000_5000.coverage" NAME="run_calibration-5000-5000 Coverage Results" MODIFIED="1564521923793" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/AuditAnalysis$calibration.coverage" NAME="calibration Coverage Results" MODIFIED="1562134171969" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python" />
     <SUITE FILE_PATH="coverage/AuditAnalysis$calibrated_data_generation.coverage" NAME="calibrated_data_generation Coverage Results" MODIFIED="1564400751601" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python" />
@@ -59,25 +65,22 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/python/calibration/calibration_data_generation.py">
+        <entry file="file://$PROJECT_DIR$/python/auditing_setup/election_processes.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="229">
-              <caret line="52" column="18" selection-start-line="52" selection-start-column="18" selection-end-line="52" selection-end-column="18" />
+            <state relative-caret-position="228">
+              <caret line="174" column="20" selection-start-line="174" selection-start-column="20" selection-end-line="174" selection-end-column="20" />
               <folding>
-                <element signature="e#0#107#0" expanded="true" />
+                <element signature="e#0#14#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/python/auditing_setup/election_processes.py">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/python/auditing_setup/audit_methods.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="146" column="25" selection-start-line="146" selection-start-column="25" selection-end-line="146" selection-end-column="25" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="277">
+              <caret line="82" column="32" selection-start-line="82" selection-start-column="32" selection-end-line="82" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -99,13 +102,49 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/python/utility/utility.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/python/utility/program_utility.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="127">
-              <caret line="123" selection-start-line="123" selection-end-line="123" />
+            <state relative-caret-position="278">
+              <caret line="108" column="17" selection-start-line="108" selection-start-column="17" selection-end-line="108" selection-end-column="17" />
               <folding>
-                <element signature="e#0#19#0" expanded="true" />
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/python/utility/math_utility.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="162">
+              <caret line="46" selection-start-line="46" selection-end-line="46" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_HOME_DIR$/helpers/typeshed/stdlib/3/multiprocessing/managers.pyi">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="387">
+              <caret line="48" column="15" selection-start-line="48" selection-start-column="15" selection-end-line="48" selection-end-column="15" />
+              <folding>
+                <element signature="e#69#81#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file:///anaconda/envs/ml_env/lib/python3.7/multiprocessing/managers.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="218">
+              <caret line="683" column="53" selection-start-line="683" selection-start-column="53" selection-end-line="683" selection-end-column="53" />
+              <folding>
+                <element signature="e#283#293#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -114,48 +153,6 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/python/calibration/binary_search_calibration.py">
           <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/python/run_calibration.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="370">
-              <caret line="65" column="36" lean-forward="true" selection-start-line="65" selection-start-column="36" selection-end-line="65" selection-end-column="36" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/python/benchmark.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="23" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/python/calibrated_config_generation.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/benchmark_logs/calibration_data_configs/with_replacements/calibration_100000_5000.log">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
-            </state>
-          </provider>
         </entry>
       </file>
     </leaf>
@@ -169,20 +166,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>total_power</find>
-      <find>beta</find>
-      <find>save_</find>
-      <find>integral_from_roots</find>
-      <find>cached</find>
-      <find>HK_ps_se_p</find>
-      <find>break</find>
-      <find>sss =</find>
-      <find>/l</find>
-      <find>true_p</find>
-      <find>le</find>
-      <find>make_legen</find>
-      <find>make_legend</find>
-      <find>hypergeom</find>
       <find>clip</find>
       <find>election</find>
       <find>fpath</find>
@@ -196,9 +179,23 @@
       <find>param</find>
       <find>pri</find>
       <find>print\(&quot;pa</find>
-      <find>print</find>
       <find>gener</find>
       <find>path</find>
+      <find>dictproxy</find>
+      <find>baseproxy</find>
+      <find>makepro</find>
+      <find>multiprocessing</find>
+      <find>basepro</find>
+      <find>print</find>
+      <find>init</find>
+      <find>init(</find>
+      <find>vgam.</find>
+      <find>global</find>
+      <find>pop(</find>
+      <find>debug</find>
+      <find>peek(</find>
+      <find>after:</find>
+      <find>after</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -213,11 +210,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/python/auditing_setup/audit_sample_number_analysis.py" />
-        <option value="$PROJECT_DIR$/python/auditing_setup/audit_power.py" />
-        <option value="$PROJECT_DIR$/python/risk_power_parallel.py" />
-        <option value="$PROJECT_DIR$/python/auditing_setup/stochastic_process_simulation.py" />
-        <option value="$PROJECT_DIR$/python/misc/scratch.py" />
         <option value="$PROJECT_DIR$/new_data/000500-001050_wo/max_sprt_cdf.csv" />
         <option value="$PROJECT_DIR$/python/auditing_setup/election_process_dynamic_computation.py" />
         <option value="$PROJECT_DIR$/python/calibration.py" />
@@ -258,12 +250,17 @@
         <option value="$PROJECT_DIR$/calibration_data_configs/step/calibration_5000_500_20.csv" />
         <option value="$PROJECT_DIR$/calibration_data_configs/step/calibration_500_500_5.csv" />
         <option value="$PROJECT_DIR$/python/calibration/calibration_curve.py" />
-        <option value="$PROJECT_DIR$/python/auditing_setup/audit_methods.py" />
         <option value="$PROJECT_DIR$/benchmark.sh" />
         <option value="$PROJECT_DIR$/python/run_calibration.py" />
         <option value="$PROJECT_DIR$/python/benchmark.py" />
+        <option value="/anaconda/envs/ml_env/lib/python3.7/multiprocessing/managers.py" />
+        <option value="$PROJECT_DIR$/python/utility/mp_help.py" />
+        <option value="$APPLICATION_HOME_DIR$/helpers/typeshed/stdlib/3/multiprocessing/managers.pyi" />
+        <option value="$PROJECT_DIR$/python/auditing_setup/audit_methods.py" />
         <option value="$PROJECT_DIR$/python/utility/utility.py" />
+        <option value="$PROJECT_DIR$/python/utility/math_utility.py" />
         <option value="$PROJECT_DIR$/python/auditing_setup/election_processes.py" />
+        <option value="$PROJECT_DIR$/python/utility/program_utility.py" />
       </list>
     </option>
   </component>
@@ -332,6 +329,57 @@
             </path>
             <path>
               <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
+            <path>
+              <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7 (ml_env) &gt;" type="70bed36:NamedLibraryElementNode" />
+            </path>
+            <path>
+              <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7 (ml_env) &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="python3.7" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7 (ml_env) &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="python3.7" type="462c0819:PsiDirectoryNode" />
+              <item name="multiprocessing" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7 (ml_env) &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="Typeshed Stubs" type="9c07c3ae:PyTypeShedNode" />
+            </path>
+            <path>
+              <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7 (ml_env) &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="Typeshed Stubs" type="9c07c3ae:PyTypeShedNode" />
+              <item name="3" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7 (ml_env) &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="Typeshed Stubs" type="9c07c3ae:PyTypeShedNode" />
+              <item name="3" type="462c0819:PsiDirectoryNode" />
+              <item name="collections" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7 (ml_env) &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="Typeshed Stubs" type="9c07c3ae:PyTypeShedNode" />
+              <item name="3" type="462c0819:PsiDirectoryNode" />
+              <item name="multiprocessing" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AuditAnalysis" type="b2602c69:ProjectViewProjectNode" />
               <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
             </path>
             <path>
@@ -354,7 +402,7 @@
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="diff.base" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -473,7 +521,7 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/python/auditing_setup/election_processes.py" />
       <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
       <option name="REDIRECT_INPUT" value="false" />
@@ -675,12 +723,12 @@
       <workItem from="1564460638182" duration="31447000" />
       <workItem from="1564528651579" duration="8465000" />
       <workItem from="1564569102014" duration="11042000" />
-      <workItem from="1564786547476" duration="14526000" />
+      <workItem from="1564786547476" duration="28815000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="313063000" />
+    <option name="totallyTimeSpent" value="327352000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -695,12 +743,12 @@
     <frame x="0" y="23" width="1680" height="1027" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.875" visible="true" weight="0.16483517" />
-      <window_info id="Structure" order="1" sideWeight="0.125" side_tool="true" visible="true" weight="0.16483517" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.86270875" visible="true" weight="0.16483517" />
+      <window_info id="Structure" order="1" sideWeight="0.13729128" side_tool="true" visible="true" weight="0.16483517" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4946752" weight="0.3273453" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.6666667" visible="true" weight="0.3613808" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.82295483" weight="0.41855448" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.7655678" weight="0.39506173" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -710,9 +758,9 @@
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.33333334" side_tool="true" weight="0.37433156" />
       <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49627262" weight="0.32934132" />
-      <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.6691087" weight="0.5210356" />
+      <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.75457877" weight="0.32470334" />
       <window_info anchor="bottom" id="Concurrent Activities Diagram" order="13" sideWeight="0.49893504" weight="0.32867134" />
-      <window_info anchor="bottom" x="862" y="681" width="564" height="159" id="Documentation" order="14" sideWeight="0.33333334" side_tool="true" visible="true" weight="0.3613808" />
+      <window_info anchor="bottom" x="862" y="681" width="564" height="159" id="Documentation" order="14" sideWeight="0.17704518" side_tool="true" visible="true" weight="0.41855448" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -755,33 +803,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100/bayesian_0.05/bayesian_power&gt;=0.90.csv" />
-    <entry file="file://$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100/bayesian_0.05/bayesian_risk&gt;=0.75.csv" />
-    <entry file="file://$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100/bravo_0.05/bravo_power&gt;=0.50.csv" />
-    <entry file="file://$PROJECT_DIR$/new_data/000500-001050_wo/truncated_bayesian0101_cdf.csv">
-      <provider selected="true" editor-type-id="csv-text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="14" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
-        </state>
-      </provider>
-      <provider editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100/bayesian_0.05/bayesian_risk&gt;=0.25.csv" />
-    <entry file="file://$PROJECT_DIR$/python/calibration/calibrate_plot_generator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="27" column="17" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100/bayesian_0.05/bayesian_risk.csv" />
-    <entry file="file://$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100/bayesian_0.05/bayesian_power.csv" />
-    <entry file="file://$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100/bayesian_0.05/bayesian_conditional_mean.csv" />
     <entry file="file://$PROJECT_DIR$/python/auditing_setup/raw_distributions.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="41">
@@ -980,13 +1001,6 @@
     <entry file="file://$PROJECT_DIR$/python/calibration/calibration_curve.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/python/auditing_setup/audit_methods.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="113" selection-start-line="113" selection-end-line="113" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/python/tests/file_equality_check.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -1106,23 +1120,100 @@
     <entry file="file://$PROJECT_DIR$/python/utility/hashable_array.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/python/utility/utility.py">
+    <entry file="file://$PROJECT_DIR$/python/calibration/binary_search_calibration.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file:///anaconda/envs/ml_env/lib/python3.7/concurrent/futures/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="123" selection-start-line="123" selection-end-line="123" />
+        <state relative-caret-position="270">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Library/Caches/PyCharm2018.3/python_stubs/-419063918/builtins.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="5474" column="8" selection-start-line="5474" selection-start-column="8" selection-end-line="5474" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///anaconda/envs/ml_env/lib/python3.7/multiprocessing/context.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4680">
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/python/calibration/binary_search_calibration.py">
+    <entry file="file:///anaconda/envs/ml_env/lib/python3.7/multiprocessing/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="20" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python/utility/mp_help.py">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file:///anaconda/envs/ml_env/lib/python3.7/multiprocessing/managers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="218">
+          <caret line="683" column="53" selection-start-line="683" selection-start-column="53" selection-end-line="683" selection-end-column="53" />
+          <folding>
+            <element signature="e#283#293#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/typeshed/stdlib/3/multiprocessing/managers.pyi">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="387">
+          <caret line="48" column="15" selection-start-line="48" selection-start-column="15" selection-end-line="48" selection-end-column="15" />
+          <folding>
+            <element signature="e#69#81#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python/auditing_setup/audit_methods.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="277">
+          <caret line="82" column="32" selection-start-line="82" selection-start-column="32" selection-end-line="82" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/typeshed/stdlib/3/collections/__init__.pyi">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="203" column="8" selection-start-line="203" selection-start-column="8" selection-end-line="203" selection-end-column="8" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/python/auditing_setup/election_processes.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="146" column="25" selection-start-line="146" selection-start-column="25" selection-end-line="146" selection-end-column="25" />
+        <state relative-caret-position="228">
+          <caret line="174" column="20" selection-start-line="174" selection-start-column="20" selection-end-line="174" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python/utility/math_utility.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="46" selection-start-line="46" selection-end-line="46" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python/utility/program_utility.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="108" column="17" selection-start-line="108" selection-start-column="17" selection-end-line="108" selection-end-column="17" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
