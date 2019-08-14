@@ -134,14 +134,19 @@ def single_node_update(rejection_dict, q, rejection_fn, n, t, y_t, p_t, step, p,
             rejection_dict[node[:2]] += node[2]
         else:
             logging.debug(f"        append queue: {node[:2]} -> {node[2]}")
+            logging.debug(f"{n} | {t} | {y_t} | {node[:2]} | {node[2]} starts to acquire lock")
             q.append(node[:2], node[2])
+            logging.debug(f"{n} | {t} | {y_t} | {node[:2]} | {node[2]} release lock")
 
 
 def stochastic_process_simulation(rejection_fn, n, m, step=1, p=1/2, progression=False,
                                   replacement=False, *args, **kwargs):
     # manager for multiprocessing purpose
-    mgr = CollectionsManager()
-    mgr.start()
+    queue_mgr = CollectionsManager()
+    queue_mgr.start()
+    # manager for multiprocessing purpose
+    dict_mgr = CollectionsManager()
+    dict_mgr.start()
 
     if m == -1:
         m = n
@@ -152,14 +157,14 @@ def stochastic_process_simulation(rejection_fn, n, m, step=1, p=1/2, progression
     if progression:
         progression_bar = SimpleProgressionBar(m)
 
-    rejection_dict = AutoLockMultiprocessingDefaultdict(float, mgr)
+    rejection_dict = AutoLockMultiprocessingDefaultdict(float, dict_mgr)
 
     # first element: t,
     # second element: y_t, (observe every step time)
     # third element: probability going to this state
     source = (0, 0, 1)
 
-    q = AutoLockMultiprocessingOrderedDict(mgr)
+    q = AutoLockMultiprocessingOrderedDict(queue_mgr)
     q.append(source[:2], source[2])
 
     for i in range(0, m, step):
@@ -180,13 +185,16 @@ def stochastic_process_simulation(rejection_fn, n, m, step=1, p=1/2, progression
                 if not len(q):
                     break
                 key, value = q.peek()
+        pool.join()
         logging.debug(f"    End   Pool: {i}")
         # Update progression
         progression_bar(key[0])
 
+        logging.debug(f"len | acquire lock")
         # Break if no more item remains (all rejected)
         if not len(q):
             break
+        logging.debug(f"len | release lock")
 
     # The information in this is enough to determine the result
     return rejection_dict

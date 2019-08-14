@@ -166,3 +166,5 @@ fabric.properties
 
 
 **/__pycache__/*
+
+.idea

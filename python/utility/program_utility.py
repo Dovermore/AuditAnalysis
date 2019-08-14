@@ -1,12 +1,10 @@
 import logging
 import os
 from os import path
-os.environ["R_HOME"] = "/anaconda/envs/ml_env/lib/R"
 
-from multiprocessing.managers import SyncManager, DictProxy
+import multiprocessing as mp
+from multiprocessing.managers import SyncManager, DictProxy, AcquirerProxy
 from matplotlib import pyplot as plt
-
-# from scipy.stats import binom, hypergeom
 
 from collections import defaultdict
 from collections import deque
@@ -97,14 +95,12 @@ class OrderedDict:
         self._dict = defaultdict(float)
         
     def append(self, key, value):
-        print("Before:", key, value, self._q, self._dict)
         # Didn't find
         if key not in self._q:
             self._q.appendleft(key)
             self._dict[key] = value
         else:
             self._dict[key] += value
-        print("After :", key, value, self._q, self._dict)
 
     def pop(self):
         key = self._q.pop()
@@ -208,10 +204,17 @@ class DequeProxy:
         return self.deque.__str__()
 
 
+
+global_lock = mp.Lock()
+def get_lock():
+    logging.debug('getting global_lock')
+    return global_lock
+
+
 CollectionsManager.register("deque", DequeProxy, exposed=["__len__", "append", "appendleft", "pop", "__getitem__",
                                                           "__str__", "popleft"])
-# CollectionsManager.register("defaultdict", defaultdict, DefaultdictProxy)
 CollectionsManager.register("defaultdict", defaultdict, DictProxy)
+CollectionsManager.register('Lock', get_lock, AcquirerProxy)
 
 
 class AutoLockMultiprocessingOrderedDict(OrderedDict):
@@ -230,9 +233,8 @@ class AutoLockMultiprocessingOrderedDict(OrderedDict):
         self._lock = mgr.Lock()
 
     def append(self, key, value):
-        with ContextTracker("append"):
-            with self._lock:
-                super().append(key, value)
+        with self._lock:
+            super().append(key, value)
 
     def pop(self):
         with self._lock:
@@ -251,12 +253,8 @@ class AutoLockMultiprocessingOrderedDict(OrderedDict):
             return super().serialize()
 
     def __len__(self):
-        with ContextTracker("len"):
-            with self._lock:
-                return super().__len__()
-
-    def shutdown(self):
-        self.mgr.shutdown()
+        with self._lock:
+            return super().__len__()
 
 
 def natural_number_generator():
