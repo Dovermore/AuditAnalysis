@@ -1,25 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9d82c61b-1943-4c16-a50b-c917d4554f87" name="Default Changelist" comment="kk">
-      <change afterPath="$PROJECT_DIR$/python/utility/math_utility.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/python/utility/mp_help.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/python/utility/program_utility.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/AuditAnalysis.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/AuditAnalysis.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=1/bayesian_0.05/bayesian_unconditional_mean.csv" beforeDir="false" afterPath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=1/bayesian_0.05/bayesian_unconditional_mean.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=1/bravo_0.05/bravo_unconditional_mean.csv" beforeDir="false" afterPath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=1/bravo_0.05/bravo_unconditional_mean.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=1/bravo_without_replacement_0.05/bravo_without_replacement_unconditional_mean.csv" beforeDir="false" afterPath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=1/bravo_without_replacement_0.05/bravo_without_replacement_unconditional_mean.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=1/clip_0.05/clip_unconditional_mean.csv" beforeDir="false" afterPath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=1/clip_0.05/clip_unconditional_mean.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=1/max_sprt_0.05/max_sprt_unconditional_mean.csv" beforeDir="false" afterPath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=1/max_sprt_0.05/max_sprt_unconditional_mean.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=1/truncated_bayesian_0.05/truncated_bayesian_unconditional_mean.csv" beforeDir="false" afterPath="$PROJECT_DIR$/calibrated_data/election_n=000100_m=00100_replacement=False_step=1/truncated_bayesian_0.05/truncated_bayesian_unconditional_mean.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/python/auditing_setup/election_processes.py" beforeDir="false" afterPath="$PROJECT_DIR$/python/auditing_setup/election_processes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/python/auditing_setup/expected_statistics.py" beforeDir="false" afterPath="$PROJECT_DIR$/python/auditing_setup/expected_statistics.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/python/auditing_setup/raw_distributions.py" beforeDir="false" afterPath="$PROJECT_DIR$/python/auditing_setup/raw_distributions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/python/calibration/calibration_data_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/python/calibration/calibration_data_generation.py" afterDir="false" />
-    </list>
+    <list default="true" id="9d82c61b-1943-4c16-a50b-c917d4554f87" name="Default Changelist" comment="kk" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
