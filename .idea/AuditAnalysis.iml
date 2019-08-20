@@ -4,7 +4,7 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/python" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.7 (ml_env)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.7 (audit_analysis)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PyDocumentationSettings">

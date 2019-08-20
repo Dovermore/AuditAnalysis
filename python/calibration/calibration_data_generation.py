@@ -80,5 +80,4 @@ class AuditMethodCalibrator:
                 kwargs_list.append(kwargs)
             audit_method_dict["calibrated_param_expected_statistics"] = \
                 audit_method_expected_statistics(audit_method, kwargs_list, self.n, self.m, step=self.step, replacement=self.replacement,
-                                                 true_ps=true_ps, save=save, fpath=
-                                                 path.join(self.fpath, f"{audit_method.name}_{self.risk_lim}"))
+                                                 true_ps=true_ps, save=save, fpath=path.join(self.fpath, f"{audit_method.name}_{self.risk_lim}"))

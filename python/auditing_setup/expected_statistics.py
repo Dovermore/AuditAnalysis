@@ -20,9 +20,6 @@ from collections import defaultdict as dd
 
 from auditing_setup.raw_distributions import AuditMethodDistributionComputer, to_csv
 from auditing_setup.audit_methods import Bayesian, BRAVO, make_legend
-
-from os.path import join
-
 import numpy as np
 
 
@@ -42,12 +39,13 @@ class ExpectedStatisticsComputer:
 
         # Computer all statistics related to alternative hypothesis
         power, dsample_power = audit_simulation.power(true_p, dsample=True, *args, **kwargs)
-        statistics_power = self.extract_statistics(dsample_power, self.n, self.m, power)
+        statistics_power, cdf = self.extract_statistics(dsample_power, self.n, self.m, power)
         summary_statistics = dict()
         summary_statistics["power"] = power
-        summary_statistics.update({key: statistics_power[key] for key in statistics_power})
+        summary_statistics.update(statistics_power)
         summary_statistics = pd.Series(summary_statistics, name=self.m)
-        return summary_statistics
+        pdf = dsample_power
+        return summary_statistics, pdf, cdf
 
     def compute_param_dict_statistics(self, true_p, params, *args,
                                       **kwargs):
@@ -78,6 +76,7 @@ class ExpectedStatisticsComputer:
         """
         dsample = pd.Series(dsample)
         statistics = dd(float)
+        cdf = dd(float)
         cumulative_probability = 0
 
         quantiles = [0.25, 0.5, 0.75, 0.9]
@@ -85,6 +84,7 @@ class ExpectedStatisticsComputer:
         for t in sorted(dsample.index):
             cumulative_probability += dsample[t]
             unconditional_mean += dsample[t] * t
+            cdf[t] = cumulative_probability
             for quantile in quantiles:
                 # Update unconditional quantile
                 ExpectedStatisticsComputer.update_quantile(t, cumulative_probability, quantile, statistics)
@@ -95,7 +95,7 @@ class ExpectedStatisticsComputer:
                 break
 
         # Update mean by computing (computed mean + rest prob * m)
-        statistics["unconditional_mean"] = unconditional_mean
+        statistics["unconditional_mean"] = unconditional_mean + (1-cumulative_probability) * m
         statistics["unconditional_mean_with_recount"] = unconditional_mean + (1 - cumulative_probability) * (m+n)
         statistics["conditional_mean"] = unconditional_mean / power
 
@@ -103,7 +103,7 @@ class ExpectedStatisticsComputer:
         cumulative_probability = 1
         for quantile in quantiles:
             ExpectedStatisticsComputer.update_quantile(m, cumulative_probability, quantile, statistics)
-        return statistics
+        return statistics, cdf
 
 
 def audit_method_expected_statistics(audit_method, audit_params, n, m, true_ps=np.linspace(0.45, 0.75, 25),
@@ -115,13 +115,12 @@ def audit_method_expected_statistics(audit_method, audit_params, n, m, true_ps=n
     for params in audit_params:
         legend = make_legend(audit_method, **params)
         statistics_data = dd(lambda: {"legend": legend})
-
         # add 0.5 for computing risk as well.
         if include_risk:
             true_ps.insert(0, 0.5)
         for true_p in true_ps:
             print("    true_p:", true_p)
-            statistics = expected_statistics_computer.compute_statistics(true_p, **params)
+            statistics, pdf, cdf = expected_statistics_computer.compute_statistics(true_p, **params)
             for stat_type in statistics.index:
                 statistics_data[stat_type][true_p] = statistics[stat_type]
         for stat_type in statistics_data:

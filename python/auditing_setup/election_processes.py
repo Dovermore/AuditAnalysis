@@ -27,58 +27,6 @@ def reverse_conversion(step, index):
     return t, t * step - (total - index)
 
 
-def find_terminal(f, n, m=1, step=10, p_h0=1/2, to_sequence=False,
-                  transition=False):
-    """
-    Find the terminal state given a specific setting
-    :param f: The auditing function
-    :param n: Number of total ballots
-    :param m: Max number to be sampled
-    :param step: How many ballots is sampled each step
-    :param p_h0: p under null hypothesis
-    :param to_sequence: If the output should be a pd.sequence (or dict)
-    :param transition: Should return only transition probabilities (for debug)
-    """
-    # 1 + step+1 + 2*step+1 + 3*step+1 +...+ m*step+1 = step*((m-1)*m)/2+(m+1)
-    rejections = set()
-
-    # Initialise a DataFrame as dense matrix
-    indexes = []
-    for t in range(m + 1):
-        total = t * step
-        for y_t in range(total + 1):
-            indexes.append(str((t * step, y_t)))
-    transition_matrix = pd.DataFrame(0, columns=indexes, index=indexes)
-
-    for t in range(m + 1):
-        total = t * step
-        for y_t in range(total + 1):
-            index = str((total, y_t))
-            # Rejected?
-            if f(n, total, y_t):
-                transition_matrix.loc[index, index] = 1
-                rejections.add(index)
-            # Already last layer
-            elif t == m:
-                transition_matrix.loc[index, index] = 1
-            else:
-                t_next = t + 1
-                for y_t_add in range(step+1):
-                    y_t_next = y_t + y_t_add
-                    index_next = str((t_next * step, y_t_next))
-                    transition_matrix.loc[index, index_next] = binom_pmf(y_t_add, step, p_h0)
-    if transition:
-        return transition_matrix
-    # Initialise the sparse matrix to sovle this chain
-    # transition_matrix = sp.sparse.csr_matrix(transition_matrix)
-    stationary = solve_stationary(transition_matrix.values)
-    d = {indexes[i]: np.asscalar(stationary[i]) for i in range(len(indexes))}
-    if to_sequence:
-        return pd.Series(d), rejections
-    # TODO clean this up!
-    return d, rejections
-
-
 def convert_to_sequence(array, m, step):
     d = {}
     for t in range(m + 1):
@@ -100,6 +48,7 @@ def solve_stationary(chain):
     return sp.linalg.lstsq(a, b)[0]
 
 
+@Cached
 def stochastic_process_simulation(rejection_fn, n, m, step=1, p=1/2, progression=False,
                                   replacement=False, *args, **kwargs):
     if m == -1:
@@ -140,8 +89,8 @@ def stochastic_process_simulation(rejection_fn, n, m, step=1, p=1/2, progression
             total_power += cumulative_rejection[key[0] - step]
             del cumulative_rejection[key[0] - step]
 
-        # If sampled to the max number already, break
-        if isinstance(m, int) and key[0] >= m:
+        # If sampled to the max number already, break (max number inclusive)
+        if isinstance(m, int) and key[0] > m:
             break
 
         # Break if a power is given and already at that power

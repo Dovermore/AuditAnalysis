@@ -5,6 +5,7 @@ from os.path import exists, join
 
 import pandas as pd
 import matplotlib.pyplot as plt
+from utility.program_utility import CachedMethod
 
 
 class AuditMethodDistributionComputer:
