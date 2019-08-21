@@ -1,5 +1,5 @@
 import logging
-import os
+from collections import OrderedDict as OD
 from os import path
 
 import multiprocessing as mp
@@ -85,7 +85,7 @@ class CachedMethod:
         return res
 
 
-class OrderedDict:
+class OrderedDict(OD):
     
     def __init__(self):
         # Priority queue for keys

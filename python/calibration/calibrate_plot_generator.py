@@ -41,5 +41,7 @@ def generate_plot(all_data_path):
 if __name__ == "__main__":
     n = 20000
     m = 1000
-    all_data_path = path.join("calibrated_data", f"election_n={n:06d}_m={m:05d}")
+    replacement = True
+    step = 1
+    all_data_path = path.join("calibrated_data", f"election_n={n:06d}_m={m:05d}_replacement={replacement}_step={step}")
     generate_plot(all_data_path)

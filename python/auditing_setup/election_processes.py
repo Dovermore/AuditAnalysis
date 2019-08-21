@@ -1,10 +1,14 @@
 import logging
 from multiprocessing import Pool
-from utility.program_utility import (Cached, SimpleProgressionBar, null_bar, AutoLockMultiprocessingDefaultdict, AutoLockMultiprocessingOrderedDict, CollectionsManager)
+from utility.program_utility import (Cached, SimpleProgressionBar, null_bar, AutoLockMultiprocessingDefaultdict,
+                                     AutoLockMultiprocessingOrderedDict, CollectionsManager,
+                                     OrderedDict)
 from utility.math_utility import binom_pmf
 import scipy as sp
 
 from math import floor
+
+from collections import defaultdict
 
 
 
@@ -100,6 +104,7 @@ def solve_stationary(chain):
 
 
 def single_node_update(rejection_dict, q, rejection_fn, n, t, y_t, p_t, step, p, replacement, *args, **kwargs):
+    rejection_dict = defaultdict(float)
     # Take the floor for winner's share
     w = floor(n * p)
 
@@ -141,13 +146,6 @@ def single_node_update(rejection_dict, q, rejection_fn, n, t, y_t, p_t, step, p,
 
 def stochastic_process_simulation(rejection_fn, n, m, step=1, p=1/2, progression=False,
                                   replacement=False, *args, **kwargs):
-    # manager for multiprocessing purpose
-    queue_mgr = CollectionsManager()
-    queue_mgr.start()
-    # manager for multiprocessing purpose
-    dict_mgr = CollectionsManager()
-    dict_mgr.start()
-
     if m == -1:
         m = n
     m += 1
