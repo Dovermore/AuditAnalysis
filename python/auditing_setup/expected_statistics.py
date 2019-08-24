@@ -73,6 +73,7 @@ class ExpectedStatisticsComputer:
     def extract_statistics(dsample, n, m, power):
         """
         :param dsample: Dictionary or pd.Series of distribution of sample
+        :param n: The election size
         :param m: The max number sampled (To compute mean)
         :return: pd.Series of computed statistics
         """
@@ -95,7 +96,7 @@ class ExpectedStatisticsComputer:
                 break
 
         # Update mean by computing (computed mean + rest prob * m)
-        statistics["unconditional_mean"] = unconditional_mean
+        statistics["unconditional_mean"] = unconditional_mean + (1 - cumulative_probability) * m
         statistics["unconditional_mean_with_recount"] = unconditional_mean + (1 - cumulative_probability) * (m+n)
         statistics["conditional_mean"] = unconditional_mean / power
 
