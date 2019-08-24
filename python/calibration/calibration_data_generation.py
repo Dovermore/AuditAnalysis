@@ -1,4 +1,4 @@
-from auditing_setup.expected_statistics import ExpectedStatisticsComputer, audit_method_expected_statistics
+from auditing_setup.expected_statistics import audit_method_expected_statistics
 from .binary_search_calibration import RiskBinarySearch
 from os import path
 from copy import deepcopy

@@ -222,7 +222,7 @@ def stochastic_process_simulation_serial(rejection_fn, n, m, step=1, p=1/2, prog
 
             # Compose the node
             node = (t_next, y_t_next, p_next * p_t)
-            if pd.isnull(p_next * p_t):
+            if isnull(p_next * p_t):
                 node = (t_next, y_t_next, 0)
 
             # if null is rejected, put it in the risk dict
@@ -238,7 +238,7 @@ def stochastic_process_simulation_serial(rejection_fn, n, m, step=1, p=1/2, prog
 
 @Cached
 def stochastic_process_simulation(*args, **kwargs):
-    multiprocessing = True
+    multiprocessing = False
     if "multiprocessing" in kwargs:
         multiprocessing = kwargs.pop("multiprocessing")
 

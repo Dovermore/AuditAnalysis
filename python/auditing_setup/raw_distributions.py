@@ -17,20 +17,22 @@ class AuditMethodDistributionComputer:
         self.replacement = replacement
         self.step = step
 
-    def power(self, true_p, dsample=False, cdf=False, progression=False, *args, **kwargs):
+    def power(self, true_p, dsample=False, cdf=False, progression=False, multiprocessing=False, *args, **kwargs):
         """
         Mostly used as helper for computing a single power
         :param true_p: The true proportion of winner's share
         :param dsample: distribution of sample votes
         :param cdf: should output be cdf instead of pdf
         :param progression: If a progression bar should be used
+        :param multiprocessing: If the simulation should be done with multiprocessing
         :param args: Parameters supporting the creation of auditing function
         :param kwargs: Parameters supporting the creation of auditing function
         :return: The power of current simulation
         """
         audit_f = self.audit_class(*args, **kwargs)
         reject_dict = stochastic_process_simulation(audit_f, n=self.n, m=self.m, p=true_p, progression=progression,
-                                                    step=self.step, replacement=self.replacement)
+                                                    step=self.step, replacement=self.replacement,
+                                                    multiprocessing=multiprocessing)
         power = sum(reject_dict.values())
         ret = power
         if dsample:
@@ -78,8 +80,8 @@ class AuditMethodDistributionComputer:
         pandas.Series as result
         :param true_p: The true proportion of winner's share
         :param params: single {key: values} pair of parameters to be simulated
-        :param dsample: if the distribution of sample should be returned
-            (For sanity check)
+        :param dsample: if the distribution of sample should be returned (For sanity check)
+        :param cdf: If a cumulative distribution instead of mass function should be returned
         :param progression: If a progression bar should be shown
         :param args: Other supportive arguments
         :param kwargs: Other supportive arguments

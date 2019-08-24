@@ -28,10 +28,19 @@ import numpy as np
 
 class ExpectedStatisticsComputer:
     def __init__(self, audit_class, n, m, step=1, replacement=False):
+        """
+        Instantiate a new computer for a certain election setup
+        :param audit_class: The class of audit to use
+        :param n: total number of ballots
+        :param m: number to sample
+        :param step: number to sample each timestamp
+        :param replacement: sampling with or without replacement?
+        """
         self.n = n
         if m == -1:
             m = n
         self.m = m
+        # TODO refactor this parameter to compute_statistics
         self.audit_class = audit_class
         self.step = step
         self.replacement = replacement
@@ -49,8 +58,7 @@ class ExpectedStatisticsComputer:
         summary_statistics = pd.Series(summary_statistics, name=self.m)
         return summary_statistics
 
-    def compute_param_dict_statistics(self, true_p, params, *args,
-                                      **kwargs):
+    def compute_param_dict_statistics(self, true_p, params, *args, **kwargs):
         key, params = AuditMethodDistributionComputer._parse_params(params)
         all_statistics = pd.DataFrame()
         for param in params:
@@ -70,18 +78,18 @@ class ExpectedStatisticsComputer:
             statistics[entry] = t
 
     @staticmethod
-    def extract_statistics(dsample, n, m, power):
+    def extract_statistics(dsample, n, m, power, quantiles=(0.25, 0.5, 0.75, 0.9, 0.99)):
         """
         :param dsample: Dictionary or pd.Series of distribution of sample
         :param n: The election size
         :param m: The max number sampled (To compute mean)
+        :param power: the power of the dsample (not necessary but to reduce the amount of computation)
+        :param quantiles: the quantiles to get statistics from
         :return: pd.Series of computed statistics
         """
         dsample = pd.Series(dsample)
         statistics = dd(float)
         cumulative_probability = 0
-
-        quantiles = [0.25, 0.5, 0.75, 0.9]
         unconditional_mean = 0
         for t in sorted(dsample.index):
             cumulative_probability += dsample[t]
