@@ -1,8 +1,10 @@
 import argparse
 from calibration.calibration_data_generation import AuditMethodCalibrator
 import csv
-from auditing_setup.audit_methods import *
 from os import path
+
+# The following import is needed because `eval` is used for audit methods
+from auditing_setup.audit_methods import *
 
 
 def main_run_calibration():
@@ -48,13 +50,19 @@ def run_calibration(file_path):
         audit_parameters = ["audit_method", "param_name", "param_min", "param_max"]
 
         config_list = list(config_reader)
+        # -2 because last 2 lines are settings for the true_ps and if the sampling is with or without replacement
         for audit_setting in config_list[:-2]:
+
+            # First 4 entries to be parsed by these few lines
             audit_kwargs = dict(zip(audit_parameters, audit_setting[:4]))
             for key in audit_kwargs:
                 if key != "param_name":
                     audit_kwargs[key] = eval(audit_kwargs[key])
+
+            # The rest of the lines are variable length, automatically parse them (additional parameters)
             for ind in range(4, len(audit_setting), 2):
                 audit_kwargs[audit_setting[ind]] = eval(audit_setting[ind + 1])
+
             print(audit_kwargs)
             audit_method_calibrator.add_method_config(**audit_kwargs)
 
@@ -68,4 +76,8 @@ def run_calibration(file_path):
 
 
 if __name__ == "__main__":
+    """
+    The entry for the calibration for a method are:
+    Method Name, Parameter Name, min_parameter, max_parameter, *(parameter names, values)
+    """
     main_run_calibration()
