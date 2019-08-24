@@ -1,9 +1,5 @@
-import logging
-from collections import OrderedDict as OD
 from os import path
 
-import multiprocessing as mp
-from multiprocessing.managers import SyncManager, DictProxy, AcquirerProxy
 from matplotlib import pyplot as plt
 
 from collections import defaultdict
@@ -85,7 +81,7 @@ class CachedMethod:
         return res
 
 
-class OrderedDict(OD):
+class OrderedDict:
     
     def __init__(self):
         # Priority queue for keys
@@ -109,7 +105,6 @@ class OrderedDict(OD):
         return key, value
 
     def peek(self):
-        logging.warning([str(self._q), str(self._dict)])
         key = self._q[-1]
         value = self._dict[key]
         return key, value
@@ -122,186 +117,6 @@ class OrderedDict(OD):
 
     def __len__(self):
         return len(self._q)
-
-
-class CollectionsManager(SyncManager):
-    pass
-
-
-# class DefaultdictProxy:
-#     def __init__(self, data_type):
-#         self.defaultdict = defaultdict(data_type)
-#
-#     def __len__(self):
-#         return self.defaultdict.__len__()
-#
-#     def __delitem__(self, v):
-#         self.defaultdict.__delitem__(v)
-#
-#     def __getitem__(self, k):
-#         self.defaultdict.__getitem__(k)
-#
-#     def __iter__(self):
-#         return self.defaultdict.__iter__()
-#
-#     def __setitem__(self, k, v):
-#         return self.defaultdict.__setitem__(k, v)
-#
-#     def clear(self):
-#         return self.defaultdict.clear()
-#
-#     def copy(self):
-#         return self.defaultdict.copy()
-#
-#     def items(self):
-#         return self.defaultdict.items()
-#
-#     def keys(self):
-#         return self.defaultdict.keys()
-#
-#     def pop(self, k):
-#         return self.defaultdict.pop(k)
-#
-#     def popitem(self):
-#         return self.defaultdict.popitem()
-#
-#     def setdefault(self, k, default):
-#         return self.defaultdict.setdefault(k, default)
-#
-#     def update(self, __m, **kwargs):
-#         return self.defaultdict.update(__m, **kwargs)
-#
-#     def values(self):
-#         return self.defaultdict.values()
-#
-#     def __str__(self):
-#         return self.defaultdict.__str__()
-
-
-class DequeProxy:
-    def __init__(self, *args):
-        self.deque = deque(*args)
-
-    def __len__(self):
-        return self.deque.__len__()
-
-    def appendleft(self, x):
-        self.deque.appendleft(x)
-
-    def append(self, x):
-        self.deque.append(x)
-
-    def pop(self):
-        return self.deque.pop()
-
-    def popleft(self):
-        return self.deque.popleft()
-
-    def __getitem__(self, k):
-        return self.deque.__getitem__(k)
-
-    def __str__(self):
-        return self.deque.__str__()
-
-
-
-global_lock = mp.Lock()
-def get_lock():
-    logging.debug('getting global_lock')
-    return global_lock
-
-
-CollectionsManager.register("deque", DequeProxy, exposed=["__len__", "append", "appendleft", "pop", "__getitem__",
-                                                          "__str__", "popleft"])
-CollectionsManager.register("defaultdict", defaultdict, DictProxy)
-CollectionsManager.register('Lock', get_lock, AcquirerProxy)
-
-
-class AutoLockMultiprocessingOrderedDict(OrderedDict):
-    """
-    Adding locks for all operations
-    """
-
-    def __init__(self, mgr: CollectionsManager):
-        """
-        :param mgr: Manager for deque and defaultdict
-        """
-        # super().__init__()
-        # Replace data structure with manager and multiprocessing safe data structures
-        self._q = mgr.deque()
-        self._dict = mgr.dict()
-        self._lock = mgr.Lock()
-
-    def append(self, key, value):
-        with self._lock:
-            super().append(key, value)
-
-    def pop(self):
-        with self._lock:
-            return super().pop()
-
-    def peek(self):
-        with self._lock:
-            return super().peek()
-
-    def __repr__(self):
-        with self._lock:
-            return super().__repr__()
-
-    def serialize(self):
-        with self._lock:
-            return super().serialize()
-
-    def __len__(self):
-        with self._lock:
-            return super().__len__()
-
-
-def natural_number_generator():
-    i = 0
-    while True:
-        yield i
-        i += 1
-
-
-class ContextTracker:
-    identifier_subscript = natural_number_generator()
-    enter_set = set()
-    exit_set = set()
-
-    def __init__(self, identifier):
-        # FIXME there might be threading issue here as well
-        self.identifier = str(identifier) + f"_{next(self.identifier_subscript)}"
-
-    def __enter__(self):
-        self.enter_set.add(self.identifier)
-        logging.debug(f"Enter message: {self.identifier}")
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.enter_set.remove(self.identifier)
-        self.exit_set.add(self.identifier)
-        logging.debug(f"Exit  message: {self.identifier}")
-
-
-class AutoLockMultiprocessingDefaultdict:
-    """
-    Multiprocessing compatible dict
-    """
-    def __init__(self, data_type, mgr):
-        self._dict = mgr.defaultdict(data_type)
-        self._lock = mgr.Lock()
-
-    def __getitem__(self, k):
-        with self._lock:
-            return self._dict[k]
-
-    def __setitem__(self, k, v):
-        with self._lock:
-            self._dict[k] = v
-
-    def __str__(self):
-        with self._lock:
-            return str(self._dict)
 
 
 class SimpleProgressionBar:
@@ -363,6 +178,26 @@ def pretty_print(sep=1, **kwargs):
     print(key_string) 
     print(value_string) 
     print(sep_string * sep, end="")
+
+
+class BatchFunctionWrapper:
+    def __init__(self):
+        self.partial_functions = []
+
+    def add_call(self, fn, *args, **kwargs):
+        self.partial_functions.append(
+            partial(fn, *args, **kwargs)
+        )
+
+    def __call__(self, *args, **kwargs):
+        results = []
+        for partial_function in self.partial_functions:
+            results.append(partial_function(*args, **kwargs))
+        return results
+
+    def __len__(self):
+        return len(self.partial_functions)
+
 
 
 def null_bar(x):

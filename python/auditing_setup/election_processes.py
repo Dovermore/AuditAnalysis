@@ -1,15 +1,14 @@
 import logging
-from multiprocessing import Pool
-from utility.program_utility import (Cached, SimpleProgressionBar, null_bar, AutoLockMultiprocessingDefaultdict,
-                                     AutoLockMultiprocessingOrderedDict, CollectionsManager,
-                                     OrderedDict)
-from utility.math_utility import binom_pmf
-import scipy as sp
-
-from math import floor
-
 from collections import defaultdict
+from math import floor
+from multiprocessing import Pool, cpu_count
 
+from pandas import isnull
+
+from utility.math_utility import binom_pmf, hypergeom_pmf
+from utility.program_utility import Cached, SimpleProgressionBar, null_bar, OrderedDict, BatchFunctionWrapper
+
+logging.getLogger().setLevel(logging.INFO)
 
 
 @Cached
@@ -20,91 +19,9 @@ def index_conversion(t, y_t, step):
     return step * ((t-1)*t)//2 + t + y_t  # (+1-1) due to 0 index
 
 
-@Cached
-def reverse_conversion(step, index):
-    t = 0
-    total = 0
-    while total < index:
-        t += 1
-        total += (t * step + 1)
-    return t, t * step - (total - index)
-
-
-def find_terminal(f, n, m=1, step=10, p_h0=1/2, to_sequence=False,
-                  transition=False):
-    """
-    Find the terminal state given a specific setting
-    :param f: The auditing function
-    :param n: Number of total ballots
-    :param m: Max number to be sampled
-    :param step: How many ballots is sampled each step
-    :param p_h0: p under null hypothesis
-    :param to_sequence: If the output should be a pd.sequence (or dict)
-    :param transition: Should return only transition probabilities (for debug)
-    """
-    # 1 + step+1 + 2*step+1 + 3*step+1 +...+ m*step+1 = step*((m-1)*m)/2+(m+1)
-    rejections = set()
-
-    # Initialise a DataFrame as dense matrix
-    indexes = []
-    for t in range(m + 1):
-        total = t * step
-        for y_t in range(total + 1):
-            indexes.append(str((t * step, y_t)))
-    transition_matrix = pd.DataFrame(0, columns=indexes, index=indexes)
-
-    for t in range(m + 1):
-        total = t * step
-        for y_t in range(total + 1):
-            index = str((total, y_t))
-            # Rejected?
-            if f(n, total, y_t):
-                transition_matrix.loc[index, index] = 1
-                rejections.add(index)
-            # Already last layer
-            elif t == m:
-                transition_matrix.loc[index, index] = 1
-            else:
-                t_next = t + 1
-                for y_t_add in range(step+1):
-                    y_t_next = y_t + y_t_add
-                    index_next = str((t_next * step, y_t_next))
-                    transition_matrix.loc[index, index_next] = binom_pmf(y_t_add, step, p_h0)
-    if transition:
-        return transition_matrix
-    # Initialise the sparse matrix to sovle this chain
-    # transition_matrix = sp.sparse.csr_matrix(transition_matrix)
-    stationary = solve_stationary(transition_matrix.values)
-    d = {indexes[i]: np.asscalar(stationary[i]) for i in range(len(indexes))}
-    if to_sequence:
-        return pd.Series(d), rejections
-    # TODO clean this up!
-    return d, rejections
-
-
-def convert_to_sequence(array, m, step):
-    d = {}
-    for t in range(m + 1):
-        for y_t in range(t*step + 1):
-            index = index_conversion(t, y_t, step)
-            d[(t * step, y_t)] = np.asscalar(array[index])
-    return pd.Series(d)
-
-
-def solve_stationary(chain):
-    """ x = xA where x is the answer
-    x - xA = 0
-    x( I - A ) = 0 and sum(x) = 1
-    """
-    n = chain.shape[0]
-    a = np.eye(n) - chain
-    a = np.vstack((a.T, np.ones(n)))
-    b = np.matrix([0] * n + [1]).T
-    return sp.linalg.lstsq(a, b)[0]
-
-
-def single_node_update(rejection_dict, q, rejection_fn, n, t, y_t, p_t, step, p, replacement, *args, **kwargs):
+def single_node_update(rejection_fn, n, t, y_t, p_t, step, p, replacement, *args, **kwargs):
     rejection_dict = defaultdict(float)
+    q = OrderedDict()
     # Take the floor for winner's share
     w = floor(n * p)
 
@@ -128,71 +45,96 @@ def single_node_update(rejection_dict, q, rejection_fn, n, t, y_t, p_t, step, p,
 
         # Compose the node
         node = (t_next, y_t_next, p_next * p_t)
-        if pd.isnull(node[2]):
+        if isnull(node[2]):
             node = (t_next, y_t_next, 0)
 
-        logging.debug(f"rejection({[n, t, y_t]}): {reject}")
         # No need for a lock since the Data Structures inherently have locks in their method
         # if null is rejected, put it in the risk dict
         if reject:
-            logging.debug(f"        rejected: {node[:2]} -> {node[2]}")
             rejection_dict[node[:2]] += node[2]
         else:
-            logging.debug(f"        append queue: {node[:2]} -> {node[2]}")
-            logging.debug(f"{n} | {t} | {y_t} | {node[:2]} | {node[2]} starts to acquire lock")
             q.append(node[:2], node[2])
-            logging.debug(f"{n} | {t} | {y_t} | {node[:2]} | {node[2]} release lock")
+    return rejection_dict, q
 
 
 def stochastic_process_simulation(rejection_fn, n, m, step=1, p=1/2, progression=False,
-                                  replacement=False, *args, **kwargs):
+                                  replacement=False, multiprocessing_batch=50, *args, **kwargs):
     if m == -1:
         m = n
     m += 1
-
     progression_bar = null_bar
-
     if progression:
         progression_bar = SimpleProgressionBar(m)
-
-    rejection_dict = AutoLockMultiprocessingDefaultdict(float, dict_mgr)
-
+    rejection_dict = defaultdict(float)
     # first element: t,
     # second element: y_t, (observe every step time)
     # third element: probability going to this state
     source = (0, 0, 1)
 
-    q = AutoLockMultiprocessingOrderedDict(queue_mgr)
+    q = OrderedDict()
     q.append(source[:2], source[2])
+
+    num_workers = cpu_count()
 
     for i in range(0, m, step):
         # get next node to explore
-        logging.debug(f"{i}")
         key, value = q.peek()
 
-        logging.debug(f"    Start Pool: {i}")
-        with Pool() as pool:
+        logging.info(f"    Start Pool: {i}")
+        async_results = []
+
+        with Pool(num_workers) as pool:
+            # Instantiate first wrapper
+            batch_function_wrapper = BatchFunctionWrapper()
+            total = 0
             while key[0] <= i:
                 assert key[0] == i
                 # Remove the value
                 q.pop()
                 t, y_t, p_t = *key, value
-                logging.debug(f"*        poped: {t, y_t, p_t}")
-                pool.apply_async(single_node_update, (rejection_dict, q, rejection_fn, n, t, y_t, p_t, step, p,
-                                                      replacement, *args), kwargs)
+                logging.info(f"         poped: {t, y_t, p_t}")
+
+                # If not the number of batches yet, add to current batch
+                if len(batch_function_wrapper) < multiprocessing_batch:
+                    batch_function_wrapper.add_call(single_node_update, rejection_fn, n, t, y_t, p_t,
+                                                    step, p, replacement, *args, **kwargs)
+                # If the batch processor already full, send to another process to process
+                else:
+                    total += 1
+                    logging.info(f"Total sent to process = {total}")
+                    async_result = pool.apply_async(batch_function_wrapper, ())
+                    async_results.append(async_result)
+                    batch_function_wrapper = BatchFunctionWrapper()
+
                 if not len(q):
                     break
                 key, value = q.peek()
-        pool.join()
-        logging.debug(f"    End   Pool: {i}")
+            # If there is still calls left un processed, send to a process.
+            if len(batch_function_wrapper):
+                async_result = pool.apply_async(batch_function_wrapper, ())
+                async_results.append(async_result)
+
+            # Wait for all the processes to finish and update the results
+            logging.info("        waiting result:")
+            all_results = []
+            for async_result in async_results:
+                all_results += async_result.get()
+
+            for result_rejection_dict, result_q in all_results:
+                # logging.debug("--------------------")
+                # logging.debug(result_rejection_dict)
+                # logging.debug(result_q)
+                for key, value in result_rejection_dict.items():
+                    rejection_dict[key] += value
+                while len(result_q):
+                    key, value = result_q.pop()
+                    q.append(key, value)
+        logging.info(f"    End   Pool: {i}")
         # Update progression
         progression_bar(key[0])
-
-        logging.debug(f"len | acquire lock")
         # Break if no more item remains (all rejected)
         if not len(q):
             break
-        logging.debug(f"len | release lock")
 
     # The information in this is enough to determine the result
     return rejection_dict
@@ -201,11 +143,13 @@ def stochastic_process_simulation(rejection_fn, n, m, step=1, p=1/2, progression
 if __name__ == "__main__":
     logging.getLogger().setLevel(logging.DEBUG)
     from auditing_setup.audit_methods import *
-    from time import process_time
-    now = process_time()
+    from time import time
+    now = time()
     bayesian = Bayesian(0.99)
-    stochastic_process_simulation(bayesian, 100000, 5000, replacement=True)
-    after = process_time()
+    # rejection_dict = stochastic_process_simulation(bayesian, 100000, 2000, replacement=False)
+    rejection_dict = stochastic_process_simulation(bayesian, 1000, 1000, replacement=False)
+    print(rejection_dict, sum(rejection_dict.values()))
+    after = time()
     duration = after - now
     print(f"duration: {duration}")
     pass
