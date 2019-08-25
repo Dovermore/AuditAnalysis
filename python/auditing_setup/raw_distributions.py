@@ -97,7 +97,6 @@ class AuditMethodDistributionComputer:
             power = self.power(true_p, dsample=dsample, cdf=cdf, progression=progression, *args, **kwargs)
             if dsample:
                 power, _dsample = power
-                # dsamples[param] = _dsample
                 dsamples = pd.concat([dsamples, _dsample], axis=1)
             simulations[param] = power
         ret = pd.Series(simulations, name=key)

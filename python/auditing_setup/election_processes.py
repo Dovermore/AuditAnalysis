@@ -238,6 +238,7 @@ def stochastic_process_simulation_serial(rejection_fn, n, m, step=1, p=1/2, prog
 
 @Cached
 def stochastic_process_simulation(*args, **kwargs):
+    # TODO optimise the checking for rejection (don't need to compute the rejection after a certain point)
     multiprocessing = False
     if "multiprocessing" in kwargs:
         multiprocessing = kwargs.pop("multiprocessing")

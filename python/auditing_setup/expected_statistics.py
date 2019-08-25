@@ -45,7 +45,7 @@ class ExpectedStatisticsComputer:
         self.step = step
         self.replacement = replacement
 
-    def compute_statistics(self, true_p, *args, **kwargs):
+    def compute_statistics(self, true_p, return_pdf=False, *args, **kwargs):
         audit_simulation = AuditMethodDistributionComputer(self.audit_class, self.n,
                                                            self.m, step=self.step, replacement=self.replacement)
 
@@ -56,6 +56,8 @@ class ExpectedStatisticsComputer:
         summary_statistics["power"] = power
         summary_statistics.update({key: statistics_power[key] for key in statistics_power})
         summary_statistics = pd.Series(summary_statistics, name=self.m)
+        if return_pdf:
+            return summary_statistics, dsample_power
         return summary_statistics
 
     def compute_param_dict_statistics(self, true_p, params, *args, **kwargs):
@@ -120,23 +122,54 @@ def audit_method_expected_statistics(audit_method, audit_params, n, m, true_ps=n
     true_ps = list(true_ps)
     expected_statistics_computer = ExpectedStatisticsComputer(audit_method, n, m, step=step, replacement=replacement)
 
+    # Store all statistics in a dictionary of DataFrame with values of same type of statistics
     statistics_dfs = dd(lambda: pd.DataFrame())
+    legends = []
+    pdf_dfs = []
+    cdf_dfs = []
     for params in audit_params:
         legend = make_legend(audit_method, **params)
+        legends.append(legend)
+
+        # Made up of each type of statistics and each row of data in statistics_df (for all p)
         statistics_data = dd(lambda: {"legend": legend})
+        # Store all pdf data and cdf data
+        pdf_data = []
+        cdf_data = []
 
         # add 0.5 for computing risk as well.
         if include_risk:
             true_ps.insert(0, 0.5)
         for true_p in true_ps:
             print("    true_p:", true_p)
-            statistics = expected_statistics_computer.compute_statistics(true_p, **params)
+            statistics, pdf = expected_statistics_computer.compute_statistics(true_p, return_pdf=True, **params)
+            cdf = AuditMethodDistributionComputer.dsample_to_cdf(pdf, m)
+
             for stat_type in statistics.index:
                 statistics_data[stat_type][true_p] = statistics[stat_type]
+            pdf_data.append(pdf)
+            cdf_data.append(cdf)
+
         for stat_type in statistics_data:
             statistics_dfs[stat_type] = statistics_dfs[stat_type].append(statistics_data[stat_type], ignore_index=True)
+
+        pdf_data = pd.concat(pdf_data, axis=1)
+        pdf_data = pdf_data.fillna(value=0)
+        pdf_data.columns = true_ps
+        pdf_dfs.append(pdf_data)
+
+        cdf_data = pd.concat(cdf_data, axis=1)
+        cdf_data = cdf_data.fillna(value=0)
+        cdf_data.columns = true_ps
+        cdf_dfs.append(cdf_data)
+
     for stat_type in statistics_dfs:
         statistics_dfs[stat_type] = statistics_dfs[stat_type].set_index("legend")
+
+    pdf_dfs = pd.concat(pdf_dfs, keys=legends)
+    cdf_dfs = pd.concat(cdf_dfs, keys=legends)
+    statistics_dfs["pdf"] = pdf_dfs
+    statistics_dfs["cdf"] = cdf_dfs
     if save:
         for stat_type in statistics_dfs:
             to_csv(statistics_dfs[stat_type], f"{audit_method.name}_{stat_type}.csv", fpath)

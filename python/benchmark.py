@@ -3,9 +3,9 @@ import subprocess
 from os import path
 
 
-def benchmark(base_path="calibration_data_configs", base_log_path="benchmark_logs"):
+def benchmark(base_path="configs", base_log_path="benchmark_logs"):
     python = "/anaconda/envs/ml_env/bin/python"
-    run_file = "/Users/Dovermore/Documents/Research/AustralianElectionAuditing/AuditAnalysis/python/run_calibration.py"
+    run_file = "/Users/Dovermore/Documents/Research/AustralianElectionAuditing/AuditAnalysis/python/run_calibrated_generation.py"
     for file_path, folders, files in os.walk(base_path):
         print(file_path)
         for file in files:
