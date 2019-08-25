@@ -92,6 +92,9 @@ class RiskBinarySearch:
 
         try:
             while self.__next__(detail=False) is not True:
+                if len(self._search_record.values()) != len(set(self._search_record.values())):
+                    print("Repeated Risk found when searching, stop searching now...")
+                    break
                 if self.step_count >= self.max_iter:
                     print(f"Maximum iter reached {self.max_iter}")
                     if manual:
