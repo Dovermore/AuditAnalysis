@@ -1,11 +1,12 @@
 import argparse
+from os import path
 
 from auditing_setup.expected_statistics import audit_method_expected_statistics
 import csv
 # The following import is needed because `eval` is used for audit methods
 from auditing_setup.audit_methods import *
 
-from parse_election import parse_election_config
+from parse_election import parse_election_config, make_path
 
 
 def main_run_uncalibrated_generation():
@@ -24,17 +25,15 @@ def main_run_uncalibrated_generation():
 
 def run_uncalibrated_generation(election_config, method_config):
     global_kwargs, true_ps, save = parse_election_config(election_config)
-    global_kwargs.pop("p_O")
-    global_kwargs.pop("tol")
-    global_kwargs.pop("max_iter")
-    global_kwargs.pop("risk_lim")
-    global_kwargs.pop("fpath")
+    for key in ("p_0", "tol", "max_iter", "risk_lim", "fpath"):
+        if key in global_kwargs:
+            global_kwargs.pop(key)
 
     with open(method_config) as config_file:
         config_reader = csv.reader(config_file)
         config_list = list(config_reader)
         for audit_setting in config_list:
-            audit_method = audit_setting[0]
+            audit_method = eval(audit_setting[0])
             # First entry to be parsed by these few lines
             audit_kwargs = dict()
             for key in audit_kwargs:
@@ -45,8 +44,18 @@ def run_uncalibrated_generation(election_config, method_config):
             for ind in range(1, len(audit_setting), 2):
                 audit_kwargs[audit_setting[ind]] = eval(audit_setting[ind + 1])
             print(audit_kwargs)
-    audit_method_expected_statistics(audit_method, [audit_kwargs], true_ps=true_ps, save=True,
-                                     fpath="uncalibrated_data", include_risk=True, **global_kwargs)
+
+            base_path = "uncalibrated_data"
+            fpath = make_path(
+                base_path,
+                global_kwargs["n"],
+                global_kwargs["m"],
+                global_kwargs["replacement"],
+                global_kwargs["step"]
+            )
+            fpath = path.join(fpath, audit_method.name)
+            audit_method_expected_statistics(audit_method, [audit_kwargs], true_ps=true_ps, save=True,
+                                             fpath=fpath, include_risk=True, **global_kwargs)
 
 
 if __name__ == "__main__":

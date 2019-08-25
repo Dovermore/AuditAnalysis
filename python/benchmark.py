@@ -21,6 +21,5 @@ def benchmark(base_path="configs", base_log_path="benchmark_logs"):
                     args = [python, run_file, file]
                     subprocess.Popen(args=args, stdout=log)
 
-
 if __name__ == "__main__":
     benchmark()

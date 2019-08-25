@@ -35,9 +35,16 @@ def parse_election_config(election_config):
         save = eval(save_config[0])
         if save:
             global_kwargs["fpath"] = save_config[1]
-        global_kwargs["fpath"] = path.join(global_kwargs["fpath"], f"election_n={global_kwargs['n']:06d}_m="
-                                                                   f"{global_kwargs['m']:05d}_replacement={global_kwargs['replacement']}_"
-                                                                   f"step={global_kwargs['step']}")
+        global_kwargs["fpath"] = make_path(
+            global_kwargs["fpath"],
+            global_kwargs["n"],
+            global_kwargs["m"],
+            global_kwargs["replacement"],
+            global_kwargs["step"]
+        )
         print(global_kwargs)
         return global_kwargs, true_ps, save
 
+
+def make_path(base, n, m, replacement, step):
+    return path.join(base, f"election_n={n:06d}_m={m:05d}_replacement={replacement}_step={step}")
