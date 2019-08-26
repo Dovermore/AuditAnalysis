@@ -2,6 +2,7 @@ import csv
 from os import path
 
 
+# Refactor the save out to a separate parameter
 def parse_election_config(election_config):
     with open(election_config) as config_file:
         config_reader = csv.reader(config_file)

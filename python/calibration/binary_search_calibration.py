@@ -73,7 +73,10 @@ class RiskBinarySearch:
                     max_risk = max(self.prev_param_risk, self.param_risk)
                     if not min_risk <= self.risk_lim <= max_risk:
                         raise RiskOutOfRangeError(f"Risk Lim {self.risk_lim:.2f} is not in the "
-                                                  f"range of possible risks {min_risk:.2f} <= risk <= {max_risk:.2f}")
+                                                  f"range of possible risks {min_risk:.2f} <= risk <= {max_risk:.2f}\n"
+                                                  f"{audit_method.name}, kwargs: {full_kwargs}, param:{self.param_name}"
+                                                  f"{self.param_min},{self.param_max}, {self.n}_{self.m}_"
+                                                  f"{self.replacement}_{self.step}")
                     self.lo = self.param_min if self.increasing_risk else self.param_max
                     self.hi = self.param_max if self.increasing_risk else self.param_min
                 self.prev_param_val = self.param_val

@@ -1,0 +1,8 @@
+Bayesian,critical_value,0.1,0.000000000001,a,1,b,1
+MaxSPRT,alpha,0.001,0.5
+TruncatedBayesian,critical_value,0.001,0.5,a,1,b,1
+BRAVO,alpha,0.001,0.5,p,0.7
+BRAVO,alpha,0.001,0.5,p,0.55
+HyperGeomBRAVO,alpha,0.001,0.5,p,0.7
+HyperGeomBRAVO,alpha,0.001,0.5,p,0.55
+Clip,alpha,0.001,0.5,n_total,5000
