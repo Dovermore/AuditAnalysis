@@ -27,7 +27,7 @@ def generate_plot(all_data_path):
         print(data_type)
         all_data[data_type] = all_data[data_type].set_index("legend")
         data = all_data[data_type]
-        plt.figure(figsize=[10, 10])
+        plt.figure(figsize=[14, 14])
         for method, method_data in data.iterrows():
             print("=======")
             print(method_data)
