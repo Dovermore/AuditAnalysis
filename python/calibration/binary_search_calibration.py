@@ -72,9 +72,9 @@ class RiskBinarySearch:
                     min_risk = min(self.prev_param_risk, self.param_risk)
                     max_risk = max(self.prev_param_risk, self.param_risk)
                     if not min_risk <= self.risk_lim <= max_risk:
-                        raise RiskOutOfRangeError(f"Risk Lim {self.risk_lim:.2f} is not in the "
-                                                  f"range of possible risks {min_risk:.2f} <= risk <= {max_risk:.2f}\n"
-                                                  f"{audit_method.name}, kwargs: {full_kwargs}, param:{self.param_name}"
+                        raise RiskOutOfRangeError(f"Risk Lim {self.risk_lim:.5f} is not in the "
+                                                  f"range of possible risks {min_risk:.5f} <= risk <= {max_risk:.5f}\n"
+                                                  f"{self.audit_method.name}, kwargs: {full_kwargs}, param:{self.param_name}"
                                                   f"{self.param_min},{self.param_max}, {self.n}_{self.m}_"
                                                   f"{self.replacement}_{self.step}")
                     self.lo = self.param_min if self.increasing_risk else self.param_max
@@ -89,7 +89,7 @@ class RiskBinarySearch:
                     self.param_val = (self.lo + self.param_val) / 2
         return (ret, self.param_risk) if detail else ret
 
-    def binary_search(self, risk_lim=0.05, manual=False):
+    def binary_search(self, risk_lim=0.05, manual=False, just_warn=True):
         self.risk_lim = risk_lim
         self.reset()
 
@@ -108,18 +108,25 @@ class RiskBinarySearch:
                             self.max_iter = int(user_input)
                     else:
                         break
-        except RiskOutOfRangeError:
-            if not manual:
+        except RiskOutOfRangeError as rooe:
+            if just_warn:
+                from sys import stderr
+                print("--------------------", file=stderr)
+                print(rooe, file=stderr)
+                print(f"No appropriate risk found, using {self.param_name}={self.param_val}, with risk: {self.param_risk} instead", file=stderr)
+                print("--------------------", file=stderr)
+            elif not manual:
                 raise StopIteration("Error Encountered in available range of risks")
-            new_min = input(f"Enter a new minimum for the parameter({self.param_name}), enter 'n' to cancel")
-            if new_min == "n":
-                return
-            self.param_min = float(new_min)
-            new_max = input(f"Enter a new maximum for the parameter({self.param_name}), enter 'n' to cancel")
-            if new_max == "n":
-                return
-            self.param_max = float(new_max)
-            return self.binary_search(risk_lim)
+            else:
+                new_min = input(f"Enter a new minimum for the parameter({self.param_name}), enter 'n' to cancel")
+                if new_min == "n":
+                    return
+                self.param_min = float(new_min)
+                new_max = input(f"Enter a new maximum for the parameter({self.param_name}), enter 'n' to cancel")
+                if new_max == "n":
+                    return
+                self.param_max = float(new_max)
+                return self.binary_search(risk_lim)
         return self.param_val, self.param_risk
 
     @property

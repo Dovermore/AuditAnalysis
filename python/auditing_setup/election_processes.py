@@ -184,8 +184,8 @@ def stochastic_process_simulation_serial(rejection_fn, n, m, step=1, p=1/2, prog
             total_power += cumulative_rejection[key[0] - step]
             del cumulative_rejection[key[0] - step]
 
-        # If sampled to the max number already, break (max number inclusive)
-        if isinstance(m, int) and key[0] > m:
+        # If sampled to the max number already, break (max number exclusive)
+        if isinstance(m, int) and key[0] >= m:
             break
 
         # Break if a power is given and already at that power
@@ -253,10 +253,9 @@ if __name__ == "__main__":
     from auditing_setup.audit_methods import *
     from time import time
     now = time()
-    bayesian = Bayesian(0.99)
-    rejection_dict = stochastic_process_simulation(bayesian, 100000, 2000, replacement=False)
-    # rejection_dict = stochastic_process_simulation(bayesian, 1000, 1000, replacement=False)
-    # rejection_dict = stochastic_process_simulation(bayesian, 100, 100, replacement=False)
+    # audit_function = BRAVO(0.7, 0.5)
+    audit_function = TruncatedBayesian(0.9)
+    rejection_dict = stochastic_process_simulation(audit_function, 5000, 500, replacement=False, step=500)
     print(rejection_dict, sum(rejection_dict.values()))
     after = time()
     duration = after - now
