@@ -35,13 +35,13 @@ def test_bravo():
     quantiles = quantiles.drop(["mean"], axis=1)
     for true_p in quantiles.index:
         m = max(quantiles.loc[true_p])
-        if m > 1000:
+        if m > 500:
             continue
         esc = ExpectedStatisticsComputer(BRAVO, n, m)
         stats = esc.compute_statistics(true_p, p=true_p, alpha=alpha)
         for column in quantiles.columns:
             entry = f"unconditional_quantile{column:.2f}"
-            assert abs(quantiles.loc[true_p, column] - stats[entry]) < 5, \
+            assert abs(quantiles.loc[true_p, column] - stats[entry]) < 3, \
                 f"{quantiles.loc[true_p, column]} {stats[entry]}"
 
 

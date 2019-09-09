@@ -1,4 +1,4 @@
-from auditing_setup.election_processes import stochastic_process_simulation
+from auditing_setup.audit_process import stochastic_process_simulation
 from collections import defaultdict as dd
 from os import makedirs
 from os.path import exists, join
@@ -73,72 +73,6 @@ class AuditMethodDistributionComputer:
         for key in params:
             break
         return key, params[key]
-
-    # def powers(self, true_p, params, dsample=False, cdf=False, progression=False, *args, **kwargs):
-    #     """
-    #     Compute set of powers for a set of parameters, will return a
-    #     pandas.Series as result
-    #     :param true_p: The true proportion of winner's share
-    #     :param params: single {key: values} pair of parameters to be simulated
-    #     :param dsample: if the distribution of sample should be returned (For sanity check)
-    #     :param cdf: If a cumulative distribution instead of mass function should be returned
-    #     :param progression: If a progression bar should be shown
-    #     :param args: Other supportive arguments
-    #     :param kwargs: Other supportive arguments
-    #     :return: pd.Series of all simulated results.
-    #     """
-    #     key, params = self._parse_params(params)
-    #     if dsample:
-    #         dsamples = pd.DataFrame()
-    #     simulations = {}
-    #     for param in params:
-    #         print(f"            param = {param}")
-    #         kwargs[key] = param
-    #         power = self.power(true_p, dsample=dsample, cdf=cdf, progression=progression, *args, **kwargs)
-    #         if dsample:
-    #             power, _dsample = power
-    #             dsamples = pd.concat([dsamples, _dsample], axis=1)
-    #         simulations[param] = power
-    #     ret = pd.Series(simulations, name=key)
-    #     if dsample:
-    #         dsamples.columns = params
-    #         dsamples = dsamples.fillna(value=0)
-    #         ret = [ret, dsamples]
-    #     return ret
-
-    # def tabular_power(self, true_ps, params, dsample=False, cdf=False, progression=False, *args, **kwargs):
-    #     """
-    #     Compute table of powers for a set of parameters, and a set of true
-    #     probabilities will return a pandas.DataFrame as result
-    #     :param true_ps: List of true proportions of winner's share
-    #     :param params: single {key: values} pair of parameters to be simulated
-    #     :param dsample: if the distribution of sample should be returned
-    #         (For sanity check)
-    #     :param progression: If a progression bar should be shown
-    #     :param args: Other supportive arguments
-    #     :param kwargs: Other supportive arguments
-    #     :return: pd.DataFrame of all simulated results.
-    #     """
-    #     key, params = self._parse_params(params)
-    #     if dsample:
-    #         dsamples = []
-    #     table = pd.DataFrame(columns=true_ps, index=params)
-    #     print("Tabulating all powers for given set of \n"
-    #           + f"    True P: {true_ps}\n"
-    #           + f"    parameters: {key} -> {params}")
-    #     for true_p in true_ps:
-    #         print(f"        true_p = {true_p}")
-    #         column = self.powers(true_p, {key: params}, dsample=dsample, cdf=cdf, progression=progression,
-    #                              *args, **kwargs)
-    #         if dsample:
-    #             column, _dsample = column
-    #             dsamples.append(_dsample)
-    #         table[true_p] = column
-    #     ret = table
-    #     if dsample:
-    #         dsamples = pd.concat(dsamples, keys=true_ps, axis=0)
-    #         ret = [ret, dsamples]
-    #     return ret
 
 
 def type1_power_plot(*args):

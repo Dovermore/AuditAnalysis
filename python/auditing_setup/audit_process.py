@@ -2,9 +2,9 @@ import logging
 from collections import defaultdict
 from math import floor
 from multiprocessing import Pool, cpu_count
-
+from auditing_setup.audit_methods import BaseMethod
 from pandas import isnull
-
+from auditing_setup.election_setting import Election
 from utility.math_utility import binom_pmf, hypergeom_pmf
 from utility.program_utility import Cached, SimpleProgressionBar, null_bar, OrderedDict, BatchFunctionWrapper
 
@@ -62,8 +62,14 @@ def single_node_update(rejection_fn, n, t, y_t, p_t, step, p, replacement, *args
     return rejection_dict, q
 
 
-def stochastic_process_simulation_parallel(rejection_fn, n, m, step=1, p=1/2, progression=False,
-                                           replacement=False, multiprocessing_batch=30, *args, **kwargs):
+def stochastic_process_simulation_parallel(rejection_fn: BaseMethod, election: Election, progression=False,
+                                           multiprocessing_batch=30, *args, **kwargs):
+    m = election.m
+    n = election.n
+    step = election.step
+    replacement = election.replacement
+    p = election.p
+
     if m == -1:
         m = n
     m += 1
@@ -144,8 +150,14 @@ def stochastic_process_simulation_parallel(rejection_fn, n, m, step=1, p=1/2, pr
 
 
 @Cached
-def stochastic_process_simulation_serial(rejection_fn, n, m, step=1, p=1/2, progression=False,
-                                         replacement=False, *args, **kwargs):
+def stochastic_process_simulation_serial(rejection_fn, election: Election, progression=False, *args, **kwargs):
+
+    m = election.m
+    n = election.n
+    step = election.step
+    replacement = election.replacement
+    p = election.p
+
     if m == -1:
         m = n + 1
 
@@ -206,8 +218,9 @@ def stochastic_process_simulation_serial(rejection_fn, n, m, step=1, p=1/2, prog
         n_remain = n - t
         w_remain = w - y_t
 
+        reject = True
         # All possible generated sa for next batch
-        for i in range(step+1):
+        for i in range(step, -1, -1):
             y_t_next = y_t + i
 
             if not replacement:
@@ -217,8 +230,9 @@ def stochastic_process_simulation_serial(rejection_fn, n, m, step=1, p=1/2, prog
                 # Else use binomial compute probability
                 p_next = binom_pmf(i, step, p)
 
-            # Is this state rejected?
-            reject = rejection_fn(n, t_next, y_t_next, *args, **kwargs)
+            # Update reject if it's not False, don't need to compute reject if it's False (as is tested sequentially)
+            if reject is True:
+                reject = rejection_fn(n, t_next, y_t_next, *args, **kwargs)
 
             # Compose the node
             node = (t_next, y_t_next, p_next * p_t)
