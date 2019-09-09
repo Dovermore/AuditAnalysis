@@ -4,6 +4,7 @@ from matplotlib import pyplot as plt
 
 from collections import defaultdict
 from collections import deque
+from collections import OrderedDict as PythonOrderedDict
 from functools import partial
 
 import os
@@ -35,7 +36,6 @@ class Cached:
         sorted_kwargs = tuple(sorted(kwargs.items()))
         try:
             cached_value = self.cache[(args, sorted_kwargs)]
-            # print("cached")
             return cached_value
         except KeyError:
             ret = self.cache[(args, sorted_kwargs)] = self.function(*args, **kwargs)

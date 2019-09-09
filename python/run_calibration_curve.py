@@ -6,9 +6,9 @@ from os import path
 
 from auditing_setup.audit_methods import *
 from calibration.calibration_curve_generator import CalibrationCurveGenerator
-from calibration.calibration_data_generation import AuditMethodCalibrator
+from calibration.calibration_data_generator import AuditMethodCalibrator
 
-from parse_election import parse_election_config
+from parse_args import parse_election_config
 
 
 def main_run_calibration_curve():

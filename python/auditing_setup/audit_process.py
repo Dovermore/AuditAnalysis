@@ -62,8 +62,9 @@ def single_node_update(rejection_fn, n, t, y_t, p_t, step, p, replacement, *args
     return rejection_dict, q
 
 
-def stochastic_process_simulation_parallel(rejection_fn: BaseMethod, election: Election, progression=False,
-                                           multiprocessing_batch=30, *args, **kwargs):
+@Cached
+def audit_process_simulation_parallel(rejection_fn: BaseMethod, election: Election, progression=False,
+                                      multiprocessing_batch=30, *args, **kwargs):
     m = election.m
     n = election.n
     step = election.step
@@ -150,7 +151,7 @@ def stochastic_process_simulation_parallel(rejection_fn: BaseMethod, election: E
 
 
 @Cached
-def stochastic_process_simulation_serial(rejection_fn, election: Election, progression=False, *args, **kwargs):
+def audit_process_simulation_serial(rejection_fn, election: Election, progression=False, *args, **kwargs):
 
     m = election.m
     n = election.n
@@ -218,9 +219,9 @@ def stochastic_process_simulation_serial(rejection_fn, election: Election, progr
         n_remain = n - t
         w_remain = w - y_t
 
-        reject = True
+        reject = False
         # All possible generated sa for next batch
-        for i in range(step, -1, -1):
+        for i in range(0, step+1):
             y_t_next = y_t + i
 
             if not replacement:
@@ -230,8 +231,8 @@ def stochastic_process_simulation_serial(rejection_fn, election: Election, progr
                 # Else use binomial compute probability
                 p_next = binom_pmf(i, step, p)
 
-            # Update reject if it's not False, don't need to compute reject if it's False (as is tested sequentially)
-            if reject is True:
+            # Update reject if it's False, don't need to compute reject if it's True already (as is tested sequentially)
+            if reject is False:
                 reject = rejection_fn(n, t_next, y_t_next, *args, **kwargs)
 
             # Compose the node
@@ -250,26 +251,19 @@ def stochastic_process_simulation_serial(rejection_fn, election: Election, progr
     return rejection_dict
 
 
-@Cached
-def stochastic_process_simulation(*args, **kwargs):
-    # TODO optimise the checking for rejection (don't need to compute the rejection after a certain point)
-    multiprocessing = False
-    if "multiprocessing" in kwargs:
-        multiprocessing = kwargs.pop("multiprocessing")
-
-    if multiprocessing:
-        return stochastic_process_simulation_parallel(*args, **kwargs)
+def audit_process_simulation(*args, **kwargs):
+    if "multiprocessing_batch" in kwargs:
+        return audit_process_simulation_parallel(*args, **kwargs)
     else:
-        return stochastic_process_simulation_serial(*args, **kwargs)
+        return audit_process_simulation_serial(*args, **kwargs)
 
 
 if __name__ == "__main__":
     from auditing_setup.audit_methods import *
     from time import time
     now = time()
-    # audit_function = BRAVO(0.7, 0.5)
     audit_function = TruncatedBayesian(0.9)
-    rejection_dict = stochastic_process_simulation(audit_function, 5000, 500, replacement=False, step=500)
+    rejection_dict = audit_process_simulation(audit_function, 5000, 500, replacement=False, step=500)
     print(rejection_dict, sum(rejection_dict.values()))
     after = time()
     duration = after - now

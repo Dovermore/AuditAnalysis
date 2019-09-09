@@ -3,50 +3,61 @@ import csv
 
 # The following import is needed because `eval` is used for audit methods
 from auditing_setup.audit_methods import *
-from calibration.calibration_data_generation import AuditMethodCalibrator
+from calibration.calibration_data_generator import AuditMethodCalibrator
 
-from parse_election import parse_election_config
+from parse_args import parse_election_config
+
+import joblib
 
 
 def main_run_calibration():
     parser = argparse.ArgumentParser()
     parser.add_argument("election_config")
     parser.add_argument("method_config")
+    parser.add_argument("save_path")
 
     args = parser.parse_args()
     election_config = args.election_config
     method_config = args.method_config
+    save_path = args.save_path
+    print(election_config, method_config, save_path)
 
     assert method_config.endswith(".csv")
     assert election_config.endswith(".csv")
-    run_calibration(election_config, method_config)
+    assert save_path is not None
+    run_calibration(election_config, method_config, save_path)
 
 
-def run_calibration(election_config, method_config):
-    global_kwargs, true_ps, save = parse_election_config(election_config)
-    audit_method_calibrator = AuditMethodCalibrator(**global_kwargs)
+def run_calibration(election_config, method_config, save_path):
+    election_kwargs_list, calibration_kwargs, alternative_ps = parse_election_config(election_config)
 
-    with open(method_config) as config_file:
-        config_reader = csv.reader(config_file)
-        audit_parameters = ["audit_method", "param_name", "param_min", "param_max"]
-        config_list = list(config_reader)
-        for audit_setting in config_list:
+    for election_kwargs in election_kwargs_list:
+        print("Election kwargs:", election_kwargs)
+        election = Election(**election_kwargs)
 
-            # First 4 entries to be parsed by these few lines
-            audit_kwargs = dict(zip(audit_parameters, audit_setting[:4]))
-            for key in audit_kwargs:
-                if key != "param_name":
-                    audit_kwargs[key] = eval(audit_kwargs[key])
+        audit_method_calibrator = AuditMethodCalibrator(election, **calibration_kwargs)
 
-            # The rest of the lines are variable length, automatically parse them (additional parameters)
-            for ind in range(4, len(audit_setting), 2):
-                audit_kwargs[audit_setting[ind]] = eval(audit_setting[ind + 1])
+        with open(method_config) as config_file:
+            config_reader = csv.reader(config_file)
+            audit_parameters = ["audit_method", "param_name", "param_min", "param_max"]
+            config_list = list(config_reader)
+            for audit_setting in config_list:
 
-            print(audit_kwargs)
-            audit_method_calibrator.add_method_config(**audit_kwargs)
+                # First 4 entries to be parsed by these few lines
+                audit_kwargs = dict(zip(audit_parameters, audit_setting[:4]))
+                for key in audit_kwargs:
+                    if key != "param_name":
+                        audit_kwargs[key] = eval(audit_kwargs[key])
 
-    audit_method_calibrator.calibrate()
-    audit_method_calibrator.generate_expected_statistics(true_ps, save=save)
+                # The rest of the lines are variable length, automatically parse them (additional parameters)
+                for ind in range(4, len(audit_setting), 2):
+                    audit_kwargs[audit_setting[ind]] = eval(audit_setting[ind + 1])
+
+                print("Method kwargs:", audit_kwargs)
+                audit_method_calibrator.add_method_config(**audit_kwargs)
+
+        audit_method_calibrator.calibrate()
+        audit_method_calibrator.generate_expected_statistics(alternative_ps, fpath=save_path)
 
 
 if __name__ == "__main__":
@@ -57,5 +68,4 @@ if __name__ == "__main__":
     import logging
     logger = logging.getLogger("console_logger")
     logger.setLevel(logging.ERROR)
-
     main_run_calibration()

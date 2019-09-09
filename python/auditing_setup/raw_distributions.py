@@ -1,4 +1,5 @@
-from auditing_setup.audit_process import stochastic_process_simulation
+from auditing_setup.election_setting import Election
+from auditing_setup.audit_process import audit_process_simulation
 from collections import defaultdict as dd
 from os import makedirs
 from os.path import exists, join
@@ -8,31 +9,22 @@ import matplotlib.pyplot as plt
 
 
 class AuditMethodDistributionComputer:
-    def __init__(self, audit_class, n, m, step=1, replacement=False):
-        self.n = n
-        if m == -1:
-            m = n
-        self.m = m
-        self.audit_class = audit_class
-        self.replacement = replacement
-        self.step = step
+    def __init__(self, audit_method):
+        self.audit_method = audit_method
 
-    def power(self, true_p, dsample=False, cdf=False, progression=False, multiprocessing=False, *args, **kwargs):
+    def power(self, election: Election, dsample=False, cdf=False, audit_process_kw={}, *args, **kwargs):
         """
         Mostly used as helper for computing a single power
-        :param true_p: The true proportion of winner's share
+        :param election: The election setup to run power on and to support audit_class
         :param dsample: distribution of sample votes
         :param cdf: should output be cdf instead of pdf
-        :param progression: If a progression bar should be used
-        :param multiprocessing: If the simulation should be done with multiprocessing
+        :param audit_process_kw: Other keyword arguments to feed to audit process
         :param args: Parameters supporting the creation of auditing function
         :param kwargs: Parameters supporting the creation of auditing function
         :return: The power of current simulation
         """
-        audit_f = self.audit_class(*args, **kwargs)
-        reject_dict = stochastic_process_simulation(audit_f, n=self.n, m=self.m, p=true_p, progression=progression,
-                                                    step=self.step, replacement=self.replacement,
-                                                    multiprocessing=multiprocessing)
+        audit_f = self.audit_method(election=election, *args, **kwargs)
+        reject_dict = audit_process_simulation(audit_f, election, **audit_process_kw)
         power = sum(reject_dict.values())
         ret = power
         if dsample:
@@ -40,14 +32,14 @@ class AuditMethodDistributionComputer:
             # (t, y_t)
             for key in reject_dict:
                 t, y_t = key
-                if t > self.m:
+                if t > election.m:
                     continue
                 proba = reject_dict[key]
                 dsample[t] += proba
             
             ret = [power, pd.Series(dsample).sort_values(axis="index")]
         if cdf and dsample:
-            ret[1] = self.dsample_to_cdf(ret[1], self.m)
+            ret[1] = self.dsample_to_cdf(ret[1], election.m)
         return ret
 
     @staticmethod

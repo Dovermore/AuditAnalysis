@@ -20,6 +20,8 @@ from collections import defaultdict as dd
 
 from auditing_setup.raw_distributions import AuditMethodDistributionComputer, to_csv
 from auditing_setup.audit_methods import Bayesian, BRAVO, make_legend
+from auditing_setup.election_setting import Election
+from typing import List
 
 from os.path import join
 
@@ -27,49 +29,35 @@ import numpy as np
 
 
 class ExpectedStatisticsComputer:
-    def __init__(self, audit_class, n, m, step=1, replacement=False):
+    def __init__(self, audit_class):
         """
         Instantiate a new computer for a certain election setup
         :param audit_class: The class of audit to use
-        :param n: total number of ballots
-        :param m: number to sample
-        :param step: number to sample each timestamp
-        :param replacement: sampling with or without replacement?
         """
-        self.n = n
-        if m == -1:
-            m = n
-        self.m = m
-        # TODO refactor this parameter to compute_statistics
         self.audit_class = audit_class
-        self.step = step
-        self.replacement = replacement
 
-    def compute_statistics(self, true_p, return_pdf=False, *args, **kwargs):
-        audit_simulation = AuditMethodDistributionComputer(self.audit_class, self.n,
-                                                           self.m, step=self.step, replacement=self.replacement)
+    def compute_statistics(self, election: Election, return_pdf=False, *args, **kwargs):
+        audit_simulation = AuditMethodDistributionComputer(self.audit_class)
 
         # Computer all statistics related to alternative hypothesis
-        power, dsample_power = audit_simulation.power(true_p, dsample=True, *args, **kwargs)
-        statistics_power = self.extract_statistics(dsample_power, self.n, self.m, power)
+        power, dsample_power = audit_simulation.power(election, dsample=True, *args, **kwargs)
+        statistics_power = self.extract_statistics(dsample_power, election)
         summary_statistics = dict()
         summary_statistics["power"] = power
         summary_statistics.update({key: statistics_power[key] for key in statistics_power})
-        summary_statistics = pd.Series(summary_statistics, name=self.m)
+        summary_statistics = pd.Series(summary_statistics, name=election.m)
         if return_pdf:
             return summary_statistics, dsample_power
         return summary_statistics
 
-    def compute_param_dict_statistics(self, true_p, params, *args, **kwargs):
-        key, params = AuditMethodDistributionComputer._parse_params(params)
+    def compute_param_dict_statistics(self, election: Election, param_dict, *args, **kwargs):
+        key, params = AuditMethodDistributionComputer._parse_params(param_dict)
         all_statistics = pd.DataFrame()
         for param in params:
             print(f"            param = {param}")
             kwargs[key] = param
-            summary_statistics = self.compute_statistics(true_p, *args,
-                                                         **kwargs)
-            all_statistics = \
-                all_statistics.append(summary_statistics, ignore_index=True)
+            summary_statistics = self.compute_statistics(election, *args, **kwargs)
+            all_statistics = all_statistics.append(summary_statistics, ignore_index=True)
         return all_statistics
 
     @staticmethod
@@ -80,15 +68,16 @@ class ExpectedStatisticsComputer:
             statistics[entry] = t
 
     @staticmethod
-    def extract_statistics(dsample, n, m, power, quantiles=(0.25, 0.5, 0.75, 0.9, 0.99)):
+    def extract_statistics(dsample, election:Election, quantiles=(0.25, 0.5, 0.75, 0.9, 0.99)):
         """
         :param dsample: Dictionary or pd.Series of distribution of sample
-        :param n: The election size
-        :param m: The max number sampled (To compute mean)
-        :param power: the power of the dsample (not necessary but to reduce the amount of computation)
         :param quantiles: the quantiles to get statistics from
         :return: pd.Series of computed statistics
         """
+        power = sum(dsample.values)
+        n = election.n
+        m = election.m
+
         dsample = pd.Series(dsample)
         statistics = dd(float)
         cumulative_probability = 0
@@ -117,10 +106,9 @@ class ExpectedStatisticsComputer:
         return statistics
 
 
-def audit_method_expected_statistics(audit_method, audit_params, n, m, true_ps=np.linspace(0.45, 0.75, 25),
-                                     step=1, replacement=False, save=False, fpath="data", include_risk=True):
-    true_ps = list(true_ps)
-    expected_statistics_computer = ExpectedStatisticsComputer(audit_method, n, m, step=step, replacement=replacement)
+def audit_method_expected_statistics(audit_method, audit_params, elections: List[Election], fpath="data"):
+    true_ps = [election.p for election in elections]
+    expected_statistics_computer = ExpectedStatisticsComputer(audit_method)
 
     # Store all statistics in a dictionary of DataFrame with values of same type of statistics
     statistics_dfs = dd(lambda: pd.DataFrame())
@@ -137,16 +125,13 @@ def audit_method_expected_statistics(audit_method, audit_params, n, m, true_ps=n
         pdf_data = []
         cdf_data = []
 
-        # add 0.5 for computing risk as well.
-        if include_risk:
-            true_ps.insert(0, 0.5)
-        for true_p in true_ps:
+        for true_p, election in zip(true_ps, elections):
             print("    true_p:", true_p)
-            statistics, pdf = expected_statistics_computer.compute_statistics(true_p, return_pdf=True, **params)
-            cdf = AuditMethodDistributionComputer.dsample_to_cdf(pdf, m)
+            statistics, pdf = expected_statistics_computer.compute_statistics(election, return_pdf=True, **params)
+            cdf = AuditMethodDistributionComputer.dsample_to_cdf(pdf, election.m)
 
             for stat_type in statistics.index:
-                statistics_data[stat_type][true_p] = statistics[stat_type]
+                statistics_data[stat_type][election.p] = statistics[stat_type]
             pdf_data.append(pdf)
             cdf_data.append(cdf)
 
@@ -170,31 +155,8 @@ def audit_method_expected_statistics(audit_method, audit_params, n, m, true_ps=n
     cdf_dfs = pd.concat(cdf_dfs, keys=legends)
     statistics_dfs["pdf"] = pdf_dfs
     statistics_dfs["cdf"] = cdf_dfs
-    if save:
+    if fpath is not None:
         for stat_type in statistics_dfs:
             to_csv(statistics_dfs[stat_type], f"{audit_method.name}_{stat_type}.csv", fpath)
     return statistics_dfs
-
-
-if __name__ == "__main__":
-    test_mode = 1
-    audit_method = BRAVO
-    args = []
-    kwargs = {}
-    param_dict = {}
-    if audit_method is Bayesian:
-        param_dict = {"thresh": list(np.linspace(0.95, 0.99, 10))}
-    elif audit_method is BRAVO:
-        kwargs["p"] = 0.6
-        param_dict = {"alpha": list(np.linspace(0.01, 0.20, 20))}
-    sss = ExpectedStatisticsComputer(audit_method, 5000, 0.9, False)
-    summary = None
-    if test_mode == 0:
-        summary = sss.compute_statistics(0.6, thresh=0.95, *args, **kwargs)
-    elif test_mode == 1:
-        summary = sss.compute_param_dict_statistics(0.7, param_dict,
-                                                    *args, **kwargs)
-    print(summary)
-
-
 

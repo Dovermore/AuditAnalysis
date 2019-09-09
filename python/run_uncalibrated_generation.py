@@ -6,7 +6,7 @@ import csv
 # The following import is needed because `eval` is used for audit methods
 from auditing_setup.audit_methods import *
 
-from parse_election import parse_election_config, make_path
+from parse_args import parse_election_config, make_path
 
 
 def main_run_uncalibrated_generation():
