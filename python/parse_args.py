@@ -11,8 +11,17 @@ def parse_election_config(election_config):
         election_kwargs_list = []
         # Read Null Election Setup
         for i in range(n_lines):
-            election_keys = ["n", "m", "p", "step", "replacement", "multiprocessing"]
+            election_keys = ["n", "m", "p", "step", "replacement", "multiprocessing_batch", "cached"]
             election_kwargs = {key: eval(value) for key, value in zip(election_keys, next(config_reader))}
+            if not election_kwargs["multiprocessing_batch"]:
+                election_kwargs.pop("multiprocessing_batch")
+
+            # TODO: Add the function to ignore computed data
+            cached = election_kwargs.pop("cached")
+            # Currently it won't compute if this flag is set to True.
+            if cached:
+                continue
+
             election_kwargs_list.append(election_kwargs)
 
         # Read Calibration Parameters
@@ -22,7 +31,11 @@ def parse_election_config(election_config):
         # Read Alternative Election Probabilities
         alternative_ps = [eval(p) for p in next(config_reader)]
 
+        # Do the simulatioon from least to most
+        election_kwargs = sorted(election_kwargs_list, key=lambda x: x["n"])
+
         return election_kwargs_list, calibration_kwargs, alternative_ps
+
 
 def parse_audit_method_config(method_config):
     audit_kwargs_list = []

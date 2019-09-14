@@ -81,42 +81,20 @@ class CachedMethod:
         return res
 
 
-class OrderedDict:
-    
-    def __init__(self):
-        # Priority queue for keys
-        self._q = deque()
-        
-        # Dictionary for values
-        self._dict = defaultdict(float)
-        
+class OrderedDict(PythonOrderedDict):
     def append(self, key, value):
         # Didn't find
-        if key not in self._q:
-            self._q.appendleft(key)
-            self._dict[key] = value
+        try:
+            self[key] += value
+        except KeyError:
+            self[key] = value
+
+    def peek(self, last=False):
+        if last:
+            k = next(reversed(self))
         else:
-            self._dict[key] += value
-
-    def pop(self):
-        key = self._q.pop()
-        value = self._dict[key]
-        del self._dict[key]
-        return key, value
-
-    def peek(self):
-        key = self._q[-1]
-        value = self._dict[key]
-        return key, value
-    
-    def __repr__(self):
-        return str([(key, self._dict[key]) for key in self._q])
-    
-    def serialize(self):
-        return [(key, self._dict[key]) for key in self._q]
-
-    def __len__(self):
-        return len(self._q)
+            k = next(iter(self))
+        return k, self[k]
 
 
 class SimpleProgressionBar:

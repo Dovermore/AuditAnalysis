@@ -26,12 +26,12 @@ def main_run_calibration_curve():
 
 
 def run_calibration(election_config, method_config):
-    global_kwargs, true_ps, save = parse_election_config(election_config)
+    election_kwargs, true_ps, save = parse_election_config(election_config)
     for key in ("tol", "max_iter", "fpath", "risk_lim"):
-        if key in global_kwargs:
-            global_kwargs.pop(key)
-    global_kwargs["fpath"] = "calibration_curve"
-    audit_method_calibrator = CalibrationCurveGenerator(**global_kwargs)
+        if key in election_kwargs:
+            election_kwargs.pop(key)
+    election_kwargs["fpath"] = "calibration_curve"
+    audit_method_calibrator = CalibrationCurveGenerator(**election_kwargs)
 
     with open(method_config) as config_file:
         config_reader = csv.reader(config_file)

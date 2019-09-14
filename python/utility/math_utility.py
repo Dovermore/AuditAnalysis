@@ -61,8 +61,13 @@ def beta_binomial_pmf(k, a, b, n):
 
 
 @Cached
-def beta_pdf(x, a, b, log):
-    return r.dbeta(x, a, b, log=log)
+def beta_pdf(p, a, b, log):
+    return list(r.dbeta(p, a, b, log=log))[0]
+
+
+@Cached
+def beta_cdf(p, a, b, log=False, lower_tail=True):
+    return list(r.pbeta(p, a, b, log_p=log, lower_tail=lower_tail))[0]
 
 
 @Cached
@@ -76,11 +81,6 @@ def betafn(a, b, log=False):
     if log:
         return list(r.lbeta(a, b))[0]
     return list(r.beta(a, b))[0]
-
-
-@Cached
-def beta_cdf(p, a, b, log=False, lower_tail=True):
-    return list(r.pbeta(p, a, b, log_p=log, lower_tail=lower_tail))[0]
 
 
 @Cached

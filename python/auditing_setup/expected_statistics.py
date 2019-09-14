@@ -23,10 +23,6 @@ from auditing_setup.audit_methods import Bayesian, BRAVO, make_legend
 from auditing_setup.election_setting import Election
 from typing import List
 
-from os.path import join
-
-import numpy as np
-
 
 class ExpectedStatisticsComputer:
     def __init__(self, audit_class):
@@ -97,7 +93,7 @@ class ExpectedStatisticsComputer:
         # Update mean by computing (computed mean + rest prob * m)
         statistics["unconditional_mean"] = unconditional_mean + (1 - cumulative_probability) * m
         statistics["unconditional_mean_with_recount"] = unconditional_mean + (1 - cumulative_probability) * (m+n)
-        statistics["conditional_mean"] = unconditional_mean / power
+        statistics["conditionalmean"] = unconditional_mean / power
 
         # The rest of the statistics should be 1
         cumulative_probability = 1
@@ -127,7 +123,16 @@ def audit_method_expected_statistics(audit_method, audit_params, elections: List
 
         for true_p, election in zip(true_ps, elections):
             print("    true_p:", true_p)
-            statistics, pdf = expected_statistics_computer.compute_statistics(election, return_pdf=True, **params)
+            try:
+                statistics, pdf = expected_statistics_computer.compute_statistics(election, return_pdf=True, **params)
+            except Exception as e:
+                import logging
+                console_logger = logging.getLogger("console_logger")
+                console_logger.exception(f"Exception {e}- election: {election}, \n"
+                      f"               audit_method: {audit_method.name}"
+                      f"               params: {params}")
+                exit(1)
+
             cdf = AuditMethodDistributionComputer.dsample_to_cdf(pdf, election.m)
 
             for stat_type in statistics.index:

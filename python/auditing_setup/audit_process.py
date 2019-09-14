@@ -103,7 +103,7 @@ def audit_process_simulation_parallel(rejection_fn: BaseMethod, election: Electi
                 # logging.info(f"Queue = {q}")
                 assert key[0] == i
                 # Remove the value
-                q.pop()
+                q.popitem(last=False)
                 t, y_t, p_t = *key, value
                 console_logger.debug(f"         poped: {t, y_t, p_t}")
                 # If the batch processor already full, send to another process to process
@@ -137,7 +137,7 @@ def audit_process_simulation_parallel(rejection_fn: BaseMethod, election: Electi
                 for key, value in result_rejection_dict.items():
                     rejection_dict[key] += value
                 while len(result_q):
-                    key, value = result_q.pop()
+                    key, value = result_q.popitem(last=False)
                     q.append(key, value)
         console_logger.info(f"    End   Pool: {i}")
         # Update progression
@@ -179,11 +179,6 @@ def audit_process_simulation_serial(rejection_fn, election: Election, progressio
     q = OrderedDict()
     q.append(source[:2], source[2])
 
-    # Records {sample_number: power} pair for the election
-    # This one only records the sample number but not the winner's vote
-    cumulative_rejection = defaultdict(float)
-    total_power = 0
-
     # While q is not empty
     while len(q):
         # get next node to explore
@@ -192,24 +187,15 @@ def audit_process_simulation_serial(rejection_fn, election: Election, progressio
         # Update progression
         progression_bar(key[0])
 
-        # Last step of calculation is finished, record the total power
-        if (key[0] - step) in cumulative_rejection:
-            total_power += cumulative_rejection[key[0] - step]
-            del cumulative_rejection[key[0] - step]
-
         # If sampled to the max number already, break (max number exclusive)
         if isinstance(m, int) and key[0] >= m:
-            break
-
-        # Break if a power is given and already at that power
-        if isinstance(m, float) and total_power >= m:
             break
 
         if replacement and key[0] > n:
             break
 
         # Remove the value
-        q.pop()
+        q.popitem(last=False)
 
         t, y_t, p_t = *key, value
         console_logger.debug(f"         poped: {t, y_t, p_t}")
@@ -232,7 +218,8 @@ def audit_process_simulation_serial(rejection_fn, election: Election, progressio
                 p_next = binom_pmf(i, step, p)
 
             # Update reject if it's False, don't need to compute reject if it's True already (as is tested sequentially)
-            if reject is False:
+            if not reject:
+                # Remainder: Don't use is to compare True False
                 reject = rejection_fn(n, t_next, y_t_next, *args, **kwargs)
 
             # Compose the node
@@ -243,7 +230,6 @@ def audit_process_simulation_serial(rejection_fn, election: Election, progressio
             # if null is rejected, put it in the risk dict
             if reject:
                 rejection_dict[node[:2]] += node[2]
-                cumulative_rejection[node[0]] += node[2]
             else:
                 q.append(node[:2], node[2])
 
@@ -262,9 +248,12 @@ if __name__ == "__main__":
     from auditing_setup.audit_methods import *
     from time import time
     now = time()
-    audit_function = TruncatedBayesian(0.9)
-    rejection_dict = audit_process_simulation(audit_function, 5000, 500, replacement=False, step=500)
-    print(rejection_dict, sum(rejection_dict.values()))
+    election = Election(n=500, m=500, replacement=False, step=250, p=0.5)
+    # audit_function = TruncatedBayesian(0.05)
+    audit_function = Clip(alpha=0.7, election=election)
+    rejection_dict = audit_process_simulation_serial(audit_function, election)
+    print(rejection_dict)
+    print(sum(rejection_dict.values()))
     after = time()
     duration = after - now
     print(f"duration: {duration}")
