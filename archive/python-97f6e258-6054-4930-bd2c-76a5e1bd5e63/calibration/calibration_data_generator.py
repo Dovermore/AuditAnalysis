@@ -45,7 +45,7 @@ class AuditMethodCalibrator:
         for audit_method in self.audit_methods:
             audit_method_dict = self.audit_methods[audit_method]
             for risk_calibrator in audit_method_dict["risk_search"]:
-                print("---- {}({}, kwargs: {}) ----".format(audit_method.name, risk_calibrator.param_name, risk_calibrator.kwargs))
+                print(f"---- {audit_method.name}({risk_calibrator.param_name}, kwargs: {risk_calibrator.kwargs}) ----")
                 calibrated_param_val, calibrated_risk = risk_calibrator.binary_search(self.risk_lim, manual=manual)
                 audit_method_dict["calibrated_risk"].append(calibrated_risk)
                 audit_method_dict["calibrated_param_val"].append(calibrated_param_val)
@@ -81,4 +81,4 @@ class AuditMethodCalibrator:
                 kwargs_list.append(kwargs)
             audit_method_dict["calibrated_param_expected_statistics"] = \
                 audit_method_expected_statistics(audit_method, kwargs_list, elections,
-                                                 fpath=path.join(fpath, "{}_{}".format(audit_method.name, self.risk_lim)))
+                                                 fpath=path.join(fpath, f"{audit_method.name}_{self.risk_lim}"))

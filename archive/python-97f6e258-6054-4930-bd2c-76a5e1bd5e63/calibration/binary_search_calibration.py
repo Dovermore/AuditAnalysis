@@ -51,7 +51,7 @@ class RiskBinarySearch:
         self.param_risk = self.method_distribution_computer.power(self.election, **full_kwargs)
         self._search_record[self.param_val] = self.param_risk
 
-        print("{} -> {} | {} | {}".format(self.param_val, self.param_risk, self.lo, self.hi))
+        print(f"{self.param_val} -> {self.param_risk} | {self.lo} | {self.hi}")
 
         ret = False
         if self.param_risk < self.risk_lim and self.risk_lim - self.param_risk < self.tol:
@@ -67,11 +67,11 @@ class RiskBinarySearch:
                     min_risk = min(self.prev_param_risk, self.param_risk)
                     max_risk = max(self.prev_param_risk, self.param_risk)
                     if not min_risk <= self.risk_lim <= max_risk:
-                        raise RiskOutOfRangeError("Risk Lim {:.5f} is not in the "
-                                                  "range of possible risks {:.5f} <= risk <= {:.5f}\n"
-                                                  "audit_method: {}, kwargs: {}, "
-                                                  "param:{}_{},{}, \n"
-                                                  "{}".format(self.risk_lim, min_risk, max_risk, self.audit_method.name, full_kwargs, self.param_name, self.param_min, self.param_max, self.election))
+                        raise RiskOutOfRangeError(f"Risk Lim {self.risk_lim:.5f} is not in the "
+                                                  f"range of possible risks {min_risk:.5f} <= risk <= {max_risk:.5f}\n"
+                                                  f"audit_method: {self.audit_method.name}, kwargs: {full_kwargs}, "
+                                                  f"param:{self.param_name}_{self.param_min},{self.param_max}, \n"
+                                                  f"{self.election}")
                     self.lo = self.param_min if self.increasing_risk else self.param_max
                     self.hi = self.param_max if self.increasing_risk else self.param_min
                 self.prev_param_val = self.param_val
@@ -94,9 +94,9 @@ class RiskBinarySearch:
                     print("Repeated Risk found when searching, stop searching now...")
                     break
                 if self.step_count >= self.max_iter:
-                    print("Maximum iter reached {}".format(self.max_iter))
+                    print(f"Maximum iter reached {self.max_iter}")
                     if manual:
-                        user_input = input("please enter a new number of max iteration (> {}) or 'n' to terminate:\n".format(self.max_iter))
+                        user_input = input(f"please enter a new number of max iteration (> {self.max_iter}) or 'n' to terminate:\n")
                         if user_input == "n" or int(user_input) < self.max_iter:
                             break
                         else:
@@ -108,16 +108,16 @@ class RiskBinarySearch:
                 from sys import stderr
                 print("--------------------", file=stderr)
                 print(rooe, file=stderr)
-                print("No appropriate risk found, using {}={}, with risk: {} instead".format(self.param_name, self.param_val, self.param_risk), file=stderr)
+                print(f"No appropriate risk found, using {self.param_name}={self.param_val}, with risk: {self.param_risk} instead", file=stderr)
                 print("--------------------", file=stderr)
             elif not manual:
                 raise StopIteration("Error Encountered in available range of risks")
             else:
-                new_min = input("Enter a new minimum for the parameter({}), enter 'n' to cancel".format(self.param_name))
+                new_min = input(f"Enter a new minimum for the parameter({self.param_name}), enter 'n' to cancel")
                 if new_min == "n":
                     return
                 self.param_min = float(new_min)
-                new_max = input("Enter a new maximum for the parameter({}), enter 'n' to cancel".format(self.param_name))
+                new_max = input(f"Enter a new maximum for the parameter({self.param_name}), enter 'n' to cancel")
                 if new_max == "n":
                     return
                 self.param_max = float(new_max)

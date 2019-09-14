@@ -102,7 +102,7 @@ def parse_table(table: pd.DataFrame, audit_type):
         # Skip the type1
         if p == 0.5:
             continue
-        args += ["{}_{}".format(audit_type, p), type1, table[p]]
+        args += [f"{audit_type}_{p}", type1, table[p]]
     return args
 
 

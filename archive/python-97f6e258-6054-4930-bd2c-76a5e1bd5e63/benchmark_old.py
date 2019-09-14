@@ -108,15 +108,15 @@ def benchmark():
     n = 20000
     m = 2000
     calibrated_jobs.append([
-        path.join(election_config_prefix, "with_replacement" if replacement else "without_replacement", "election_n={:06d}_m={:05d}_replacement={}_step=1.csv".format(n, m, replacement)),
-        path.join(method_config_prefix, "calibrated_config", "calibration_{:06d}.csv".format(n))
+        path.join(election_config_prefix, "with_replacement" if replacement else "without_replacement", f"election_n={n:06d}_m={m:05d}_replacement={replacement}_step=1.csv"),
+        path.join(method_config_prefix, "calibrated_config", f"calibration_{n:06d}.csv")
     ])
 
     n = 100000
     m = 5000
     calibrated_jobs.append([
-        path.join(election_config_prefix, "with_replacement" if replacement else "without_replacement", "election_n={:06d}_m={:05d}_replacement={}_step=1.csv".format(n, m, replacement)),
-        path.join(method_config_prefix, "calibrated_config", "calibration_{:06d}.csv".format(n))
+        path.join(election_config_prefix, "with_replacement" if replacement else "without_replacement", f"election_n={n:06d}_m={m:05d}_replacement={replacement}_step=1.csv"),
+        path.join(method_config_prefix, "calibrated_config", f"calibration_{n:06d}.csv")
     ])
 
     # With replacement
@@ -152,15 +152,15 @@ def benchmark():
     n = 20000
     m = 2000
     calibrated_jobs.append([
-        path.join(election_config_prefix, "with_replacement" if replacement else "without_replacement", "election_n={:06d}_m={:05d}_replacement={}_step=1.csv".format(n, m, replacement)),
-        path.join(method_config_prefix, "calibrated_config", "calibration_{:06d}.csv".format(n))
+        path.join(election_config_prefix, "with_replacement" if replacement else "without_replacement", f"election_n={n:06d}_m={m:05d}_replacement={replacement}_step=1.csv"),
+        path.join(method_config_prefix, "calibrated_config", f"calibration_{n:06d}.csv")
     ])
 
     n = 100000
     m = 5000
     calibrated_jobs.append([
-        path.join(election_config_prefix, "with_replacement" if replacement else "without_replacement", "election_n={:06d}_m={:05d}_replacement={}_step=1.csv".format(n, m, replacement)),
-        path.join(method_config_prefix, "calibrated_config", "calibration_{:06d}.csv".format(n))
+        path.join(election_config_prefix, "with_replacement" if replacement else "without_replacement", f"election_n={n:06d}_m={m:05d}_replacement={replacement}_step=1.csv"),
+        path.join(method_config_prefix, "calibrated_config", f"calibration_{n:06d}.csv")
     ])
 
     for f1, f2 in calibrated_jobs:
@@ -174,14 +174,14 @@ def benchmark():
     m = 500
     replacement = True
     uncalibrated_jobs.append([
-        path.join(election_config_prefix, "with_replacement" if replacement else "without_replacement", "election_n={:06d}_m={:05d}_replacement={}_step=1.csv".format(n, m, replacement)),
-        path.join(method_config_prefix, "uncalibrated_config", "uncalibrated_{:06d}.csv".format(n))
+        path.join(election_config_prefix, "with_replacement" if replacement else "without_replacement", f"election_n={n:06d}_m={m:05d}_replacement={replacement}_step=1.csv"),
+        path.join(method_config_prefix, "uncalibrated_config", f"uncalibrated_{n:06d}.csv")
     ])
 
     replacement = False
     uncalibrated_jobs.append([
-        path.join(election_config_prefix, "with_replacement" if replacement else "without_replacement", "election_n={:06d}_m={:05d}_replacement={}_step=1.csv".format(n, m, replacement)),
-        path.join(method_config_prefix, "uncalibrated_config", "uncalibrated_{:06d}.csv".format(n))
+        path.join(election_config_prefix, "with_replacement" if replacement else "without_replacement", f"election_n={n:06d}_m={m:05d}_replacement={replacement}_step=1.csv"),
+        path.join(method_config_prefix, "uncalibrated_config", f"uncalibrated_{n:06d}.csv")
     ])
 
     for f1, f2 in uncalibrated_jobs:
@@ -194,14 +194,14 @@ def benchmark():
     m = 500
     replacement = False
     calibration_curve_jobs.append([
-        path.join(election_config_prefix, "with_replacement" if replacement else "without_replacement", "election_n={:06d}_m={:05d}_replacement={}_step=1.csv".format(n, m, replacement)),
-        path.join(method_config_prefix, "calibrated_config", "calibration_{:06d}.csv".format(n))
+        path.join(election_config_prefix, "with_replacement" if replacement else "without_replacement", f"election_n={n:06d}_m={m:05d}_replacement={replacement}_step=1.csv"),
+        path.join(method_config_prefix, "calibrated_config", f"calibration_{n:06d}.csv")
     ])
 
     replacement = True
     calibration_curve_jobs.append([
-        path.join(election_config_prefix, "with_replacement" if replacement else "without_replacement", "election_n={:06d}_m={:05d}_replacement={}_step=1.csv".format(n, m, replacement)),
-        path.join(method_config_prefix, "calibrated_config", "calibration_{:06d}.csv".format(n))
+        path.join(election_config_prefix, "with_replacement" if replacement else "without_replacement", f"election_n={n:06d}_m={m:05d}_replacement={replacement}_step=1.csv"),
+        path.join(method_config_prefix, "calibrated_config", f"calibration_{n:06d}.csv")
     ])
 
     for f1, f2 in calibration_curve_jobs:

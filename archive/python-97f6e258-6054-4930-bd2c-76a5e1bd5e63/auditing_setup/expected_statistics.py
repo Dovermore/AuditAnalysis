@@ -50,7 +50,7 @@ class ExpectedStatisticsComputer:
         key, params = AuditMethodDistributionComputer._parse_params(param_dict)
         all_statistics = pd.DataFrame()
         for param in params:
-            print("            param = {}".format(param))
+            print(f"            param = {param}")
             kwargs[key] = param
             summary_statistics = self.compute_statistics(election, *args, **kwargs)
             all_statistics = all_statistics.append(summary_statistics, ignore_index=True)
@@ -58,7 +58,7 @@ class ExpectedStatisticsComputer:
 
     @staticmethod
     def update_quantile(t, cumulative_probability, quantile, statistics, prefix="unconditional"):
-        entry = "{}_quantile{:.2f}".format(prefix, quantile)
+        entry = f"{prefix}_quantile{quantile:.2f}"
         if cumulative_probability >= quantile and entry \
                 not in statistics:
             statistics[entry] = t
@@ -128,9 +128,9 @@ def audit_method_expected_statistics(audit_method, audit_params, elections: List
             except Exception as e:
                 import logging
                 console_logger = logging.getLogger("console_logger")
-                console_logger.exception("Exception {}- election: {}, \n"
-                      "               audit_method: {}"
-                      "               params: {}".format(e, election, audit_method.name, params))
+                console_logger.exception(f"Exception {e}- election: {election}, \n"
+                      f"               audit_method: {audit_method.name}"
+                      f"               params: {params}")
                 exit(1)
 
             cdf = AuditMethodDistributionComputer.dsample_to_cdf(pdf, election.m)
@@ -162,6 +162,6 @@ def audit_method_expected_statistics(audit_method, audit_params, elections: List
     statistics_dfs["cdf"] = cdf_dfs
     if fpath is not None:
         for stat_type in statistics_dfs:
-            to_csv(statistics_dfs[stat_type], "{}_{}.csv".format(audit_method.name, stat_type), fpath)
+            to_csv(statistics_dfs[stat_type], f"{audit_method.name}_{stat_type}.csv", fpath)
     return statistics_dfs
 

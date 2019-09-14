@@ -12,7 +12,7 @@ for file in os.listdir(data_dir):
     if match:
         old_name = path.join(data_dir, file)
 
-        new_name = "{}{}.csv".format(match.group(1), match.group(2))
+        new_name = f"{match.group(1)}{match.group(2)}.csv"
 
         print(new_name)
         os.rename(old_name, path.join(data_dir, new_name))

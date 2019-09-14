@@ -16,7 +16,7 @@ def generate_plot(all_data_path):
         method, _ = method_data_path.rsplit("_", 1)
         for data_file_name in os.listdir(path.join(all_data_path, method_data_path)):
             data_name = path.splitext(data_file_name)[0]
-            data_type = data_name.replace("{}_".format(method), "")
+            data_type = data_name.replace(f"{method}_", "")
             data_file_full_path = path.join(all_data_path, method_data_path, data_file_name)
             data = pd.read_csv(data_file_full_path, header=0)
             all_data[data_type] = pd.concat([all_data[data_type], data])

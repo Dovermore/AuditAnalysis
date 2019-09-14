@@ -92,7 +92,7 @@ def audit_process_simulation_parallel(rejection_fn: BaseMethod, election: Electi
         # get next node to explore
         key, value = q.peek()
 
-        console_logger.info("    Start Pool: {}".format(i))
+        console_logger.info(f"    Start Pool: {i}")
         async_results = []
 
         with Pool(num_workers) as pool:
@@ -105,7 +105,7 @@ def audit_process_simulation_parallel(rejection_fn: BaseMethod, election: Electi
                 # Remove the value
                 q.popitem(last=False)
                 t, y_t, p_t = *key, value
-                console_logger.debug("         poped: {}".format((t, y_t, p_t)))
+                console_logger.debug(f"         poped: {t, y_t, p_t}")
                 # If the batch processor already full, send to another process to process
                 if len(batch_function_wrapper) >= multiprocessing_batch:
                     total += 1
@@ -122,7 +122,7 @@ def audit_process_simulation_parallel(rejection_fn: BaseMethod, election: Electi
             if len(batch_function_wrapper):
                 async_result = pool.apply_async(batch_function_wrapper, ())
                 async_results.append(async_result)
-            console_logger.info("Total sent to process = {}".format(total + 1))
+            console_logger.info(f"Total sent to process = {total + 1}")
 
             # Wait for all the processes to finish and update the results
             console_logger.info("        waiting result:")
@@ -139,7 +139,7 @@ def audit_process_simulation_parallel(rejection_fn: BaseMethod, election: Electi
                 while len(result_q):
                     key, value = result_q.popitem(last=False)
                     q.append(key, value)
-        console_logger.info("    End   Pool: {}".format(i))
+        console_logger.info(f"    End   Pool: {i}")
         # Update progression
         progression_bar(key[0])
         # Break if no more item remains (all rejected)
@@ -198,7 +198,7 @@ def audit_process_simulation_serial(rejection_fn, election: Election, progressio
         q.popitem(last=False)
 
         t, y_t, p_t = *key, value
-        console_logger.debug("         poped: {}".format((t, y_t, p_t)))
+        console_logger.debug(f"         poped: {t, y_t, p_t}")
 
         t_next = t + step
 
@@ -256,5 +256,5 @@ if __name__ == "__main__":
     print(sum(rejection_dict.values()))
     after = time()
     duration = after - now
-    print("duration: {}".format(duration))
+    print(f"duration: {duration}")
     pass

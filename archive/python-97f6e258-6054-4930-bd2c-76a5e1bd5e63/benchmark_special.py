@@ -26,14 +26,14 @@ def benchmark():
 
     step = 100
     calibrated_jobs.append([
-        path.join(election_config_prefix, "step", "election_n={:06d}_m=00500_replacement=False_step={}.csv".format(n, step)),
-        path.join(method_config_prefix, "calibrated_config", "calibration_{:06d}.csv".format(n))
+        path.join(election_config_prefix, "step", f"election_n={n:06d}_m=00500_replacement=False_step={step}.csv"),
+        path.join(method_config_prefix, "calibrated_config", f"calibration_{n:06d}.csv")
     ])
 
     step = 250
     calibrated_jobs.append([
-        path.join(election_config_prefix, "step", "election_n={:06d}_m=00500_replacement=False_step={}.csv".format(n, step)),
-        path.join(method_config_prefix, "calibrated_config", "calibration_{:06d}.csv".format(n))
+        path.join(election_config_prefix, "step", f"election_n={n:06d}_m=00500_replacement=False_step={step}.csv"),
+        path.join(method_config_prefix, "calibrated_config", f"calibration_{n:06d}.csv")
     ])
 
     # Step with n = 5000
@@ -41,14 +41,14 @@ def benchmark():
 
     step = 250
     calibrated_jobs.append([
-        path.join(election_config_prefix, "step", "election_n={:06d}_m=00500_replacement=False_step={}.csv".format(n, step)),
-        path.join(method_config_prefix, "calibrated_config", "calibration_{:06d}.csv".format(n))
+        path.join(election_config_prefix, "step", f"election_n={n:06d}_m=00500_replacement=False_step={step}.csv"),
+        path.join(method_config_prefix, "calibrated_config", f"calibration_{n:06d}.csv")
     ])
 
     step = 500
     calibrated_jobs.append([
-        path.join(election_config_prefix, "step", "election_n={:06d}_m=00500_replacement=False_step={}.csv".format(n, step)),
-        path.join(method_config_prefix, "calibrated_config", "calibration_{:06d}.csv".format(n))
+        path.join(election_config_prefix, "step", f"election_n={n:06d}_m=00500_replacement=False_step={step}.csv"),
+        path.join(method_config_prefix, "calibrated_config", f"calibration_{n:06d}.csv")
     ])
 
     # Step with n = 20000
@@ -56,18 +56,18 @@ def benchmark():
 
     step = 500
     calibrated_jobs.append([
-        path.join(election_config_prefix, "step", "election_n={:06d}_m=02000_replacement=False_step={}.csv".format(n, step)),
-        path.join(method_config_prefix, "calibrated_config", "calibration_{:06d}.csv".format(n))
+        path.join(election_config_prefix, "step", f"election_n={n:06d}_m=02000_replacement=False_step={step}.csv"),
+        path.join(method_config_prefix, "calibrated_config", f"calibration_{n:06d}.csv")
     ])
     step = 1000
     calibrated_jobs.append([
-        path.join(election_config_prefix, "step", "election_n={:06d}_m=02000_replacement=False_step={}.csv".format(n, step)),
-        path.join(method_config_prefix, "calibrated_config", "calibration_{:06d}.csv".format(n))
+        path.join(election_config_prefix, "step", f"election_n={n:06d}_m=02000_replacement=False_step={step}.csv"),
+        path.join(method_config_prefix, "calibrated_config", f"calibration_{n:06d}.csv")
     ])
     step = 2000
     calibrated_jobs.append([
-        path.join(election_config_prefix, "step", "election_n={:06d}_m=02000_replacement=False_step={}.csv".format(n, step)),
-        path.join(method_config_prefix, "calibrated_config", "calibration_{:06d}.csv".format(n))
+        path.join(election_config_prefix, "step", f"election_n={n:06d}_m=02000_replacement=False_step={step}.csv"),
+        path.join(method_config_prefix, "calibrated_config", f"calibration_{n:06d}.csv")
     ])
 
     for f1, f2 in calibrated_jobs:

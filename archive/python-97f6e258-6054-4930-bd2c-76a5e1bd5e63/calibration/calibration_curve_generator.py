@@ -25,10 +25,10 @@ class CalibrationCurveGenerator:
             kwargs = deepcopy(kwargs)
             kwargs[param_name] = param_val
             search_record[param_val] = method_distribution_computer.power(true_p=self.p_0, dsample=False, **kwargs)
-        series = pd.Series(data=search_record, name="{}-{}-search".format(audit_method.name, param_name)).sort_index()
+        series = pd.Series(data=search_record, name=f"{audit_method.name}-{param_name}-search").sort_index()
         if save:
-            to_csv(series, "{}_curve.csv".format(make_legend(audit_method, **kwargs)), self.fpath)
-        return pd.Series(data=search_record, name="{}-{}-search".format(audit_method.name, param_name)).sort_index()
+            to_csv(series, f"{make_legend(audit_method, **kwargs)}_curve.csv", self.fpath)
+        return pd.Series(data=search_record, name=f"{audit_method.name}-{param_name}-search").sort_index()
 
 
 if __name__ == "__main__":

@@ -20,7 +20,7 @@ def parse_election_config(election_config):
             cached = election_kwargs.pop("cached")
             # Currently it won't compute if this flag is set to True.
             if cached:
-                print("cached: {}, ignoring election config".format(election_kwargs))
+                print(f"cached: {election_kwargs}, ignoring election config")
                 continue
 
             election_kwargs_list.append(election_kwargs)
@@ -61,4 +61,4 @@ def parse_audit_method_config(method_config):
 
 
 def make_path(base, n, m, replacement, step):
-    return path.join(base, "election_n={:06d}_m={:05d}_replacement={}_step={}".format(n, m, replacement, step))
+    return path.join(base, f"election_n={n:06d}_m={m:05d}_replacement={replacement}_step={step}")

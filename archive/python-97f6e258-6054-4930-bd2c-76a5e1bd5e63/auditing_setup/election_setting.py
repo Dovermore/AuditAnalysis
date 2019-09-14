@@ -10,7 +10,7 @@ class Election:
         self.replacement = replacement
 
     def __str__(self):
-        return "n={:06d}_m={:05d}_p={:.3f}_replacement={}_step={}".format(self.n, self.m, self.p, bool(self.replacement), self.step)
+        return f"n={self.n:06d}_m={self.m:05d}_p={self.p:.3f}_replacement={bool(self.replacement)}_step={self.step}"
 
     def clone(self):
         return Election(self.n, self.m, self.p, self.step, self.replacement)
