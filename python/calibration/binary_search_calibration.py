@@ -48,6 +48,7 @@ class RiskBinarySearch:
         full_kwargs = deepcopy(self.kwargs)
         full_kwargs[self.param_name] = self.param_val
 
+        # TODO separate audit process related things out
         self.param_risk = self.method_distribution_computer.power(self.election, **full_kwargs)
         self._search_record[self.param_val] = self.param_risk
 

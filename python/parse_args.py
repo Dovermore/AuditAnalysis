@@ -33,7 +33,7 @@ def parse_election_config(election_config):
         alternative_ps = [eval(p) for p in next(config_reader)]
 
         # Do the simulatioon from least to most
-        election_kwargs = sorted(election_kwargs_list, key=lambda x: x["n"])
+        election_kwargs_list = sorted(election_kwargs_list, key=lambda x: x["n"])
 
         return election_kwargs_list, calibration_kwargs, alternative_ps
 
