@@ -20,6 +20,7 @@ def parse_election_config(election_config):
             cached = election_kwargs.pop("cached")
             # Currently it won't compute if this flag is set to True.
             if cached:
+                print(f"cached: {election_kwargs}, ignoring election config")
                 continue
 
             election_kwargs_list.append(election_kwargs)
