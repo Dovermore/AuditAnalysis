@@ -74,13 +74,12 @@ def run_calibration(election_config, method_config, save_path, log_path, paralle
 
 
 def compute_single(audit_method_calibrator, alternative_ps, save_path, log_path="log"):
-    import sys
     from datetime import datetime
     import os
     from os import path
     # Construct log file
     election = audit_method_calibrator.election
-    log_path = path.join("log", str(election))
+    log_path = path.join(log_path, str(election))
     if not path.exists(log_path):
         os.makedirs(log_path)
     log_file = path.join(log_path, datetime.now().strftime("%Y%m%d-%H%M%S")+".log")

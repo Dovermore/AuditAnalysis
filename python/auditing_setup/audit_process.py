@@ -9,7 +9,7 @@ from utility.math_utility import binom_pmf, hypergeom_pmf
 from utility.program_utility import Cached, SimpleProgressionBar, null_bar, OrderedDict, BatchFunctionWrapper
 
 console_logger = logging.getLogger("console_logger")
-console_logger.setLevel(logging.DEBUG)
+console_logger.setLevel(logging.ERROR)
 console_logger.addHandler(logging.StreamHandler())
 
 
