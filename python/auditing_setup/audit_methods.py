@@ -111,7 +111,8 @@ class TruncatedBayesian(BayesianMethod):
     name = "truncated_bayesian"
 
     def __init__(self, critical_value=0.05, p_0=0.5, a=1, b=1, min_stop=False, *args, **kwargs):
-        super(TruncatedBayesian, self).__init__(a=a, b=b, critical_value=critical_value, min_stop=min_stop, *args, **kwargs)
+        super(TruncatedBayesian, self).__init__(a=a, b=b, critical_value=critical_value,
+                                                min_stop=min_stop, *args, **kwargs)
         self.p_0 = p_0
 
     @CachedMethod

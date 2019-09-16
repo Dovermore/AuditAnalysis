@@ -28,19 +28,35 @@ def generate_plot(all_data_path, base_fig_path="figures"):
         all_data[data_type] = all_data[data_type].set_index("legend")
         data = all_data[data_type]
         plt.figure(figsize=[14, 14])
+        ls_generator = line_style_generator(data.shape[0])
         for method, method_data in data.iterrows():
             print("=======")
             print(method_data)
             print(method_data.index)
-            plt.plot(method_data)
+            plt.plot(method_data, **next(ls_generator), alpha=0.8)
         plt.xticks(data.columns)
         plt.legend(data.index)
-        plt.title(data_type)
+        plt.title("{}-{}".format(all_data_path.rsplit("/")[-1], data_type))
         fig_path = path.join(base_fig_path, path.basename(all_data_path))
         if not path.exists(fig_path):
             os.makedirs(fig_path)
         plt.savefig(path.join(fig_path, data_type.replace(".", "_")+".png"))
+        plt.tight_layout()
         plt.show()
+
+
+def simple_lw_fn(i, n, max=8, min=4):
+    return max - (max-min) * (i/n)
+
+
+def line_style_generator(n, ls_list=('-','--','-.',':'), lw_fn=simple_lw_fn):
+    for i in range(n):
+        lw = lw_fn(i, n)
+        ls = ls_list[i % len(ls_list)]
+        yield {
+            "linestyle": ls,
+            "linewidth": lw,
+        }
 
 
 # scratch tests
