@@ -104,10 +104,7 @@ class BetaBayesian(BayesianMethod):
         # Upset prob p(p|x <= 0.5)
 
         # This is the upset_prob according to the above formulation
-        return beta_cdf(0.5, self.a+y_t, self.b+t-y_t, log=True, lower_tail=True)
-        pass
-
-
+        return beta_cdf(0.5, self.a+y_t, self.b+t-y_t, lower_tail=True)
 
 
 class TruncatedBayesian(BayesianMethod):

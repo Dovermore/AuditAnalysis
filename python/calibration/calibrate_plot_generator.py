@@ -5,7 +5,7 @@ import pandas as pd
 from collections import defaultdict
 
 
-def generate_plot(all_data_path):
+def generate_plot(all_data_path, base_fig_path="figures"):
     # Get risk lim
     for method_data_path in os.listdir(all_data_path):
         _, risk_lim = method_data_path.split("_")
@@ -36,7 +36,7 @@ def generate_plot(all_data_path):
         plt.xticks(data.columns)
         plt.legend(data.index)
         plt.title(data_type)
-        fig_path = path.join("figures", path.basename(all_data_path))
+        fig_path = path.join(base_fig_path, path.basename(all_data_path))
         if not path.exists(fig_path):
             os.makedirs(fig_path)
         plt.savefig(path.join(fig_path, data_type.replace(".", "_")+".png"))
@@ -45,16 +45,11 @@ def generate_plot(all_data_path):
 
 # scratch tests
 if __name__ == "__main__":
-    base_path = path.abspath("calibrated_data")
+    # base_path = path.abspath("calibrated_data")
+    base_path = path.abspath("new_calibrate_full")
     for data_path in os.listdir(base_path):
         data_path = path.join(base_path, data_path)
         if not path.isdir(data_path):
             continue
-        generate_plot(data_path)
+        generate_plot(data_path, base_fig_path="new_figures")
 
-    # n = 20000
-    # m = 1000
-    # replacement = True
-    # step = 1
-    # all_data_path = path.join("calibrated_data", f"election_n={n:06d}_m={m:05d}_replacement={replacement}_step={step}")
-    # generate_plot(all_data_path)
