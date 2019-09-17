@@ -200,15 +200,23 @@ def audit_process_simulation_serial(rejection_fn, election: Election, progressio
         t, y_t, p_t = *key, value
         console_logger.debug("         poped: {}".format((t, y_t, p_t)))
 
-        t_next = t + step
-
         n_remain = n - t
         w_remain = w - y_t
 
+        t_next = t + step
         reject = False
         # All possible generated sa for next batch
         for i in range(0, step+1):
             y_t_next = y_t + i
+            if not replacement:
+                n_remain_next = n - t_next
+                w_remain_next = w - y_t_next
+                l_remain_next = n_remain_next - w_remain_next
+                if n_remain_next < 0 or w_remain_next < 0 or l_remain_next < 0:
+                    continue
+
+            if y_t_next < 0:
+                break
 
             if not replacement:
                 # If no replacement sample from hypergeometric distribution
@@ -245,16 +253,17 @@ def audit_process_simulation(*args, **kwargs):
 
 
 if __name__ == "__main__":
-    from auditing_setup.audit_methods import *
-    from time import time
-    now = time()
-    election = Election(n=500, m=500, replacement=False, step=250, p=0.5)
-    # audit_function = TruncatedBayesian(0.05)
-    audit_function = Clip(alpha=0.7, election=election)
-    rejection_dict = audit_process_simulation_serial(audit_function, election)
-    print(rejection_dict)
-    print(sum(rejection_dict.values()))
-    after = time()
-    duration = after - now
-    print("duration: {}".format(duration))
     pass
+    # from auditing_setup.audit_methods import *
+    # from time import time
+    # now = time()
+    # election = Election(n=500, m=500, replacement=False, step=250, p=0.5)
+    # # audit_function = TruncatedBayesian(0.05)
+    # audit_function = Clip(alpha=0.7, election=election)
+    # rejection_dict = audit_process_simulation_serial(audit_function, election)
+    # print(rejection_dict)
+    # print(sum(rejection_dict.values()))
+    # after = time()
+    # duration = after - now
+    # print("duration: {}".format(duration))
+    # pass

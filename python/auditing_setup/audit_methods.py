@@ -182,21 +182,42 @@ class HyperGeomBRAVO(SPRTMethod):
         y = y_t
         not_y = t - y
 
+        # The amount for winner under alternative
         p1N = int(n * self.p)
+        # The amount for winner under null
         p0N = int(n * self.p_0)
+
+        # The amount for winner is greater than alternative
+        if y >= p1N:
+            return True
+        # The amount for loser is greater than votes in null hypothesis for loser
+        elif not_y >= n - p0N:
+            return False
 
         # log(top)
         log_prob_p1 = hypergeom_pmf(y, n, p1N, t, log=True)
         # log(bot)
         log_prob_p0 = hypergeom_pmf(y, n, p0N, t, log=True)
 
-        # TODO handle the exception properly
-        if isinf(log_prob_p0) or isinf(log_prob_p1):
+        inf_p0 = isinf(log_prob_p0)
+        inf_p1 = isinf(log_prob_p1)
+        # Both return null, means the chance is in between
+        if inf_p0 and inf_p1:
+            #
+            if y > p0N:
+                return True
+            return False
+        # Chance for null is zero
+        elif inf_p0:
+            return True
+        # Chance for alternative is zero
+        elif inf_p1:
             return False
 
         # total log(top) - log(bottom)
         ratio = log_prob_p1 - log_prob_p0
 
+        print(n, t, y_t, log_prob_p0, log_prob_p1, ratio, self.critical_value)
         return ratio >= self.critical_value
 
 
