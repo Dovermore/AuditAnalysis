@@ -122,7 +122,7 @@ def compute_expected_number(dsample: dict, m):
     return proportion * m + sum((i * j for i, j in dsample.items()))
 
 
-def to_csv(data: pd.DataFrame, fname, fpath=join("..", "data"), dsample=False):
+def to_csv(data: (pd.DataFrame, pd.Series), fname, fpath=join("..", "data"), dsample=False):
     """
     Save distribution data frame to csv file, based on given file type
     """

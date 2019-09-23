@@ -7,27 +7,24 @@ import numpy as np
 
 class CalibrationCurveGenerator:
 
-    def __init__(self, n, m, p_0=0.5, step=1, replacement=False, max_iter=40, fpath="calibration_curve"):
-        self.n = n
-        self.m = m
-        self.p_0 = p_0
-        self.step = step
-        self.replacement = replacement
+    def __init__(self, election, max_iter=40, fpath="calibration_curve"):
+        self.election = election
         self.audit_methods = {}
         self.fpath = fpath
         self.max_iter = max_iter
 
     def compute_curve(self, audit_method, param_name, param_min, param_max, save=True, **kwargs):
         search_record = {}
-        method_distribution_computer = AuditMethodDistributionComputer(audit_method, self.n, self.m, step=self.step,
-                                                                       replacement=self.replacement)
+        method_distribution_computer = AuditMethodDistributionComputer(audit_method)
         for param_val in np.linspace(param_min, param_max, num=self.max_iter):
             kwargs = deepcopy(kwargs)
             kwargs[param_name] = param_val
-            search_record[param_val] = method_distribution_computer.power(true_p=self.p_0, dsample=False, **kwargs)
+            search_record[param_val] = method_distribution_computer.power(self.election, dsample=False, **kwargs)
         series = pd.Series(data=search_record, name="{}-{}-search".format(audit_method.name, param_name)).sort_index()
         if save:
-            to_csv(series, "{}_curve.csv".format(make_legend(audit_method, **kwargs)), self.fpath)
+            to_csv(series, "{}_curve.csv".format(make_legend(audit_method, **kwargs)
+                                                 .replace(" ", "")
+                                                 .replace("|", "_")), self.fpath)
         return pd.Series(data=search_record, name="{}-{}-search".format(audit_method.name, param_name)).sort_index()
 
 

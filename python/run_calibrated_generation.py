@@ -69,8 +69,7 @@ def run_calibration(election_config, method_config, save_path, log_path, paralle
         n_jobs = 2
         if isinstance(parallel, int):
             n_jobs = parallel
-        Parallel(n_jobs=n_jobs, pre_dispatch="n_jobs+3")(delayed(compute_single)(*args) for args in
-                                                         yield_calibrator())
+        Parallel(n_jobs=n_jobs, pre_dispatch="n_jobs+3")(delayed(compute_single)(*args) for args in yield_calibrator())
     else:
         for args in yield_calibrator():
             compute_single(*args)

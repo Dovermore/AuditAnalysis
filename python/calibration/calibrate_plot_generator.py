@@ -41,8 +41,8 @@ def generate_plot(all_data_path, base_fig_path="figures"):
         if not path.exists(fig_path):
             os.makedirs(fig_path)
         plt.savefig(path.join(fig_path, data_type.replace(".", "_")+".png"))
+        data.to_csv(path.join(fig_path, data_type.replace(".", "_")+".csv"))
         plt.tight_layout()
-        plt.show()
 
 
 def simple_lw_fn(i, n, max=8, min=4):
