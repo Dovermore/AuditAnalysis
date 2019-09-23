@@ -1,12 +1,11 @@
 import argparse
 import csv
 
-# The following import is needed because `eval` is used for audit methods
 from os import path
 
+# The following import is needed because `eval` is used for audit methods
 from auditing_setup.audit_methods import *
 from calibration.calibration_curve_generator import CalibrationCurveGenerator
-from calibration.calibration_data_generator import AuditMethodCalibrator
 
 from parse_args import parse_election_config
 
@@ -15,14 +14,18 @@ def main_run_calibration_curve():
     parser = argparse.ArgumentParser()
     parser.add_argument("election_config")
     parser.add_argument("method_config")
+    parser.add_argument("save_path", nargs="?", default="calibration_curve")
+    parser.add_argument("log_path", nargs="?", default="log")
+    parser.add_argument("parallel", nargs="?", default="False")
 
     args = parser.parse_args()
     election_config = args.election_config
     method_config = args.method_config
+    save_path = args.save_path
 
     assert method_config.endswith(".csv")
     assert election_config.endswith(".csv")
-    run_calibration(election_config, method_config)
+    run_calibration(election_config, method_config, save_path)
 
 
 def run_calibration(election_config, method_config, save_path="calibration_curve"):
@@ -30,8 +33,7 @@ def run_calibration(election_config, method_config, save_path="calibration_curve
     for election_kwargs in election_kwargs_list:
         print("Election kwargs:", election_kwargs)
         election = Election(**election_kwargs)
-        audit_method_calibrator = CalibrationCurveGenerator(election, fpath=save_path)
-
+        audit_method_calibrator = CalibrationCurveGenerator(election, fpath=path.join(save_path, str(election)))
         with open(method_config) as config_file:
             config_reader = csv.reader(config_file)
             audit_parameters = ["audit_method", "param_name", "param_min", "param_max"]
