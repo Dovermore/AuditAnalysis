@@ -5,7 +5,7 @@ import pandas as pd
 from collections import defaultdict
 
 
-def generate_plot(all_data_path, base_fig_path="figures"):
+def generate_plot(all_data_path, base_fig_path="figures", base_table_path="tables"):
     # Get risk lim
     for method_data_path in os.listdir(all_data_path):
         _, risk_lim = method_data_path.split("_")
@@ -41,8 +41,13 @@ def generate_plot(all_data_path, base_fig_path="figures"):
         if not path.exists(fig_path):
             os.makedirs(fig_path)
         plt.savefig(path.join(fig_path, data_type.replace(".", "_")+".png"))
-        data.to_csv(path.join(fig_path, data_type.replace(".", "_")+".csv"))
         plt.tight_layout()
+
+        table_path = path.join(base_table_path, path.basename(all_data_path))
+        if not path.exists(table_path):
+            os.makedirs(table_path)
+        data.to_csv(path.join(table_path, data_type.replace(".", "_")+".csv"))
+
 
 
 def simple_lw_fn(i, n, max=8, min=4):
