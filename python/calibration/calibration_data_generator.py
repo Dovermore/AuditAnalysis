@@ -61,6 +61,7 @@ class AuditMethodCalibrator:
             for risk_calibrator in audit_method_dict["risk_search"]:
                 risk_calibrator.reset()
 
+    # TODO should generate after calibration to save storage space.
     def generate_expected_statistics(self, true_ps, fpath="calibrated_data"):
         fpath = path.join(fpath, str(self.election))
 

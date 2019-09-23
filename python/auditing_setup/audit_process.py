@@ -65,6 +65,7 @@ def single_node_update(rejection_fn, n, t, y_t, p_t, step, p, replacement, *args
 @Cached
 def audit_process_simulation_parallel(rejection_fn: BaseMethod, election: Election, progression=False,
                                       multiprocessing_batch=30, *args, **kwargs):
+    # FIXME There should be errors in this function
     m = election.m
     n = election.n
     step = election.step

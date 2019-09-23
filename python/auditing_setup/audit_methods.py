@@ -1,4 +1,4 @@
-from utility.program_utility import CachedMethod, string_to_num
+from utility.program_utility import CachedMethod, string_to_num, memoized_method
 from utility.math_utility import beta_binomial_cdf, beta_pdf, betafn, beta_cdf, hypergeom_pmf, addln
 from auditing_setup.election_setting import Election
 from math import ceil, log, isinf, exp
@@ -56,14 +56,12 @@ class BayesianMethod(BaseMethod, abc.ABC):
         self.b = b
         self.critical_value = critical_value
 
-    @CachedMethod
     def compute_upset_prob(self, n, t, y_t):
         return 1
 
     def min_stop_check(self, t):
         return self.min_stop is not False and t < self.min_stop
 
-    @CachedMethod
     def __call__(self, n, t, y_t):
         if self.min_stop_check(t):
             return False
@@ -86,7 +84,7 @@ class Bayesian(BayesianMethod):
     def __init__(self, a=1, b=1, critical_value=0.05,  min_stop=False, *args, **kwargs):
         super(Bayesian, self).__init__(a=a, b=b, critical_value=critical_value, min_stop=min_stop, *args, **kwargs)
 
-    @CachedMethod
+    @memoized_method(maxsize=250)
     def compute_upset_prob(self, n, t, y_t):
         k = ceil(n/2 - y_t)
         upset_prob = beta_binomial_cdf(k, y_t+self.a, t-y_t+self.b, n-t)
@@ -96,7 +94,7 @@ class Bayesian(BayesianMethod):
 class BetaBayesian(BayesianMethod):
     name = "bayesian_with_replacement"
 
-    @CachedMethod
+    @memoized_method(maxsize=250)
     def compute_upset_prob(self, n, t, y_t):
         # prior      p   ~ beta(a, b)
         # likelihood x|p ~ bi(t, p)
@@ -115,7 +113,7 @@ class TruncatedBayesian(BayesianMethod):
                                                 min_stop=min_stop, *args, **kwargs)
         self.p_0 = p_0
 
-    @CachedMethod
+    @memoized_method(maxsize=250)
     def compute_upset_prob(self, n, t, y_t):
         betalnfn_ratio = betafn(y_t + self.a, t - y_t + self.b, log=True) - betafn(self.a, self.b, log=True)
         # betafn_ratio = exp(betalnfn_ratio)
@@ -158,7 +156,7 @@ class BRAVO(SPRTMethod):
         self.y_val = log(p/p_0)
         self.not_y_val = log((1-p)/p_0)
 
-    @CachedMethod
+    @memoized_method(maxsize=250)
     def __call__(self, n, t, y_t):
         y = y_t
         not_y = t - y
@@ -177,7 +175,7 @@ class BRAVO(SPRTMethod):
 class HyperGeomBRAVO(SPRTMethod):
     name = "bravo_without_replacement"
 
-    @CachedMethod
+    @memoized_method(maxsize=250)
     def __call__(self, n, t, y_t):
         y = y_t
         not_y = t - y
@@ -259,8 +257,8 @@ class Clip(FrequentistMethod):
             self.beta = self.betas.loc[self.n, alpha]
         else:
             self.beta = self._compute_beta(self.n, alpha, conservative)
-        
-    @CachedMethod
+
+    @memoized_method(maxsize=250)
     def __call__(self, n, t, y_t):
         a = y_t
         b = t - y_t
@@ -284,7 +282,7 @@ class MaxSPRT(FrequentistMethod):
         else:
             self.critical_value = sequential.CV_Binomial(auto_max_sample, alpha, min_rejection, p=p_0)[0][0]
 
-    @CachedMethod
+    @memoized_method(maxsize=250)
     def __call__(self, n, t, y_t):
         # print("|", n, t, y_t, "|")
         y = y_t

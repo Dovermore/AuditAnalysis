@@ -2,6 +2,7 @@ from auditing_setup.audit_methods import *
 from auditing_setup.raw_distributions import *
 from auditing_setup.election_setting import Election
 from copy import deepcopy
+from collections import Counter
 
 
 class RiskOutOfRangeError(ValueError):
@@ -91,8 +92,8 @@ class RiskBinarySearch:
 
         try:
             while self.__next__(detail=False) is not True:
-                if len(self._search_record.values()) != len(set(self._search_record.values())):
-                    print("Repeated Risk found when searching, stop searching now...")
+                if max(Counter(list(self._search_record.values())).values()) > 5:
+                    print("Repeated Risk found more than 5 times when searching, stop searching now...")
                     break
                 if self.step_count >= self.max_iter:
                     print("Maximum iter reached {}".format(self.max_iter))
