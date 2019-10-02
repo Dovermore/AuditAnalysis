@@ -2,8 +2,6 @@ from os import path
 
 from matplotlib import pyplot as plt
 
-from collections import defaultdict
-from collections import deque
 from collections import OrderedDict as PythonOrderedDict
 from functools import partial
 

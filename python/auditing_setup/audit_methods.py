@@ -65,7 +65,6 @@ class BayesianMethod(BaseMethod, abc.ABC):
     def __call__(self, n, t, y_t):
         if self.min_stop_check(t):
             return False
-        self.compute_upset_prob(n, t, y_t)
         return self.compute_upset_prob(n, t, y_t) < self.critical_value
 
 
@@ -154,7 +153,7 @@ class BRAVO(SPRTMethod):
         """
         super(BRAVO, self).__init__(alpha=alpha, p=p, p_0=p_0, *args, **kwargs)
         self.y_val = log(p/p_0)
-        self.not_y_val = log((1-p)/p_0)
+        self.not_y_val = log((1-p)/(1-p_0))
 
     @memoized_method(maxsize=250)
     def __call__(self, n, t, y_t):

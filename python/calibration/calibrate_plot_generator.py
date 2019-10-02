@@ -5,7 +5,7 @@ import pandas as pd
 from collections import defaultdict
 
 
-def generate_plot(all_data_path, base_fig_path="figures", base_table_path="tables"):
+def generate_statistics_plot(all_data_path, base_fig_path="figures", base_table_path="tables"):
     # Get risk lim
     for method_data_path in os.listdir(all_data_path):
         _, risk_lim = method_data_path.split("_")
@@ -49,7 +49,6 @@ def generate_plot(all_data_path, base_fig_path="figures", base_table_path="table
         data.to_csv(path.join(table_path, data_type.replace(".", "_")+".csv"))
 
 
-
 def simple_lw_fn(i, n, max=8, min=4):
     return max - (max-min) * (i/n)
 
@@ -72,5 +71,5 @@ if __name__ == "__main__":
         data_path = path.join(base_path, data_path)
         if not path.isdir(data_path):
             continue
-        generate_plot(data_path, base_fig_path="new_figures")
+        generate_statistics_plot(data_path, base_fig_path="new_figures")
 
