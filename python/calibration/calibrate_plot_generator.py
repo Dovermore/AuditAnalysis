@@ -7,13 +7,20 @@ from collections import defaultdict
 
 def generate_statistics_plot(all_data_path, base_fig_path="figures", base_table_path="tables"):
     # Get risk lim
-    for method_data_path in os.listdir(all_data_path):
-        _, risk_lim = method_data_path.split("_")
-        break
+    has_risk = True
+    try:
+        for method_data_path in os.listdir(all_data_path):
+            _, risk_lim = method_data_path.split("_")
+    except:
+        has_risk = False
 
     all_data = defaultdict(pd.DataFrame)
     for method_data_path in os.listdir(all_data_path):
-        method, _ = method_data_path.rsplit("_", 1)
+        if has_risk:
+            method, _ = method_data_path.rsplit("_", 1)
+        else:
+            method = method_data_path
+
         for data_file_name in os.listdir(path.join(all_data_path, method_data_path)):
             data_name = path.splitext(data_file_name)[0]
             data_type = data_name.replace("{}_".format(method), "")
@@ -66,10 +73,21 @@ def line_style_generator(n, ls_list=('-','--','-.',':'), lw_fn=simple_lw_fn):
 # scratch tests
 if __name__ == "__main__":
     # base_path = path.abspath("calibrated_data")
-    base_path = path.abspath("new_calibrate_full")
-    for data_path in os.listdir(base_path):
-        data_path = path.join(base_path, data_path)
-        if not path.isdir(data_path):
-            continue
-        generate_statistics_plot(data_path, base_fig_path="new_figures")
+    option = 1
+
+    if option == 0:
+        base_path = path.abspath("new_calibrate_full")
+        for data_path in os.listdir(base_path):
+            data_path = path.join(base_path, data_path)
+            if not path.isdir(data_path):
+                continue
+            generate_statistics_plot(data_path, base_fig_path="new_figures")
+    elif option == 1:
+        base_path = path.abspath("uncalibrated_data")
+        for data_path in os.listdir(base_path):
+            data_path = path.join(base_path, data_path)
+            if not path.isdir(data_path):
+                continue
+            generate_statistics_plot(data_path, base_fig_path="uncalibrated_figures", base_table_path="uncalibrated_tables")
+
 
