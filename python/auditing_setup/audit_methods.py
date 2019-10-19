@@ -45,6 +45,9 @@ class BaseMethod(abc.ABC):
     def legend(cls, *args, **kwargs):
         return str(cls.__init__(*args, **kwargs))
 
+    def min_stop_check(self, t):
+        return self.min_stop is not False and t < self.min_stop
+
 
 class BayesianMethod(BaseMethod, abc.ABC):
     name = "bayesian_method"
@@ -58,9 +61,6 @@ class BayesianMethod(BaseMethod, abc.ABC):
 
     def compute_upset_prob(self, n, t, y_t):
         return 1
-
-    def min_stop_check(self, t):
-        return self.min_stop is not False and t < self.min_stop
 
     def __call__(self, n, t, y_t):
         if self.min_stop_check(t):
@@ -157,6 +157,8 @@ class BRAVO(SPRTMethod):
 
     @memoized_method(maxsize=250)
     def __call__(self, n, t, y_t):
+        if self.min_stop_check(t):
+            return False
         y = y_t
         not_y = t - y
         
@@ -176,6 +178,8 @@ class HyperGeomBRAVO(SPRTMethod):
 
     @memoized_method(maxsize=250)
     def __call__(self, n, t, y_t):
+        if self.min_stop_check(t):
+            return False
         y = y_t
         not_y = t - y
 
@@ -214,7 +218,7 @@ class HyperGeomBRAVO(SPRTMethod):
         # total log(top) - log(bottom)
         ratio = log_prob_p1 - log_prob_p0
 
-        print(n, t, y_t, log_prob_p0, log_prob_p1, ratio, self.critical_value)
+        # print(n, t, y_t, log_prob_p0, log_prob_p1, ratio, self.critical_value)
         return ratio >= self.critical_value
 
 
@@ -259,6 +263,8 @@ class Clip(FrequentistMethod):
 
     @memoized_method(maxsize=250)
     def __call__(self, n, t, y_t):
+        if self.min_stop_check(t):
+            return False
         a = y_t
         b = t - y_t
         return (a - b) > self.beta * np.sqrt(t)
@@ -283,6 +289,8 @@ class MaxSPRT(FrequentistMethod):
 
     @memoized_method(maxsize=250)
     def __call__(self, n, t, y_t):
+        if self.min_stop_check(t):
+            return False
         # print("|", n, t, y_t, "|")
         y = y_t
         not_y = t - y
@@ -292,11 +300,12 @@ class MaxSPRT(FrequentistMethod):
         p_mle = max(p_0, y_t / t)
 
         y_val = log(p_mle/p_0)
-        not_y_val = log((1-p_mle)/p_0) if not_y else 0
+        not_y_val = log((1-p_mle)/(1-p_0)) if not_y else 0
 
-        # log(p_max/0.5)^y
+        # y * log(p_mle/0.5)
         sum_y_val = y_val * y
-        # log((1-p_max)/0.5)^(t-y)
+
+        # (t-y) * log((1-p_mle)/0.5)
         sum_not_y_val = not_y_val * not_y
 
         # total log(p/0.5)^y + log((1-p)/0.5)^(t-y)

@@ -10,7 +10,7 @@ def generate_statistics_plot(all_data_path, base_fig_path="figures", base_table_
     has_risk = True
     try:
         for method_data_path in os.listdir(all_data_path):
-            _, risk_lim = method_data_path.split("_")
+            _, risk_lim = method_data_path.rsplit("_", 1)
     except:
         has_risk = False
 
@@ -23,6 +23,7 @@ def generate_statistics_plot(all_data_path, base_fig_path="figures", base_table_
 
         for data_file_name in os.listdir(path.join(all_data_path, method_data_path)):
             data_name = path.splitext(data_file_name)[0]
+            print(method, data_name, data_file_name)
             data_type = data_name.replace("{}_".format(method), "")
             data_file_full_path = path.join(all_data_path, method_data_path, data_file_name)
             data = pd.read_csv(data_file_full_path, header=0)
@@ -41,6 +42,8 @@ def generate_statistics_plot(all_data_path, base_fig_path="figures", base_table_
             print(method_data)
             print(method_data.index)
             plt.plot(method_data, **next(ls_generator), alpha=0.8)
+        plt.xlim([0, None])
+        plt.ylim([0, None])
         plt.xticks(data.columns)
         plt.legend(data.index)
         plt.title("{}-{}".format(all_data_path.rsplit("/")[-1], data_type))
@@ -73,7 +76,7 @@ def line_style_generator(n, ls_list=('-','--','-.',':'), lw_fn=simple_lw_fn):
 # scratch tests
 if __name__ == "__main__":
     # base_path = path.abspath("calibrated_data")
-    option = 1
+    option = 2
 
     if option == 0:
         base_path = path.abspath("new_calibrate_full")
@@ -89,5 +92,15 @@ if __name__ == "__main__":
             if not path.isdir(data_path):
                 continue
             generate_statistics_plot(data_path, base_fig_path="uncalibrated_figures", base_table_path="uncalibrated_tables")
+
+    elif option == 2:
+        base_path = path.abspath("minstop_calibrate_full")
+        for data_path in os.listdir(base_path):
+            data_path = path.join(base_path, data_path)
+            if not path.isdir(data_path):
+                continue
+            generate_statistics_plot(data_path, base_fig_path="minstop_calibrate_full_figures", base_table_path="minstop_calibrate_full_tables")
+
+
 
 

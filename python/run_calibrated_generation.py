@@ -41,6 +41,7 @@ def run_calibration(election_config, method_config, save_path, log_path, paralle
     def yield_calibrator():
         for election_kwargs in election_kwargs_list:
             print("Election kwargs:", election_kwargs)
+            print("Calibration kwargs:", calibration_kwargs)
             election = Election(**election_kwargs)
 
             audit_method_calibrator = AuditMethodCalibrator(election, **calibration_kwargs)
