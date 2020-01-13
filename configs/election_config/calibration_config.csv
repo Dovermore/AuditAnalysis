@@ -1,4 +1,3 @@
-31
 500,500,0.5,1,False,False,False
 1000,1000,0.5,1,False,False,False
 5000,500,0.5,1,False,False,False
@@ -7,7 +6,6 @@
 10000,750,0.5,1,False,False,False
 10000,1000,0.5,1,False,False,False
 20000,2000,0.5,1,False,False,False
-30000,3000,0.5,1,False,False,False
 500,500,0.5,1,True,False,False
 1000,1000,0.5,1,True,False,False
 5000,500,0.5,1,True,False,False

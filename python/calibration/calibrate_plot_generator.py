@@ -76,7 +76,7 @@ def line_style_generator(n, ls_list=('-','--','-.',':'), lw_fn=simple_lw_fn):
 # scratch tests
 if __name__ == "__main__":
     # base_path = path.abspath("calibrated_data")
-    option = 2
+    option = 4
 
     if option == 0:
         base_path = path.abspath("new_calibrate_full")
@@ -86,7 +86,7 @@ if __name__ == "__main__":
                 continue
             generate_statistics_plot(data_path, base_fig_path="new_figures")
     elif option == 1:
-        base_path = path.abspath("uncalibrated_data")
+        base_path = path.abspath("uncalibrate_full")
         for data_path in os.listdir(base_path):
             data_path = path.join(base_path, data_path)
             if not path.isdir(data_path):
@@ -101,6 +101,17 @@ if __name__ == "__main__":
                 continue
             generate_statistics_plot(data_path, base_fig_path="minstop_calibrate_full_figures", base_table_path="minstop_calibrate_full_tables")
 
+    elif option == 3:
+        base_path = path.abspath("new_calibrate_full/n=005000_m=00500_p=0.500_replacement=False_step=1")
+        data_path = base_path
+        generate_statistics_plot(data_path, base_fig_path="new_figures")
 
+    elif option == 4:
+        base_path = path.abspath("xtreme_prior_full")
+        for data_path in os.listdir(base_path):
+            data_path = path.join(base_path, data_path)
+            if not path.isdir(data_path):
+                continue
+            generate_statistics_plot(data_path, base_fig_path="xtreme_prior_full_figures", base_table_path="xtreme_prior_full_tables")
 
 

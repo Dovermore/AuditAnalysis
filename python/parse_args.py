@@ -5,29 +5,34 @@ from os import path
 def parse_election_config(election_config):
     with open(election_config) as config_file:
         config_reader = csv.reader(config_file)
-        n_lines = int(next(config_reader)[0])
-        print("n_lines:", n_lines)
+        n_lines = 0
 
         election_kwargs_list = []
         # Read Null Election Setup
-        for i in range(n_lines):
-            election_keys = ["n", "m", "p", "step", "replacement", "multiprocessing_batch", "cached"]
-            election_kwargs = {key: eval(value) for key, value in zip(election_keys, next(config_reader))}
-            if not election_kwargs["multiprocessing_batch"]:
-                election_kwargs.pop("multiprocessing_batch")
+        election_keys = ["n", "m", "p", "step", "replacement", "multiprocessing_batch", "cached"]
+        while True:
+            next_line = next(config_reader)
+            if len(next_line) == len(election_keys):
+                election_kwargs = {key: eval(value) for key, value in zip(election_keys, next_line)}
+                n_lines += 1
+                if not election_kwargs["multiprocessing_batch"]:
+                    election_kwargs.pop("multiprocessing_batch")
 
-            # TODO: Add the function to ignore computed data
-            cached = election_kwargs.pop("cached")
-            # Currently it won't compute if this flag is set to True.
-            if cached:
-                print("cached: {}, ignoring election config".format(election_kwargs))
-                continue
+                cached = election_kwargs.pop("cached")
+                # Currently it won't compute if this flag is set to True.
+                if cached:
+                    print("cached: {}, ignoring election config".format(election_kwargs))
+                    continue
 
-            election_kwargs_list.append(election_kwargs)
+                election_kwargs_list.append(election_kwargs)
+            else:
+                break
+
+        print("n_lines:", n_lines)
 
         # Read Calibration Parameters
         calibration_keys = ["risk_lim", "tol", "max_iter"]
-        calibration_kwargs = {key: eval(value) for key, value in zip(calibration_keys, next(config_reader))}
+        calibration_kwargs = {key: eval(value) for key, value in zip(calibration_keys, next_line)}
 
         # Read Alternative Election Probabilities
         alternative_ps = [eval(p) for p in next(config_reader)]
