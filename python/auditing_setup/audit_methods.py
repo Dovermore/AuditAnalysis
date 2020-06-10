@@ -314,6 +314,81 @@ class MaxSPRT(FrequentistMethod):
         return sum_val >= self.critical_value
 
 
+class KaplanMarkov(FrequentistMethod):
+    name = "kaplan_markov"
+    def __init__(self, alpha, p0=1/2, g=0.5, *args, **kwargs):
+        super().__init__(alpha, *args, **kwargs)
+        self.p0 = p0
+        self.g = g
+        self.critical_value = np.log(self.alpha)
+
+    @memoized_method(maxsize=250)
+    def __call__(self, n, t, y_t):
+        if self.min_stop_check(t):
+            return False
+        y_t = t - y_t
+        # Log p value
+        logp = np.min([0, (t-y_t) * np.log((self.p0+self.g)/self.g) + y_t * np.log((self.p0+self.g)/(1+self.g))])
+
+        # x = np.zeros((t,))
+        # x[:y_t] = 1
+        # logp_ = np.log(np.min([1, np.prod((self.p0+self.g)/(x+self.g))]))
+        # if logp_ < 0 or logp < 0:
+        #     print(np.exp(logp), np.exp(logp)))
+
+        # If the result is significant compared to alpha (p-value threshold)
+        return logp <= self.critical_value
+
+
+class KaplanKolmogorov(FrequentistMethod):
+    name = "kaplan_kolmogorov"
+    def __init__(self, alpha, p0=1/2, g=0.5, *args, **kwargs):
+        super().__init__(alpha, *args, **kwargs)
+        self.p0 = p0
+        self.g = g
+        self.critical_value = np.log(self.alpha)
+
+    @memoized_method(maxsize=250)
+    def __call__(self, n, t, y_t):
+        if self.min_stop_check(t):
+            return False
+        y_t = t - y_t
+        x = np.zeros((t,))
+        x[:y_t] = 1
+        sample_total = 0.0
+        mart = (x[0]+self.g)/(self.p0+self.g) if self.p0 > 0 else 1
+        mart_max = mart
+        for j in range(1, len(x)):
+            mart *= (x[j]+self.g)*(1-j/n)/(self.p0+self.g - (1/n)*sample_total)
+            if mart < 0:
+                mart = np.inf
+                break
+            else:
+                sample_total += x[j]+self.g
+            mart_max = max(mart, mart_max)
+        logp = np.log(min(1/mart, 1))
+        p = min(1/mart, 1)
+        # return p <= self.critical_value
+        return p <= self.alpha
+
+class KaplanWald(FrequentistMethod):
+    name = "kaplan_wald"
+    def __init__(self, alpha, p0=1/2, g=0.5, *args, **kwargs):
+        super().__init__(alpha, *args, **kwargs)
+        self.p0 = p0
+        self.g = g
+        self.critical_value = np.log(self.alpha)
+
+    @memoized_method(maxsize=250)
+    def __call__(self, n, t, y_t):
+        if self.min_stop_check(t):
+            return False
+        y_t = t - y_t
+        # Log p value
+        logp = np.min([0, -y_t * log((1-self.g)/self.p0 + self.g)])
+        return logp <= self.critical_value
+
+
 def make_legend(audit_method, for_file=False, **kwargs):
     legend = "{:8}".format(audit_method.name)
     split = " | "

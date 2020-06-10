@@ -8,4 +8,5 @@ BRAVO,alpha,0.001,1,p,0.51
 HyperGeomBRAVO,alpha,0.001,1,p,0.7
 HyperGeomBRAVO,alpha,0.001,1,p,0.55
 HyperGeomBRAVO,alpha,0.001,1,p,0.51
+KaplanMarkov,alpha,0.001,1
 Clip,alpha,0.001,1

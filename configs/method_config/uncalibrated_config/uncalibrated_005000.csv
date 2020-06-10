@@ -5,4 +5,5 @@ BRAVO,alpha,0.05,p,0.7
 BRAVO,alpha,0.05,p,0.55
 HyperGeomBRAVO,alpha,0.05,p,0.7
 HyperGeomBRAVO,alpha,0.05,p,0.55
+KaplanMarkov,alpha,0.001,1
 Clip,alpha,0.05,n_total,5000
