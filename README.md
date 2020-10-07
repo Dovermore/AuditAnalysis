@@ -1,5 +1,6 @@
 # AuditAnalysis
 
 My repo for codes for Audit analysis
+https://arxiv.org/abs/2008.08536
 
-Code is really messy, I plan to refactor at the end of this year. Please don't look at the code closely :) 
+Messy code, major simulation all under python folder.
